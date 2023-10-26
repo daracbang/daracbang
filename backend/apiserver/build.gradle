@@ -13,10 +13,10 @@ java {
 }
 
 configurations {
+	asciidoctorExtensions
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
-	asciidoctorExt
 }
 
 repositories {
@@ -36,7 +36,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	testImplementation 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 }
 
@@ -45,17 +45,14 @@ ext {
 }
 
 tasks.named('test') {
+	outputs.dir snippetsDir
 	useJUnitPlatform()
 }
 
-tasks.named('asciidoctor') {
-	configurations 'asciidoctorExt'
-	sources {
-		include("**/index.adoc")
-	}
+asciidoctor {
+	configurations 'asciidoctorExtensions'
 	baseDirFollowsSourceFile()
 	inputs.dir snippetsDir
-
 	dependsOn test
 }
 
@@ -63,20 +60,16 @@ asciidoctor.doFirst {
 	delete file('src/main/resources/static/docs')
 }
 
-task createDocument(type: Copy) {
+tasks.register('copyDocument', Copy) {
 	dependsOn asciidoctor
 
-	from file("build/docs/asciidoc")
+	from "${asciidoctor.outputDir}"
 	into file("src/main/resources/static/docs")
+	rename { String fileName ->
+		fileName.replace('.html', 'index.html')
+	}
 }
 
-task displaceDocument(type: Copy) {
-	dependsOn asciidoctor
-
-	from("${asciidoctor.outputDir}")
-	into("build/resources/main/static")
-}
 bootJar {
-	dependsOn createDocument
-	dependsOn displaceDocument
+	dependsOn copyDocument
 }

@@ -1,12 +1,11 @@
 package a503.daracbang.domain.guestbook.controller;
 
 import a503.daracbang.domain.guestbook.dto.request.GuestbookCreateForm;
-import a503.daracbang.domain.guestbook.entity.Guestbook;
 import a503.daracbang.domain.guestbook.service.GuestbookService;
+import a503.daracbang.global.ApiDocsTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -17,17 +16,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 
-@AutoConfigureRestDocs
 @WebMvcTest(GuestbookController.class)
-class GuestbookControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
+class GuestbookControllerTest extends ApiDocsTest {
 
     @MockBean // GuestbookController이 의존하는 빈을 모킹
     private GuestbookService guestbookService;
@@ -42,7 +35,6 @@ class GuestbookControllerTest {
         doNothing().when(guestbookService).save(1L, form);
 
         // when & then
-
         mockMvc.perform(MockMvcRequestBuilders.post(URI_PATH)
             .contentType(MediaType.APPLICATION_JSON)
             .content(new ObjectMapper().writeValueAsString(form)))
@@ -52,5 +44,4 @@ class GuestbookControllerTest {
                 Preprocessors.preprocessResponse(prettyPrint())))
             .andExpect(MockMvcResultMatchers.status().isCreated());
     }
-
 }
