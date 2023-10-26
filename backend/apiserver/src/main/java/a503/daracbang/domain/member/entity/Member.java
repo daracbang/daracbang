@@ -26,13 +26,12 @@ public class Member extends BaseTimeEntity {
 
     private String nickname;
 
-    @Lob
-    private byte[] profileImage;
+    private String profileImage; // s3
 
     private String introduce;
 
     @Builder
-    public Member(String loginId, String password, String nickname, byte[] profileImage) {
+    public Member(String loginId, String password, String nickname, String profileImage) {
         this.loginId = loginId;
         this.password = password;
         this.nickname = nickname;
