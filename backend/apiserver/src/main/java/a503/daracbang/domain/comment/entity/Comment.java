@@ -30,8 +30,6 @@ public class Comment extends BaseTimeEntity {
     private String content;
 
     @Embedded
-    private Sentiment commentSentiment;
-
-
+    private Sentiment sentiment;
 
 }
