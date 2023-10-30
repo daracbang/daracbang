@@ -20,3 +20,11 @@ include::{snippets}/guestbooks/delete/http-request.adoc[]
 
 === Response
 include::{snippets}/guestbooks/delete/http-response.adoc[]
+
+== 방명록 리스트 조회
+=== Request
+include::{snippets}/guestbooks/pagination/http-request.adoc[]
+
+=== Response
+include::{snippets}/guestbooks/pagination/http-response.adoc[]
+
