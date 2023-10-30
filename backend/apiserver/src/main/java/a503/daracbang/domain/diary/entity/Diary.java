@@ -25,6 +25,9 @@ public class Diary extends BaseTimeEntity {
     @JoinColumn(name="member_id")
     private Member member;
 
+    @Column(nullable = false)
+    private Scope scope; // 다이어리 공개 범위
+
     @Column(columnDefinition = "TEXT", length = 1000, nullable = false)
     private String content; // 내용
 
@@ -32,6 +35,6 @@ public class Diary extends BaseTimeEntity {
     private List<Comment> comments =new ArrayList<>(); // 댓글
 
     @Embedded
-    private Sentiment diarySentiment; // 다이어리 감정 분석
+    private Sentiment sentiment; // 다이어리 감정 분석
 
 }
