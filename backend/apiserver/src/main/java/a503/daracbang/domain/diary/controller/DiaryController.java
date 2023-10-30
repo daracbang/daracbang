@@ -1,4 +1,4 @@
-package a503.daracbang.domain.member.controller;
+package a503.daracbang.domain.diary.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
