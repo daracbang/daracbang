@@ -1,4 +1,6 @@
 = Guestbook API 문서
+방명록을 생성, 삭제, 조회할 수 있습니다.
+
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -6,11 +8,15 @@
 :toclevels: 3
 
 == 방명록 생성
-
 === Request
-
 include::{snippets}/guestbooks/save/http-request.adoc[]
 
 === Response
-
 include::{snippets}/guestbooks/save/http-response.adoc[]
+
+== 방명록 삭제
+=== Request
+include::{snippets}/guestbooks/delete/http-request.adoc[]
+
+=== Response
+include::{snippets}/guestbooks/delete/http-response.adoc[]

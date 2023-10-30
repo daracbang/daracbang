@@ -4,6 +4,7 @@ import a503.daracbang.domain.guestbook.dto.request.GuestbookCreateForm;
 import a503.daracbang.domain.guestbook.service.GuestbookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,5 +24,11 @@ public class GuestbookController {
     public ResponseEntity<Void> create(@PathVariable("memberId") Long memberId, @RequestBody GuestbookCreateForm form) {
         guestbookService.save(memberId, form);
         return ResponseEntity.created(URI.create("/api/guestbook/" + memberId)).build();
+    }
+
+    @DeleteMapping("/{guestbookId}")
+    public ResponseEntity<Void> delete(@PathVariable("guestbookId") Long guestbookId) {
+        guestbookService.delete(guestbookId, 1L);
+        return ResponseEntity.noContent().build();
     }
 }

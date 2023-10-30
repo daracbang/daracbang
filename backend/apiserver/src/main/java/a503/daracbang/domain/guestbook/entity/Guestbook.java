@@ -29,4 +29,11 @@ public class Guestbook extends BaseTimeEntity {
         this.memberId = memberId;
         this.content = content;
     }
+
+    public boolean isWriter(long memberId) {
+        if (this.memberId == memberId) {
+            return true;
+        }
+        return false;
+    }
 }

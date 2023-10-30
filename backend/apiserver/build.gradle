@@ -60,16 +60,15 @@ asciidoctor.doFirst {
 	delete file('src/main/resources/static/docs')
 }
 
-tasks.register('copyDocument', Copy) {
+task createDocument(type: Copy) {
 	dependsOn asciidoctor
-
-	from "${asciidoctor.outputDir}"
+	from file("build/docs/asciidoc")
 	into file("src/main/resources/static/docs")
-	rename { String fileName ->
-		fileName.replace('.html', 'index.html')
-	}
 }
 
 bootJar {
-	dependsOn copyDocument
+	dependsOn createDocument
+	from("${asciidoctor.outputDir}") {
+		into "static/docs"
+	}
 }
