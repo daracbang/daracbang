@@ -5,3 +5,15 @@ F
 apiserver/build.gradle,e\c\ecaf1eda6d71365edb2677e2d06073080bdfccde
 Ö
 Uapiserver/src/main/java/a503/daracbang/domain/member/controller/MemberController.java,a\a\aa6506668df3c302151134a303ce1f28282fc0dc
+É
+Sapiserver/src/main/java/a503/daracbang/domain/member/exception/MemberErrorCode.java,9\6\96a378b4528a40529aedd9a88fc8845cdada346d
+p
+@apiserver/src/main/java/a503/daracbang/DaracbangApplication.java,2\7\27a0d947cf13be1574914a5057cb3bf20e922208
+Å
+Qapiserver/src/main/java/a503/daracbang/domain/diary/exception/DiaryErrorCode.java,c\1\c15ed3b3b74eac7bcf1cbba2451272c6375a095d
+Ö
+Uapiserver/src/main/java/a503/daracbang/domain/comment/exception/CommentErrorCode.java,7\7\7738a11d3e3dd95629f636b0f921de2ae2e3733b
+v
+Fapiserver/src/main/java/a503/daracbang/global/exception/ErrorCode.java,6\4\649706d0c6e74a35d7ae0dd66f15f1df60346a08
+y
+Iapiserver/src/main/java/a503/daracbang/domain/diary/entity/Sentiment.java,7\a\7a6fde5b134faa304df37c138698f39517d14b4f

@@ -26,6 +26,9 @@ public class Diary extends BaseTimeEntity {
     private Member member;
 
     @Column(nullable = false)
+    private Long memberId;
+
+    @Column(nullable = false)
     private Scope scope; // 다이어리 공개 범위
 
     @Column(columnDefinition = "TEXT", length = 1000, nullable = false)
@@ -36,5 +39,13 @@ public class Diary extends BaseTimeEntity {
 
     @Embedded
     private Sentiment sentiment; // 다이어리 감정 분석
+
+    @Builder
+    public Diary(Long memberId, Scope scope, String content, Sentiment sentiment){
+        this.memberId = memberId;
+        this.scope = scope;
+        this.content = content;
+        this.sentiment = sentiment;
+    }
 
 }
