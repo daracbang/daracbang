@@ -12,7 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FindDiaryDetailResponse {
+public class DiaryResponse {
 
     private Long id;
     private String content;
@@ -22,7 +22,7 @@ public class FindDiaryDetailResponse {
     private String negativeProbability;
 
     @Builder
-    private FindDiaryDetailResponse(Diary entity){
+    private DiaryResponse(Diary entity){
         this.id = entity.getId();
         this.content = entity.getContent();
         this.sentimentResult = entity.getSentiment().getSentimentResult();
