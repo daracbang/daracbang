@@ -3,19 +3,20 @@ import React from 'react';
 import Logo from "../assets/images/logo.png";
 import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
+import FormDialog from "./Login";
 
 const MainHead = () => {
 
     return (
         <Header>
             <Logos>
-                <Link to="/Daracbang" style={{ textDecoration: "none", marginRight: "20px" }}>
+                <Link to="/daracbang" style={{ textDecoration: "none", marginRight: "20px" }}>
                     <img src={Logo} alt="logo" />
                 </Link>
                 <Typography style={{ fontFamily: "omyu_pretty", fontSize: "30px", fontWeight: "bold", marginTop: "5px" }}>다락방</Typography>
             </Logos>
             <BtnGroup >
-                <Link to="/Login" style={{ textDecoration: "none", marginTop: "7px", fontFamily: "omyu_pretty", fontSize: "20px", color: "inherit" }}>로그인</Link>
+                <FormDialog />
             </BtnGroup>
         </Header>
     );

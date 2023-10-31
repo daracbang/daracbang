@@ -4,7 +4,7 @@ import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import styled from "@emotion/styled";
 import { Link } from 'react-router-dom';
 import Arrow from "../assets/images/arrow.png";
-import room1 from "../assets/images/room1.png"
+import room1 from "../assets/images/room2.png"
 
 const Main = () => {
 

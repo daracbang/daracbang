@@ -3,6 +3,7 @@ import LoginHead from '../components/LoginHead';
 import styled from "@emotion/styled";
 import { Avatar, Button, TextField } from '@mui/material';
 import DefaultImg from "../assets/images/defaultImg.png";
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
 
@@ -21,27 +22,27 @@ const SignUp = () => {
                             <Avatar
                                 alt="Default Img"
                                 src={DefaultImg}
-                                sx={{ width: 300, height: 300 }}
+                                style={{ width: 300, height: 300 }}
                             ></Avatar>
                         )}
                     </AddImgWrap>
 
                     <InfoWrap>
                         <TextField
-                            id="standard-basic" label="Standard" variant="standard"
-                            style={{ margin: "10px" }}
+                            id="standard-basic" label="아이디" variant="standard"
+                            style={{ margin: "20px" }}
                         />
                         <TextField
-                            id="standard-basic" label="Standard" variant="standard"
-                            style={{ margin: "10px" }}
+                            id="standard-basic" label="비밀번호" variant="standard"
+                            style={{ margin: "20px" }}
                         />
-                        <div>
+                        <div >
                             <TextField
-                                id="standard-basic" label="Standard" variant="standard"
-                                style={{ margin: "10px" }}
+                                id="standard-basic" label="닉네임" variant="standard"
+                                style={{ margin: "20px" }}
                             />
                             <Button
-                                sx={{ width: "100px", marginLeft: "10px", height: 52 }}
+                                style={{ width: "90px", marginLeft: "10px", height: "40px", marginTop: "20px" }}
                                 variant="contained"
                                 color="success"
                             >
@@ -52,9 +53,12 @@ const SignUp = () => {
                     </InfoWrap>
                 </ContentWrap>
                 <ButtonWrap>
-                    <Button variant="outlined">
-                        시작하기
-                    </Button>
+                    <Link to={"/daracbang"}>
+                        <Button variant="outlined">
+                            시작하기
+                        </Button>
+                    </Link>
+
                 </ButtonWrap>
             </ContainerWrap>
 
@@ -67,7 +71,7 @@ const ContainerWrap = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 10%;
+  margin-top: 7%;
 `;
 
 const ContentWrap = styled.div`
@@ -77,6 +81,7 @@ const ContentWrap = styled.div`
 
 const AddImgWrap = styled.div`
   background-color: #green;
+  margin-right: 80px; 
 `;
 
 const InfoWrap = styled.div`
@@ -85,7 +90,7 @@ const InfoWrap = styled.div`
 `;
 
 const ButtonWrap = styled.div`
-  margin-top: 10px;
+  margin-top: 80px;
 `;
 
 

@@ -21,12 +21,6 @@ const Header = styled.header`
   height: 50px;
   margin: 15px;
 `;
-
-const BtnGroup = styled.div`
-    margin-right: 20px;
-    display: flex;
-    flex-direction: row;
-`;
 const Logos = styled.div`        
     display: flex;
     flex-direction: row;
