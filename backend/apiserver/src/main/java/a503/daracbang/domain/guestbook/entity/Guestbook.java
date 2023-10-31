@@ -22,19 +22,19 @@ public class Guestbook extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+    @Column(nullable = false)
+    private Long memberId;
 
     @Column(nullable = false, length = 200)
     private String content;
 
-    public Guestbook(Member member, String content) {
-        this.member = member;
+    public Guestbook(Long memberId, String content) {
+        this.memberId = memberId;
         this.content = content;
     }
 
     public boolean isWriter(long memberId) {
-        if (this.member.getId() == memberId) {
+        if (this.memberId == memberId) {
             return true;
         }
         return false;

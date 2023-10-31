@@ -7,15 +7,15 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class GuestbookCreateForm {
+public class RegisterGuestbookRequest {
 
     private String content;
 
-    public GuestbookCreateForm(String content) {
+    public RegisterGuestbookRequest(String content) {
         this.content = content;
     }
 
-    public Guestbook toEntity(Member member) {
-        return new Guestbook(member, content);
+    public Guestbook toEntity(long memberId) {
+        return new Guestbook(memberId, content);
     }
 }
