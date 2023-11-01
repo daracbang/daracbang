@@ -17,3 +17,9 @@ v
 Fapiserver/src/main/java/a503/daracbang/global/exception/ErrorCode.java,6\4\649706d0c6e74a35d7ae0dd66f15f1df60346a08
 y
 Iapiserver/src/main/java/a503/daracbang/domain/diary/entity/Sentiment.java,7\a\7a6fde5b134faa304df37c138698f39517d14b4f
+‡
+Wapiserver/src/main/java/a503/daracbang/domain/comment/controller/CommentController.java,2\5\25ca2b07d8714884bc2b55d6ba08e8634ac6fb70
+y
+Iapiserver/src/main/java/a503/daracbang/domain/comment/entity/Comment.java,c\b\cb9321ef8c56c8a34dbadb0f93cf8f10fa8efec3
+u
+Eapiserver/src/main/java/a503/daracbang/domain/diary/entity/Scope.java,f\d\fd466a38d6e8c7fc430a6d2c25db632afcb5bfc1
