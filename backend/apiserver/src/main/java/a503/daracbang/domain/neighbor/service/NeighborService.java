@@ -1,6 +1,7 @@
 package a503.daracbang.domain.neighbor.service;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +25,10 @@ public class NeighborService {
 
 	@Transactional(readOnly = true)
 	public DataListResponse<NeighborResponse> findNeighborList(Long memberId) {
-		for (Neighbor neighbor : neighborRepository.findAllMyNeighbor(memberId)) {
-			System.out.println("neighbor = " + neighbor.getAccepter().getId());
-		}
-		return null;
+		return new DataListResponse<>(
+			neighborRepository.findAllMyNeighbor(memberId).stream()
+				.map(n -> NeighborResponse.from(n.getAccepter()))
+				.collect(Collectors.toList()));
 	}
 
 	@Transactional
