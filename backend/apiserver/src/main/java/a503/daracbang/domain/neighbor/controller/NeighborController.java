@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import a503.daracbang.domain.neighbor.dto.response.NeighborResponse;
 import a503.daracbang.domain.neighbor.service.NeighborService;
+import a503.daracbang.global.response.DataListResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -19,10 +21,18 @@ public class NeighborController {
 	private final NeighborService neighborService;
 
 	@GetMapping
-	public void neighborList() {
-		neighborService.findNeighborList(1L);
+	public ResponseEntity<DataListResponse<NeighborResponse>> neighborList() {
+		// Long myId = MemberContextHolder.memberIdHolder.get();
+		Long myId = 1L;
+		return ResponseEntity.ok(neighborService.findNeighborList(myId));
 	}
 
+	@GetMapping("/accepts")
+	public ResponseEntity<DataListResponse<NeighborResponse>> neighborRequestList() {
+		// Long myId = MemberContextHolder.memberIdHolder.get();
+		Long myId = 2L;
+		return ResponseEntity.ok(neighborService.findNeighborRequestList(myId));
+	}
 	@PostMapping("/applications/{memberId}")
 	public ResponseEntity<Void> neighborRequest(@PathVariable("memberId") Long memberId) {
 		// Long myId = MemberContextHolder.memberIdHolder.get();
@@ -40,6 +50,7 @@ public class NeighborController {
 
 		return ResponseEntity.ok().build();
 	}
+
 	// 취소, 거절, 삭제 통합
 	@DeleteMapping("/api/neighbors/{memberId}")
 	public ResponseEntity<Void> neighborRemove(@PathVariable("memberId") Long memberId) {

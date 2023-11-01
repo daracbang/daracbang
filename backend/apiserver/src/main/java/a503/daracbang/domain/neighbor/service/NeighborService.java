@@ -24,10 +24,21 @@ public class NeighborService {
 
 	@Transactional(readOnly = true)
 	public DataListResponse<NeighborResponse> findNeighborList(Long memberId) {
-		for (Neighbor neighbor : neighborRepository.findAllMyNeighbor(memberId)) {
-			System.out.println("neighbor = " + neighbor.getAccepter().getId());
-		}
-		return null;
+		return new DataListResponse<>(
+			neighborRepository.findAllMyNeighbor(memberId).stream()
+				.map(n -> NeighborResponse.from(n.getAccepter()))
+				.toList()
+		);
+	}
+
+	@Transactional(readOnly = true)
+	public DataListResponse<NeighborResponse> findNeighborRequestList(Long myId) {
+		Member me = findById(myId);
+		return new DataListResponse<>(
+			neighborRepository.findAllByIsConFalseAndRequester(me).stream()
+				.map(n -> NeighborResponse.from(n.getAccepter()))
+				.toList()
+		);
 	}
 
 	@Transactional
@@ -73,4 +84,5 @@ public class NeighborService {
 		return memberRepository.findById(id)
 			.orElseThrow(() -> new CustomException(MemberErrorCode.NOTFOUND_MEMBER));
 	}
+
 }
