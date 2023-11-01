@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.NotFound;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -19,6 +20,10 @@ public class DeleteDiaryService {
         Optional<Diary> diaryOptional = diaryRepository.findById(diaryId);
         if(diaryOptional.isPresent()){
             Diary diary = diaryOptional.get();
+            Long diaryMemberId = diary.getMemberId();
+            // 삭제를 요청한 멤버 아이디와 다이어리의 멤버 아이디가 다른 경우
+            if(!Objects.equals(diaryMemberId, memberId))
+                throw new DiaryNotFoundException(DiaryErrorCode.NOTWRITER_DIARY);
             diaryRepository.delete(diary);
         } else{
             throw new DiaryNotFoundException(DiaryErrorCode.NOTFOUND_DIARY);

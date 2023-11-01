@@ -15,12 +15,8 @@ Wapiserver/src/main/java/a503/daracbang/domain/diary/dto/response/DiaryListRespo
 Sapiserver/src/main/java/a503/daracbang/domain/diary/dto/response/DiaryResponse.java,d\8\d877c458f1745725e4566f38ca646dab548d1cfc
 ‰
 Yapiserver/src/main/java/a503/daracbang/domain/diary/dto/response/MoodTrackerResponse.java,0\3\0354492ffe5a7fd550d46106bbcef1de181a3f0e
-l
-<apiserver/src/main/java/a503/daracbang/config/JpaConfig.java,1\f\1f87b1015cd66dacab67d056e3bcdceab2985f80
 
 Qapiserver/src/main/java/a503/daracbang/domain/member/dto/SignUpMemberRequest.java,9\a\9a9e39570167c67f3c7fb885a1ad1a9abd7a3047
-…
-Uapiserver/src/main/java/a503/daracbang/domain/member/controller/MemberController.java,a\a\aa6506668df3c302151134a303ce1f28282fc0dc
 w
 Gapiserver/src/main/java/a503/daracbang/domain/member/entity/Member.java,f\a\fa93b063fbc156831e5aa8a7b3c8fd808555adb6
 u
@@ -35,16 +31,10 @@ u
 Eapiserver/src/main/java/a503/daracbang/domain/diary/entity/Diary.java,3\4\34f47918b4362f0f28e0fba6ef1fb917c4464822
 ‰
 Yapiserver/src/main/java/a503/daracbang/domain/guestbook/service/FindGuestBookService.java,d\5\d55d145ae325d845756c7d0fdb33d93c076911bf
-x
-Hapiserver/src/main/java/a503/daracbang/global/entity/BaseTimeEntity.java,4\5\453da7e80c96060a9b29a1d22641c36c0ec46a95
 v
 Fapiserver/src/main/java/a503/daracbang/global/exception/ErrorCode.java,6\4\649706d0c6e74a35d7ae0dd66f15f1df60346a08
 ‰
 Yapiserver/src/main/java/a503/daracbang/domain/guestbook/exception/GuestbookErrorCode.java,9\8\98d11e5e86e314cd862e729366bba5ae906bfe70
-
-Qapiserver/src/main/java/a503/daracbang/domain/diary/exception/DiaryErrorCode.java,c\1\c15ed3b3b74eac7bcf1cbba2451272c6375a095d
-’
-bapiserver/src/main/java/a503/daracbang/domain/guestbook/exception/GuestbookNotWriterException.java,8\e\8e4a5ab037987079120527a7e80064bedb7b6bc5
 ‘
 aapiserver/src/main/java/a503/daracbang/domain/guestbook/dto/request/RegisterGuestbookRequest.java,8\6\860196afea8360fd78073502d546e30f77375d8c
 ‘
@@ -53,5 +43,3 @@ aapiserver/src/main/java/a503/daracbang/domain/guestbook/exception/GuestbookNotF
 [apiserver/src/main/java/a503/daracbang/domain/guestbook/service/DeleteGuestbookService.java,9\d\9dab979482dbfce2688fd7485fb1b8e3cfaac88f
 ƒ
 Sapiserver/src/main/java/a503/daracbang/domain/diary/repository/DiaryRepository.java,b\5\b5e996004a6db93c20d446c414cbb5b6e41401ad
-
-Qapiserver/src/main/java/a503/daracbang/domain/diary/service/FindDiaryService.java,e\f\ef968b9e6560cbd9f9105a9581d98aa90fc64cf2

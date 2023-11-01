@@ -24,7 +24,7 @@ public class WriteDiaryService {
         LocalDateTime startDatetime = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.of(0,0,0));
         LocalDateTime endDatetime = LocalDateTime.of(LocalDate.now(), LocalTime.of(23,59,59));
         List<Diary> alreadyWrittenDiary = diaryRepository.findAllByMemberIdAndCreatedAtBetween(memberId,startDatetime,endDatetime);
-        // 이미 오늘 다이어리를 작성한 사용자인 경우
+        // 이미 같은 날 다이어리를 작성한 사용자인 경우 에러 발생
         if(!alreadyWrittenDiary.isEmpty())
             throw new DiaryAlreadyWrittenException(DiaryErrorCode.ALREADYWRITTEN_DIARY);
         // 작성하지 않은 경우에만 저장
