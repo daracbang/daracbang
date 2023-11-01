@@ -3,7 +3,7 @@ import Head from '../components/Head';
 import styled from "@emotion/styled";
 import MyDarac from "../assets/images/room2.png";
 import Dial from '../components/SpeedDial';
-import { Button, Card, CardContent, FormControlLabel, Paper, Radio, RadioGroup, TextField, Typography } from '@mui/material';
+import { Button, FormControlLabel, Paper, Radio, RadioGroup, TextField, Typography } from '@mui/material';
 
 const Diary: React.FC = () => {
 
