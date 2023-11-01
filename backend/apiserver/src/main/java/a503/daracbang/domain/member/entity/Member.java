@@ -1,12 +1,12 @@
 package a503.daracbang.domain.member.entity;
 
-
 import a503.daracbang.global.entity.BaseTimeEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,4 +19,26 @@ public class Member extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String loginId;
+
+    private String password; // 암호화할 것
+
+    private String nickname;
+
+    private String profileImage; // s3
+
+    private String introduce;
+
+    @Builder
+    public Member(String loginId, String password, String nickname, String profileImage) {
+        this.loginId = loginId;
+        this.password = password;
+        this.nickname = nickname;
+        this.profileImage = profileImage;
+        this.introduce = null;
+    }
+
+    public void updateIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
 }
