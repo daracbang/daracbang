@@ -46,6 +46,9 @@ public class GuestbookController {
     @GetMapping("/{memberId}")
     public ResponseEntity<GuestbookListResponse> reads(@PathVariable("memberId") Long memberId,
                                                        @RequestParam(value = "lastId", required = false) Integer lastId) {
+        if (lastId == null) {
+            lastId = 0;
+        }
         GuestbookListResponse guestbooks = findGuestBookService.getGuestbooks(memberId, lastId);
         return ResponseEntity.ok(guestbooks);
     }
