@@ -5,7 +5,8 @@ import a503.daracbang.global.exception.ErrorCode;
 public enum DiaryErrorCode implements ErrorCode {
 
     NOTFOUND_DIARY("DIARY_001","해당 다이어리를 찾을 수 없습니다.",404),
-    ALREADYWRITTEN_DIARY("DIARY_002","오늘은 이미 다이어리를 작성하셨습니다.",409);
+    ALREADYWRITTEN_DIARY("DIARY_002","오늘은 이미 다이어리를 작성하셨습니다.",409),
+    NOTWRITER_DIARY("DIARY_003","다이어리를 삭제할 권한이 없습니다.",403);
 
     private String errorCode;
     private String message;

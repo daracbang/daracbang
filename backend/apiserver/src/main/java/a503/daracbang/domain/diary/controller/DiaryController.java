@@ -29,7 +29,7 @@ public class DiaryController {
     @PostMapping()
     public ResponseEntity<?> writeDiary(@RequestBody WriteDiaryRequest writeDiaryRequest){
 //      Long memberId = MemberContextHolder.memberIdHolder.get();
-        Long membedId = 1L; // 테스트용
+        Long membedId = 2L; // 테스트용
         writeDiaryService.writeDiary(membedId, writeDiaryRequest);
         return ResponseEntity.ok("다이어리가 작성되었습니다.");
     }
@@ -38,7 +38,7 @@ public class DiaryController {
     @DeleteMapping("/{diaryId}")
     public ResponseEntity<?> deleteDiary(@PathVariable Long diaryId){
         //    Long memberId = MemberContextHolder.memberIdHolder.get();
-        Long memberId = 1L; // 테스트용
+        Long memberId = 2L; // 테스트용
         deleteDiaryService.deleteDiary(memberId, diaryId);
         return ResponseEntity.ok("다이어리가 삭제되었습니다.");
     }
