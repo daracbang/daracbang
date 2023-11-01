@@ -11,8 +11,10 @@ import a503.daracbang.domain.member.entity.Member;
 import a503.daracbang.domain.neighbor.entity.Neighbor;
 
 public interface NeighborRepository extends JpaRepository<Neighbor, Long> {
-	@Query("select n1 from Neighbor n1 join Neighbor n2 on n1.accepter = n2.requester "
-		+ "where n1.requester.id = :memberId and n2.accepter.id = :memberId and n1.isNeighbor = true and n2.isNeighbor = true")
+	@Query("SELECT n1 "
+		+ "FROM Neighbor n1 "
+		+ "JOIN Neighbor n2 ON n1.accepter = n2.requester "
+		+ "WHERE n1.requester.id = :memberId AND n2.accepter.id = :memberId AND n1.isNeighbor = true AND n2.isNeighbor = true")
 	@EntityGraph(attributePaths = {"requester", "accepter"})
 	List<Neighbor> findAllMyNeighbor(@Param("memberId") Long memberId);
 

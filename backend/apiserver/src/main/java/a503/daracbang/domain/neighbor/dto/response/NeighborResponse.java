@@ -1,16 +1,12 @@
 package a503.daracbang.domain.neighbor.dto.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor(staticName = "of")
 public class NeighborResponse {
-	private Long memberId;
-	private String nickname;
-	private String profileImage;
-
-	public static NeighborResponse of(Long memberId, String nickname, String profileImage) {
-		return new NeighborResponse(memberId, nickname, profileImage);
-	}
+	private final Long memberId;
+	private final String nickname;
+	private final String profileImage;
 }
