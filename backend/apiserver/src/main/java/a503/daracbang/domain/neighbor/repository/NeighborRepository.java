@@ -14,9 +14,11 @@ public interface NeighborRepository extends JpaRepository<Neighbor, Long> {
 	@Query("SELECT n1 "
 		+ "FROM Neighbor n1 "
 		+ "JOIN Neighbor n2 ON n1.accepter = n2.requester "
-		+ "WHERE n1.requester.id = :memberId AND n2.accepter.id = :memberId AND n1.isNeighbor = true AND n2.isNeighbor = true")
+		+ "WHERE n1.requester.id = :memberId AND n2.accepter.id = :memberId AND n1.isCon = true AND n2.isCon = true")
 	@EntityGraph(attributePaths = {"requester", "accepter"})
 	List<Neighbor> findAllMyNeighbor(@Param("memberId") Long memberId);
+	@EntityGraph(attributePaths = {"requester", "accepter"})
+	List<Neighbor> findAllByIsConFalseAndRequester(Member requester);
 	Neighbor findByRequesterAndAccepter(Member requester, Member accepter);
 	boolean existsByRequesterAndAccepter(Member requester, Member accepter);
 	void deleteByRequesterAndAccepter(Member requester, Member accepter);

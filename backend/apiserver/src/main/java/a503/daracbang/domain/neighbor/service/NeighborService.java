@@ -1,7 +1,6 @@
 package a503.daracbang.domain.neighbor.service;
 
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,18 @@ public class NeighborService {
 		return new DataListResponse<>(
 			neighborRepository.findAllMyNeighbor(memberId).stream()
 				.map(n -> NeighborResponse.from(n.getAccepter()))
-				.collect(Collectors.toList()));
+				.toList()
+		);
+	}
+
+	@Transactional(readOnly = true)
+	public DataListResponse<NeighborResponse> findNeighborRequestList(Long myId) {
+		Member me = findById(myId);
+		return new DataListResponse<>(
+			neighborRepository.findAllByIsConFalseAndRequester(me).stream()
+				.map(n -> NeighborResponse.from(n.getAccepter()))
+				.toList()
+		);
 	}
 
 	@Transactional
@@ -74,4 +84,5 @@ public class NeighborService {
 		return memberRepository.findById(id)
 			.orElseThrow(() -> new CustomException(MemberErrorCode.NOTFOUND_MEMBER));
 	}
+
 }
