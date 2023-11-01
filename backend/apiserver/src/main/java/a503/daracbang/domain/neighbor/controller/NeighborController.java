@@ -27,6 +27,12 @@ public class NeighborController {
 		return ResponseEntity.ok(neighborService.findNeighborList(myId));
 	}
 
+	@GetMapping("/accepts")
+	public ResponseEntity<DataListResponse<NeighborResponse>> neighborRequestList() {
+		// Long myId = MemberContextHolder.memberIdHolder.get();
+		Long myId = 2L;
+		return ResponseEntity.ok(neighborService.findNeighborRequestList(myId));
+	}
 	@PostMapping("/applications/{memberId}")
 	public ResponseEntity<Void> neighborRequest(@PathVariable("memberId") Long memberId) {
 		// Long myId = MemberContextHolder.memberIdHolder.get();
@@ -39,7 +45,7 @@ public class NeighborController {
 	@PutMapping("/accepts/{memberId}")
 	public ResponseEntity<Void> neighborAccept(@PathVariable("memberId") Long memberId) {
 		// Long myId = MemberContextHolder.memberIdHolder.get();
-		Long myId = 3L;
+		Long myId = 2L;
 		neighborService.acceptNeighbor(myId, memberId);
 
 		return ResponseEntity.ok().build();
