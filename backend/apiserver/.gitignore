@@ -45,3 +45,6 @@ application-*.yml
 ### de db volum
 
 docker-compose/localdb/db*
+
+### REST Docs ###
+src/main/resources/static/docs/
