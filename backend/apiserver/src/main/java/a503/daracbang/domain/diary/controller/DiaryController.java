@@ -28,15 +28,19 @@ public class DiaryController {
     //다이어리 작성
     @PostMapping()
     public ResponseEntity<?> writeDiary(@RequestBody WriteDiaryRequest writeDiaryRequest){
-        writeDiaryService.writeDiary(writeDiaryRequest);
+//      Long memberId = MemberContextHolder.memberIdHolder.get();
+        Long membedId = 1L; // 테스트용
+        writeDiaryService.writeDiary(membedId, writeDiaryRequest);
         return ResponseEntity.ok("다이어리가 작성되었습니다.");
     }
 
     // 다이어리 삭제
     @DeleteMapping("/{diaryId}")
     public ResponseEntity<?> deleteDiary(@PathVariable Long diaryId){
-        deleteDiaryService.deleteDiary(diaryId);
-        return ResponseEntity.ok("");
+        //    Long memberId = MemberContextHolder.memberIdHolder.get();
+        Long memberId = 1L; // 테스트용
+        deleteDiaryService.deleteDiary(memberId, diaryId);
+        return ResponseEntity.ok("다이어리가 삭제되었습니다.");
     }
 
 //    // 다이어리 상세 조회

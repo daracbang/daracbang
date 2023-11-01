@@ -1,0 +1,5 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ñ¼åÐ
+s	java:S116"RRename this field "DiaryId" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æƒ÷£úÿÿÿÿ8¸çÛ¥¸1
+M
+java:S1068"+Remove this unused "DiaryId" private field.(æƒ÷£úÿÿÿÿ8»çÛ¥¸1
