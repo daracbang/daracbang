@@ -5,40 +5,32 @@ import Head from '../components/Head';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-import { Button, Card, CardContent, SpeedDial, SpeedDialAction, SpeedDialIcon, Typography } from '@mui/material';
-import DiaryBook from "../assets/images/book.png";
-import PostIt from "../assets/images/postit.png";
-import Room from "../assets/images/room3.png";
+import { Button, Card, CardContent, Typography } from '@mui/material';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import { Link } from 'react-router-dom';
+import Dial from '../components/SpeedDial';
+import Happy from '../assets/images/happy.png';
+import Think from '../assets/images/thinking.png';
+import Angry from '../assets/images/angry.png';
 
-
-const actions: { icon: React.ReactNode; name: string }[] = [
-    { icon: <img src={Room} alt="Room" style={{ height: "90px", width: "90px" }} />, name: '이웃 다락방' },
-    { icon: <img src={PostIt} alt="Post It" style={{ height: "80px", width: "80px" }} />, name: '방명록' },
-    { icon: <img src={DiaryBook} alt="Diary Book" style={{ height: "80px", width: "80px" }} />, name: '오늘 다이어리 작성' },
-
-];
-
-const actionSize = {
-    width: 50,
-    height: 50,
-    margin: "30px",
-    backgroundColor: 'inherit'
-}
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-    height: 10,
-    borderRadius: 5,
+    height: 15,
+    width: 300,
+    marginLeft: 10,
+    marginBottom: 10,
+    borderRadius: 8,
     [`&.${linearProgressClasses.colorPrimary}`]: {
         backgroundColor: "theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800]",
     },
     [`& .${linearProgressClasses.bar}`]: {
-        borderRadius: 5,
+        borderRadius: 8,
         backgroundColor: "theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8'",
     },
 }));
 
 const Daracbang: React.FC = () => {
+
 
     return (
         <div>
@@ -46,73 +38,75 @@ const Daracbang: React.FC = () => {
             <ContainerWrap style={{ backgroundColor: "#F2EBEB" }}>
                 <SideWrap>
                     <Intro>
-                        <Card>
-                            <Typography>다락방 소개글</Typography>
+                        <Card style={{ height: "80px", marginBottom: "15px", borderRadius: "10px", boxShadow: "3px 3px 5px 1px #bdbdbd" }}>
+                            <Typography style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "20px" }}>다락방 소개글</Typography>
                         </Card>
                     </Intro>
                     <Emotions>
-                        <Card>
-                            <CardContent>
-                                <BorderLinearProgress variant="determinate" value={50} />
-                                <BorderLinearProgress variant="determinate" value={50} />
-                                <BorderLinearProgress variant="determinate" value={50} />
+                        <Card style={{ height: "130px", borderRadius: "10px", boxShadow: "3px 3px 5px 1px #bdbdbd" }}>
+                            <Typography marginBottom={1} style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "20px", marginBottom: 0 }}>나의 감정상태</Typography>
+                            <CardContent style={{ marginLeft: "10px" }}>
+                                <MoodIcon>
+                                    <img src={Happy} alt='happy' style={{ height: "20px", width: "20px", marginRight: "5px" }} />
+                                    <BorderLinearProgress variant="determinate" value={50} style={{ marginTop: "2px" }} />
+                                </MoodIcon>
+                                <MoodIcon>
+                                    <img src={Think} alt='think' style={{ height: "20px", width: "20px", marginRight: "5px" }} />
+                                    <BorderLinearProgress variant="determinate" value={50} style={{ marginTop: "2px" }} />
+                                </MoodIcon>
+                                <MoodIcon>
+                                    <img src={Angry} alt='angry' style={{ height: "20px", width: "20px", marginRight: "5px" }} />
+                                    <BorderLinearProgress variant="determinate" value={50} style={{ marginTop: "2px" }} />
+                                </MoodIcon>
                             </CardContent>
                         </Card>
                     </Emotions>
                     <Calendar>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DateCalendar />
+                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+                            <DateCalendar sx={{ height: "300px" }} />
                         </LocalizationProvider>
                     </Calendar>
                     <SumDiary>
-                        <Card>
-                            <CardContent>오늘의 일기</CardContent>
-                            <Button>더 읽으러 가기</Button>
+                        <Card style={{ height: "100px", borderRadius: "10px", boxShadow: "3px 3px 5px 1px #bdbdbd" }}>
+                            <CardContent style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px" }}>오늘의 일기</CardContent>
+                            <Link to={"/diary"}>
+                                <Button size='small' variant='contained' style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px" }}>더 읽으러 가기</Button>
+                            </Link>
                         </Card>
                     </SumDiary>
                 </SideWrap>
 
 
                 <img src={MyDarac} alt='myDarac' />
+
                 <Navi style={{ transform: 'translateZ(0px)', flexGrow: 1 }}>
-                    <SpeedDial
-                        ariaLabel="SpeedDial basic example"
-                        style={{ position: 'absolute', bottom: 16, right: 16 }}
-                        icon={<SpeedDialIcon />}
-                    >
-                        {actions.map((action) => (
-                            <SpeedDialAction
-                                FabProps={{ size: 'large' }}
-                                key={action.name}
-                                icon={action.icon}
-                                tooltipTitle={action.name}
-                                sx={actionSize}
-                            />
-                        ))}
-                    </SpeedDial>
+                    <Dial />
                 </Navi>
 
             </ContainerWrap>
-        </div>
+        </div >
     );
 };
 
 const ContainerWrap = styled.div`
  display: flex;
  flex-direction: row;
- padding-top: 40px;
- padding-bottom: 40px;
+ padding-top: 17px;
+ padding-bottom: 25px;
  padding-left: 50px;
  padding-right: 50px;
+ 
 `;
 
 const SideWrap = styled.div`
     margin-right: 10%;
     text-align: center;
+    
 `;
 
 const Intro = styled.div`
     width: 400px;
+
 `;
 
 const Emotions = styled.div`
@@ -130,5 +124,11 @@ width: 400px;
 const Navi = styled.div`
 
 `;
+
+const MoodIcon = styled.div`
+    display: flex;
+    flex-direction: "row"
+`;
+
 
 export default Daracbang;
