@@ -1,4 +1,4 @@
-package a503.daracbang.domain.member.dto;
+package a503.daracbang.domain.member.dto.request;
 
 import lombok.Builder;
 import lombok.Getter;

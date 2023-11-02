@@ -1,4 +1,4 @@
-package a503.daracbang.domain.member.dto;
+package a503.daracbang.domain.member.dto.request;
 
 import a503.daracbang.domain.member.entity.Member;
 import jakarta.validation.constraints.NotBlank;

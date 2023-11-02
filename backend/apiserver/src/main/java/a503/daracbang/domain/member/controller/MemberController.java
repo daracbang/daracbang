@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import a503.daracbang.domain.member.dto.IntroduceRequest;
-import a503.daracbang.domain.member.dto.LoginMemberRequest;
-import a503.daracbang.domain.member.dto.LoginMemberResponse;
-import a503.daracbang.domain.member.dto.SignUpMemberRequest;
-import a503.daracbang.domain.member.entity.Member;
+import a503.daracbang.domain.member.dto.request.IntroduceRequest;
+import a503.daracbang.domain.member.dto.request.LoginMemberRequest;
+import a503.daracbang.domain.member.dto.response.LoginMemberResponse;
+import a503.daracbang.domain.member.dto.request.SignUpMemberRequest;
 import a503.daracbang.domain.member.service.CheckDuplicateMemberInfoService;
+import a503.daracbang.domain.member.service.GetMemberInfoService;
 import a503.daracbang.domain.member.service.LoginMemberService;
 import a503.daracbang.domain.member.service.SignUpMemberService;
 import a503.daracbang.domain.member.service.UpdateMemberService;
@@ -34,6 +34,7 @@ public class MemberController {
     private final SignUpMemberService signUpMemberService;
     private final LoginMemberService loginMemberService;
     private final UpdateMemberService updateMemberService;
+    private final GetMemberInfoService getMemberInfoService;
 
     @PostMapping
     public ResponseEntity<?> signUp(@RequestBody @Valid SignUpMemberRequest signUpMemberRequest) {
@@ -41,20 +42,20 @@ public class MemberController {
         return ResponseEntity.status(201).body("회원가입이 완료되었습니다.");
     }
 
-    @GetMapping("/login-id")
+    @GetMapping("/login-id/{loginId}")
     public ResponseEntity<?> checkDuplicateLoginId(@PathVariable String loginId) {
         checkDuplicateMemberInfoService.checkDuplicateLoginId(loginId);
         return ResponseEntity.status(200).body("사용 가능한 ID입니다.");
     }
 
-    @GetMapping("/nickname")
+    @GetMapping("/nickname/{nickname}")
     public ResponseEntity<?> checkDuplicateNickname(@PathVariable String nickname) {
         checkDuplicateMemberInfoService.checkDuplicateNickname(nickname);
         return ResponseEntity.status(200).body("사용 가능한 닉네임입니다.");
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(LoginMemberRequest loginMemberRequest) {
+    public ResponseEntity<?> login(@RequestBody LoginMemberRequest loginMemberRequest) {
         String jwt = loginMemberService.login(loginMemberRequest.getLoginId(), loginMemberRequest.getPassword());
         return ResponseEntity.ok(new LoginMemberResponse(jwt));
     }
@@ -70,8 +71,6 @@ public class MemberController {
     @GetMapping("/info")
     public ResponseEntity<?> getMemberInfo() {
         Long id = MemberContextHolder.memberIdHolder.get();
-        return ResponseEntity.status(200)
-            .body("성공");
+        return ResponseEntity.ok(getMemberInfoService.getMemberInfo(id));
     }
-
 }
