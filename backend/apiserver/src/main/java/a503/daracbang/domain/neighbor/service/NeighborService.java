@@ -41,6 +41,14 @@ public class NeighborService {
 		);
 	}
 
+	@Transactional(readOnly = true)
+	public DataListResponse<NeighborResponse> findMemberList(String nickname) {
+		return new DataListResponse<>(
+			memberRepository.findAllByNicknameContaining(nickname).stream()
+				.map(NeighborResponse::from)
+				.toList()
+		);
+	}
 	@Transactional
 	public void requestNeighbor(Long myId, Long memberId) {
 		Member me = findById(myId);
@@ -55,6 +63,7 @@ public class NeighborService {
 		neighborRepository.save(Neighbor.builder().requester(me).accepter(you).isRequest(true).build());
 		neighborRepository.save(Neighbor.builder().requester(you).accepter(me).isRequest(false).build());
 	}
+
 
 	@Transactional
 	public void removeNeighbor(Long myId, Long memberId) {
