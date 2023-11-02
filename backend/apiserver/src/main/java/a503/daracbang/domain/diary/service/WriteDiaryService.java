@@ -7,6 +7,7 @@ import a503.daracbang.domain.diary.exception.DiaryErrorCode;
 import a503.daracbang.domain.diary.repository.DiaryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,15 +16,16 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class WriteDiaryService {
 
     private final DiaryRepository diaryRepository;
 
-    private final OneDayOneWritePolicy oneDayOneWritePolicy;
+    private final DiaryTimePolicy diaryTimePolicy;
 
     public void writeDiary(Long memberId, WriteDiaryRequest writeDiaryRequest) {
         // 사용자가 오늘 다이어리를 작성했는지 검증
-        if(!oneDayOneWritePolicy.verify(memberId, LocalDate.now()))
+        if(!diaryTimePolicy.verify(memberId, LocalDate.now()))
             throw new DiaryAlreadyWrittenException(DiaryErrorCode.ALREADYWRITTEN_DIARY);
         // 작성하지 않은 경우에만 저장
         Diary diary = writeDiaryRequest.toEntity(memberId);

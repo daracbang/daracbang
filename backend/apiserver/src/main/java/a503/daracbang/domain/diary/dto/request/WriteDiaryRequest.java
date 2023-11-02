@@ -3,13 +3,18 @@ package a503.daracbang.domain.diary.dto.request;
 
 import a503.daracbang.domain.diary.entity.Diary;
 import a503.daracbang.domain.diary.entity.Scope;
-import a503.daracbang.domain.member.entity.Member;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class WriteDiaryRequest {
+
+    @NotBlank
+    @Size(min=50, max=1000)
     private String content;
+
     private Scope scope;
 
     @Builder

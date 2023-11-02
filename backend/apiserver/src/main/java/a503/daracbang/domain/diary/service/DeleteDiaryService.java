@@ -8,12 +8,14 @@ import a503.daracbang.domain.diary.repository.DiaryRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.NotFound;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class DeleteDiaryService {
     private final DiaryRepository diaryRepository;
 
