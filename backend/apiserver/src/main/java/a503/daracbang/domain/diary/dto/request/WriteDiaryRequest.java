@@ -12,9 +12,6 @@ public class WriteDiaryRequest {
     private String content;
     private Scope scope;
 
-    public WriteDiaryRequest() {
-    }
-
     @Builder
     public WriteDiaryRequest(String content, Scope scope){
         this.content = content;
@@ -29,4 +26,8 @@ public class WriteDiaryRequest {
                 .memberId(memberId)
                 .build();
     }
+
+    public WriteDiaryRequest() {
+    }
+
 }
