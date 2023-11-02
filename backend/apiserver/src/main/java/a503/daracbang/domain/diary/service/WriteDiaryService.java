@@ -19,18 +19,15 @@ public class WriteDiaryService {
 
     private final DiaryRepository diaryRepository;
 
+    private final OneDayOneWritePolicy oneDayOneWritePolicy;
+
     public void writeDiary(Long memberId, WriteDiaryRequest writeDiaryRequest) {
-        // todo : 감정 분석
-        LocalDateTime startDatetime = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.of(0,0,0));
-        LocalDateTime endDatetime = LocalDateTime.of(LocalDate.now(), LocalTime.of(23,59,59));
-        List<Diary> alreadyWrittenDiary = diaryRepository.findAllByMemberIdAndCreatedAtBetween(memberId,startDatetime,endDatetime);
-        // 이미 같은 날 다이어리를 작성한 사용자인 경우 에러 발생
-        if(!alreadyWrittenDiary.isEmpty())
+        // 사용자가 오늘 다이어리를 작성했는지 검증
+        if(!oneDayOneWritePolicy.verify(memberId, LocalDate.now()))
             throw new DiaryAlreadyWrittenException(DiaryErrorCode.ALREADYWRITTEN_DIARY);
         // 작성하지 않은 경우에만 저장
-        else{
-            Diary diary = writeDiaryRequest.toEntity(memberId);
-            diaryRepository.save(diary);
-        }
+        Diary diary = writeDiaryRequest.toEntity(memberId);
+        diaryRepository.save(diary);
+        // todo : 감정 분석
     }
 }

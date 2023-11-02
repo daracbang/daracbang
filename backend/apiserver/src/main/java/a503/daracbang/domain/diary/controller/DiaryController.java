@@ -36,9 +36,9 @@ public class DiaryController {
 
     // 다이어리 삭제
     @DeleteMapping("/{diaryId}")
-    public ResponseEntity<?> deleteDiary(@PathVariable Long diaryId){
+    public ResponseEntity<?> deleteDiary(@PathVariable long diaryId){
         //    Long memberId = MemberContextHolder.memberIdHolder.get();
-        Long memberId = 2L; // 테스트용
+        long memberId = 2L; // 테스트용
         deleteDiaryService.deleteDiary(memberId, diaryId);
         return ResponseEntity.ok("다이어리가 삭제되었습니다.");
     }
