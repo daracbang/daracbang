@@ -30,7 +30,7 @@ public class Neighbor {
 	LocalDateTime acceptedAt;
 
 	@Column(nullable = false)
-	boolean isNeighbor;
+	boolean isCon;
 
 	@ManyToOne
 	@JoinColumn(name = "requester_id")
@@ -45,11 +45,11 @@ public class Neighbor {
 		this.requester = requester;
 		this.accepter = accepter;
 		this.requestedAt = LocalDateTime.now();
-		this.isNeighbor = isRequest;
+		this.isCon = isRequest;
 	}
 
 	public LocalDateTime acceptNeighbor() {
-		this.isNeighbor = true;
+		this.isCon = true;
 		this.acceptedAt = LocalDateTime.now();
 
 		return acceptedAt;
