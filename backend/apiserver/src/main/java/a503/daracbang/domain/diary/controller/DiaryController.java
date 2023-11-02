@@ -3,12 +3,15 @@ package a503.daracbang.domain.diary.controller;
 import a503.daracbang.domain.diary.dto.request.WriteDiaryRequest;
 import a503.daracbang.domain.diary.dto.response.DiaryListResponse;
 import a503.daracbang.domain.diary.dto.response.DiaryResponse;
+import a503.daracbang.domain.diary.exception.DiaryErrorCode;
+import a503.daracbang.domain.diary.exception.ScopeNotExistsException;
 import a503.daracbang.domain.diary.service.DeleteDiaryService;
 import a503.daracbang.domain.diary.service.FindDiaryService;
 import a503.daracbang.domain.diary.service.WriteDiaryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 

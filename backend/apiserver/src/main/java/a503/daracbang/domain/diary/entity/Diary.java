@@ -44,5 +44,5 @@ public class Diary extends BaseTimeEntity {
         this.memberId = memberId;
         this.sentiment = null;
     }
-    g
+
 }

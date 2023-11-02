@@ -3,6 +3,7 @@ package a503.daracbang.domain.diary.dto.request;
 
 import a503.daracbang.domain.diary.entity.Diary;
 import a503.daracbang.domain.diary.entity.Scope;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
