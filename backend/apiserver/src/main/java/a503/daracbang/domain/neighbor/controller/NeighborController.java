@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import a503.daracbang.domain.neighbor.dto.response.NeighborResponse;
@@ -32,6 +33,11 @@ public class NeighborController {
 		// Long myId = MemberContextHolder.memberIdHolder.get();
 		Long myId = 2L;
 		return ResponseEntity.ok(neighborService.findNeighborRequestList(myId));
+	}
+
+	@GetMapping("/search")
+	public ResponseEntity<DataListResponse<NeighborResponse>> memberList(@RequestParam("nickname") String nickname) {
+		return ResponseEntity.ok(neighborService.findMemberList(nickname));
 	}
 	@PostMapping("/applications/{memberId}")
 	public ResponseEntity<Void> neighborRequest(@PathVariable("memberId") Long memberId) {
