@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,9 @@ public class Diary extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
+    private List<Comment> comments =new ArrayList<>(); // 댓글
+
     @Column(nullable = false)
     private Long memberId;
 
@@ -29,9 +33,6 @@ public class Diary extends BaseTimeEntity {
 
     @Column(columnDefinition = "TEXT", length = 1000, nullable = false)
     private String content; // 내용
-
-    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
-    private List<Comment> comments =new ArrayList<>(); // 댓글
 
     @Embedded
     private Sentiment sentiment; // 다이어리 감정 분석
@@ -43,5 +44,5 @@ public class Diary extends BaseTimeEntity {
         this.memberId = memberId;
         this.sentiment = null;
     }
-
+    g
 }

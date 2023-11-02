@@ -24,10 +24,8 @@ public class WriteDiaryService {
     private final DiaryTimePolicy diaryTimePolicy;
 
     public void writeDiary(Long memberId, WriteDiaryRequest writeDiaryRequest) {
-        // 사용자가 오늘 다이어리를 작성했는지 검증
         if(!diaryTimePolicy.verify(memberId, LocalDate.now()))
             throw new DiaryAlreadyWrittenException(DiaryErrorCode.ALREADYWRITTEN_DIARY);
-        // 작성하지 않은 경우에만 저장
         Diary diary = writeDiaryRequest.toEntity(memberId);
         diaryRepository.save(diary);
         // todo : 감정 분석

@@ -26,7 +26,6 @@ public class DiaryController {
         return ResponseEntity.ok("테스트 성공");
     }
 
-    //다이어리 작성
     @PostMapping()
     public ResponseEntity<?> writeDiary(@RequestBody @Valid WriteDiaryRequest writeDiaryRequest){
 //      Long memberId = MemberContextHolder.memberIdHolder.get();
@@ -35,7 +34,6 @@ public class DiaryController {
         return ResponseEntity.ok("다이어리가 작성되었습니다.");
     }
 
-    // 다이어리 삭제
     @DeleteMapping("/{diaryId}")
     public ResponseEntity<?> deleteDiary(@PathVariable long diaryId){
         //    Long memberId = MemberContextHolder.memberIdHolder.get();
@@ -44,21 +42,20 @@ public class DiaryController {
         return ResponseEntity.ok("다이어리가 삭제되었습니다.");
     }
 
-//    // 다이어리 상세 조회
 //    @GetMapping("/{diaryId}")
 //    public ResponseEntity<?> getDiary(@PathVariable Long diaryId){
 //        DiaryResponse diaryResponse = findDiaryService.getDiary(diaryId);
 //        return ResponseEntity.ok(diaryResponse);
 //    }
 //
-//    // 전체 다이어리 조회
+
 //    @GetMapping("/list/{memberId}")
 //    public ResponseEntity<?> getDiaryList(@PathVariable Long memberId){
 //        DiaryListResponse diaryListResponse = findDiaryService.getDiaryList(memberId);
 //        return ResponseEntity.ok(diaryListResponse);
 //    }
 //
-//    // 무드 트래커 조회
+
 //    @GetMapping("/mood-tracker/{memberId}")
 //    public ResponseEntity<?> getMoodTracker(@PathVariable Long memberId, @RequestParam("year") int year, @RequestParam("month") int month){
 //        DiaryListResponse diaryListResponse = findDiaryService.getMoodTracker(memberId, month, year);

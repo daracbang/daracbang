@@ -21,10 +21,8 @@ public class DeleteDiaryService {
 
     public void deleteDiary(long memberId, long diaryId) {
         Diary diary = diaryRepository.findById(diaryId)
-                // 삭제 요청받은 다이어리가 존재하지 않는 경우
                 .orElseThrow(() -> new DiaryNotFoundException(DiaryErrorCode.NOTFOUND_DIARY));
         long diaryMemberId = diary.getMemberId();
-        // 삭제를 요청한 멤버 아이디와 다이어리의 멤버 아이디가 다른 경우
         if(diaryMemberId!= memberId)
             throw new DiaryNotWriterException(DiaryErrorCode.NOTWRITER_DIARY);
         diaryRepository.delete(diary);
