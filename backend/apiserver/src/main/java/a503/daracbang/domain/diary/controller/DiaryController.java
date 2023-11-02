@@ -6,6 +6,7 @@ import a503.daracbang.domain.diary.dto.response.DiaryResponse;
 import a503.daracbang.domain.diary.service.DeleteDiaryService;
 import a503.daracbang.domain.diary.service.FindDiaryService;
 import a503.daracbang.domain.diary.service.WriteDiaryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class DiaryController {
 
     //다이어리 작성
     @PostMapping()
-    public ResponseEntity<?> writeDiary(@RequestBody WriteDiaryRequest writeDiaryRequest){
+    public ResponseEntity<?> writeDiary(@RequestBody @Valid WriteDiaryRequest writeDiaryRequest){
 //      Long memberId = MemberContextHolder.memberIdHolder.get();
         Long membedId = 2L; // 테스트용
         writeDiaryService.writeDiary(membedId, writeDiaryRequest);
