@@ -2,9 +2,6 @@ import React from 'react';
 import styled from "@emotion/styled";
 import MyDarac from "../assets/images/room2.png";
 import Head from '../components/Head';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { Button, Card, CardContent, Typography } from '@mui/material';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { Link } from 'react-router-dom';
@@ -12,6 +9,7 @@ import Dial from '../components/SpeedDial';
 import Happy from '../assets/images/happy.png';
 import Think from '../assets/images/thinking.png';
 import Angry from '../assets/images/angry.png';
+import MoodTracker from '../components/MoodTracker';
 
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -61,11 +59,7 @@ const Daracbang: React.FC = () => {
                             </CardContent>
                         </Card>
                     </Emotions>
-                    <Calendar>
-                        <LocalizationProvider dateAdapter={AdapterDayjs} >
-                            <DateCalendar sx={{ height: "300px" }} />
-                        </LocalizationProvider>
-                    </Calendar>
+                    <MoodTracker />
                     <SumDiary>
                         <Card style={{ height: "100px", borderRadius: "10px", boxShadow: "3px 3px 5px 1px #bdbdbd" }}>
                             <CardContent style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px" }}>오늘의 일기</CardContent>
@@ -110,10 +104,6 @@ const Intro = styled.div`
 `;
 
 const Emotions = styled.div`
-width: 400px;
-`;
-
-const Calendar = styled.div`
 width: 400px;
 `;
 
