@@ -1,6 +1,8 @@
 package a503.daracbang.domain.diary.dto.request;
 
 
+import a503.daracbang.domain.diary.controller.DiaryLengthCheck;
+import a503.daracbang.domain.diary.controller.ValidEnum;
 import a503.daracbang.domain.diary.entity.Diary;
 import a503.daracbang.domain.diary.entity.Scope;
 import jakarta.validation.Valid;
@@ -12,10 +14,10 @@ import lombok.Getter;
 @Getter
 public class WriteDiaryRequest {
 
-    @NotBlank
-    @Size(min=50, max=1000)
+    @DiaryLengthCheck
     private String content;
 
+    @ValidEnum(enumClass = Scope.class)
     private Scope scope;
 
     @Builder
