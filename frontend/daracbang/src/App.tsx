@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
 import Main from "./pages/Main";
-import Member from "./pages/Member";
 import Daracbang from "./pages/Daracbang";
 import Diary from "./pages/Diary";
 import DiaryWrite from "./pages/DiaryWrite";
@@ -16,12 +15,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />}></Route>
-        <Route path="/members" element={<Member />}></Route>
         <Route path="/daracbang" element={<Daracbang />}></Route>
         <Route path="/diary" element={<Diary />}></Route>
         <Route path="/diary-write" element={<DiaryWrite />}></Route>
-        <Route path="/neighbors" element={<Neighbor />}></Route>
-        <Route path="/guestbooks" element={<Guestbook />}></Route>
+        <Route path="/neighbor" element={<Neighbor />}></Route>
+        <Route path="/guestbook" element={<Guestbook />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
       </Routes>
     </BrowserRouter>
