@@ -29,7 +29,6 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 const Daracbang: React.FC = () => {
 
-
     return (
         <div>
             <Head />
@@ -100,7 +99,6 @@ const SideWrap = styled.div`
 
 const Intro = styled.div`
     width: 400px;
-
 `;
 
 const Emotions = styled.div`
