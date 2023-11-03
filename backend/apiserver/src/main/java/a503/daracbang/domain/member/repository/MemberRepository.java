@@ -1,9 +1,10 @@
 package a503.daracbang.domain.member.repository;
 
-import java.util.Optional;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import a503.daracbang.domain.member.entity.Member;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberRepository extends JpaRepository<Member,Long> {
 
@@ -11,4 +12,5 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
 	boolean existsByNickname(String nickname);
 
 	Optional<Member> findByLoginId(String loginId);
+	List<Member> findAllByNicknameContaining(String nickname);
 }
