@@ -40,6 +40,7 @@ out/
 
 ### property file
 application-*.yml
+application-*.properties
 
 
 ### de db volum
