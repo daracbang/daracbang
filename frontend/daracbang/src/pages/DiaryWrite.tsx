@@ -3,11 +3,17 @@ import Head from '../components/Head';
 import styled from "@emotion/styled";
 import MyDarac from "../assets/images/room2.png";
 import Dial from '../components/SpeedDial';
-import { Button, FormControlLabel, Paper, Radio, RadioGroup, TextField, Typography } from '@mui/material';
+import { Button, FormControlLabel, Paper, Radio, RadioGroup, TextField, ThemeProvider, Typography, createTheme } from '@mui/material';
 import { Link } from 'react-router-dom';
 
+const Diary: React.FC = () => {
+    const contentLeng = 1000;
 
-const Guestbook = () => {
+    const theme = createTheme({
+        typography: {
+            fontFamily: "KyoboHand"
+        },
+    });
 
     return (
         <div>
@@ -28,13 +34,15 @@ const Guestbook = () => {
                             <FormControlLabel value="male" control={<Radio />} label="친구만공개" style={{ marginRight: "80px" }} sx={{ '.MuiFormControlLabel-label': { fontFamily: "omyu_pretty", fontSize: "20px" } }} />
                             <FormControlLabel value="other" control={<Radio />} label="나만보기" sx={{ '.MuiFormControlLabel-label': { fontFamily: "omyu_pretty", fontSize: "20px" } }} />
                         </RadioGroup>
+                        <ThemeProvider theme={theme}>
+                            <TextField variant="outlined" multiline
+                                rows={10} inputProps={{ maxLength: 1000 }} style={{ width: "600px", height: "100px", marginLeft: "50px", marginTop: "30px", fontFamily: "KyoboHand" }}>
 
-                        <TextField variant="outlined" multiline
-                            rows={10} inputProps={{ maxLength: 1000 }} style={{ width: "600px", height: "100px", marginLeft: "50px", marginTop: "30px" }}>
+                                일기작성
 
-                            일기작성
-
-                        </TextField>
+                            </TextField>
+                        </ThemeProvider>
+                        <Typography style={{ marginTop: "135px", marginLeft: "590px" }} sx={{ fontFamily: "omyu_pretty" }}>0/{contentLeng}</Typography>
                         <Typography style={{ marginTop: "10px", marginLeft: "55px" }} sx={{ fontFamily: "omyu_pretty", color: "#B22727" }}>* 감정분석을 위해 최소 50자 이상 작성해야 등록이 가능합니다</Typography>
 
 
@@ -51,7 +59,8 @@ const Guestbook = () => {
                     <Dial />
                 </Navi>
             </ContainerWrap>
-        </div>
+        </div >
+
     );
 };
 
@@ -73,4 +82,4 @@ const ContentWrap = styled.div`
     
 `;
 
-export default Guestbook;
+export default Diary;
