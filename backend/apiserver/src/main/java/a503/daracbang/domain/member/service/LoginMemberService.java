@@ -22,17 +22,13 @@ public class LoginMemberService {
 	private final JwtUtil jwtUtil;
 
 	public String login(String loginId, String password) {
-		Member member = memberRepository.findByLoginId(loginId)
-			.orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
+		 Member member = memberRepository.findByLoginId(loginId)
+		 	.orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
 
-		if (!encodePassword(member.getPassword()).equals(password)) {
-			throw new CustomException(MemberErrorCode.INCORRECT_PASSWORD);
-		}
+		 if (!BCrypt.checkpw(password, member.getPassword())) {
+			 throw new CustomException(MemberErrorCode.INCORRECT_PASSWORD);
+		 }
 
 		return jwtUtil.generateJwt(member.getId());
-	}
-
-	private String encodePassword(String password) {
-		return BCrypt.hashpw(password, BCrypt.gensalt());
 	}
 }
