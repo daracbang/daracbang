@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Arrow from "../assets/images/arrow.png";
 import room1 from "../assets/images/room2.png"
 
-const Main = () => {
+const Main: React.FC = () => {
 
     return (
         <div>
