@@ -2,6 +2,7 @@ package a503.daracbang.domain.member.service;
 
 import java.util.Optional;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +25,14 @@ public class LoginMemberService {
 		Member member = memberRepository.findByLoginId(loginId)
 			.orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
 
-		if (!member.getPassword().equals(password)) {
+		if (!encodePassword(member.getPassword()).equals(password)) {
 			throw new CustomException(MemberErrorCode.INCORRECT_PASSWORD);
 		}
 
 		return jwtUtil.generateJwt(member.getId());
+	}
+
+	private String encodePassword(String password) {
+		return BCrypt.hashpw(password, BCrypt.gensalt());
 	}
 }
