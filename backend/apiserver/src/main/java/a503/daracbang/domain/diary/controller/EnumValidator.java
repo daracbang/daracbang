@@ -25,8 +25,6 @@ public class EnumValidator implements ConstraintValidator<ValidEnum, Enum> {
                 }
             }
         }
-        if(!result)
-            throw new ScopeNotExistsException(DiaryErrorCode.SCOPENOTEXISTS_DIARY);
         return result;
     }
 }

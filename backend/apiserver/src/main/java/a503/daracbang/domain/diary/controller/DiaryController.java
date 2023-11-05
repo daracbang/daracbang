@@ -8,6 +8,7 @@ import a503.daracbang.domain.diary.exception.ScopeNotExistsException;
 import a503.daracbang.domain.diary.service.DeleteDiaryService;
 import a503.daracbang.domain.diary.service.FindDiaryService;
 import a503.daracbang.domain.diary.service.WriteDiaryService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class DiaryController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> writeDiary(@RequestBody @Valid WriteDiaryRequest writeDiaryRequest){
+    public ResponseEntity<?> writeDiary(@RequestBody @Valid WriteDiaryRequest writeDiaryRequest) throws JsonProcessingException {
 //      Long memberId = MemberContextHolder.memberIdHolder.get();
         Long membedId = 2L; // 테스트용
         writeDiaryService.writeDiary(membedId, writeDiaryRequest);
