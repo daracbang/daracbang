@@ -1,6 +1,7 @@
 package a503.daracbang.domain.diary.entity;
 
 import a503.daracbang.domain.comment.entity.Comment;
+import a503.daracbang.domain.diary.dto.response.SentimentResponse;
 import a503.daracbang.domain.member.entity.Member;
 import a503.daracbang.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -43,6 +44,10 @@ public class Diary extends BaseTimeEntity {
         this.content = content;
         this.memberId = memberId;
         this.sentiment = null;
+    }
+
+    public void addSentiment(SentimentResponse response){
+        this.sentiment = new Sentiment(response);
     }
 
 }
