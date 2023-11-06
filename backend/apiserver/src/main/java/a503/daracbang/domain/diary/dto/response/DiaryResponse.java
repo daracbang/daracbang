@@ -2,19 +2,20 @@ package a503.daracbang.domain.diary.dto.response;
 
 
 import a503.daracbang.domain.diary.entity.Diary;
-import a503.daracbang.domain.member.entity.Member;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import a503.daracbang.domain.diary.entity.Scope;
+import lombok.*;
 
-import javax.swing.border.EmptyBorder;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class DiaryResponse {
 
     private Long id;
+    private Scope scope;
+    private String createdAt;
     private String content;
     private String sentimentResult; // 감정 분석 결과
     private String positiveProbability;
@@ -22,8 +23,11 @@ public class DiaryResponse {
     private String negativeProbability;
 
     @Builder
-    private DiaryResponse(Diary entity){
+    public DiaryResponse(Diary entity){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         this.id = entity.getId();
+        this.scope = entity.getScope();
+        this.createdAt = entity.getCreatedAt().format(formatter);
         this.content = entity.getContent();
         this.sentimentResult = entity.getSentiment().getSentimentResult();
         this.positiveProbability = entity.getSentiment().getPositiveProbability();

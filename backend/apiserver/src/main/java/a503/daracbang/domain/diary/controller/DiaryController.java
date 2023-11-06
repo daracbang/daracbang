@@ -3,6 +3,7 @@ package a503.daracbang.domain.diary.controller;
 import a503.daracbang.domain.diary.dto.request.WriteDiaryRequest;
 import a503.daracbang.domain.diary.dto.response.DiaryListResponse;
 import a503.daracbang.domain.diary.dto.response.DiaryResponse;
+import a503.daracbang.domain.diary.dto.response.MoodTrackerListResponse;
 import a503.daracbang.domain.diary.exception.DiaryErrorCode;
 import a503.daracbang.domain.diary.exception.ScopeNotExistsException;
 import a503.daracbang.domain.diary.service.DeleteDiaryService;
@@ -46,23 +47,29 @@ public class DiaryController {
         return ResponseEntity.ok("다이어리가 삭제되었습니다.");
     }
 
-//    @GetMapping("/{diaryId}")
-//    public ResponseEntity<?> getDiary(@PathVariable Long diaryId){
-//        DiaryResponse diaryResponse = findDiaryService.getDiary(diaryId);
-//        return ResponseEntity.ok(diaryResponse);
-//    }
-//
+    @GetMapping("/{diaryId}")
+    public ResponseEntity<?> getDiary(@PathVariable Long diaryId){
+        //  Long requesterId = MemberContextHolder.memberIdHolder.get();
+        Long requesterId = 2L; // 다이어리 조회 요청자 ID (테스트용)
+        DiaryResponse diaryResponse = findDiaryService.getDiary(requesterId, diaryId);
+        return ResponseEntity.ok(diaryResponse);
+    }
 
-//    @GetMapping("/list/{memberId}")
-//    public ResponseEntity<?> getDiaryList(@PathVariable Long memberId){
-//        DiaryListResponse diaryListResponse = findDiaryService.getDiaryList(memberId);
-//        return ResponseEntity.ok(diaryListResponse);
-//    }
-//
 
-//    @GetMapping("/mood-tracker/{memberId}")
-//    public ResponseEntity<?> getMoodTracker(@PathVariable Long memberId, @RequestParam("year") int year, @RequestParam("month") int month){
-//        DiaryListResponse diaryListResponse = findDiaryService.getMoodTracker(memberId, month, year);
-//        return ResponseEntity.ok(diaryListResponse);
-//    }
+    @GetMapping("/list/{memberId}")
+    public ResponseEntity<?> getDiaryList(@PathVariable Long memberId){
+        //  Long requesterId = MemberContextHolder.memberIdHolder.get();
+        Long requesterId = 2L; // // 다이어리 리스트 조회 요청자 ID (테스트용)
+        DiaryListResponse diaryListResponse = findDiaryService.getDiaryList(requesterId, memberId);
+        return ResponseEntity.ok(diaryListResponse);
+    }
+
+
+    @GetMapping("/mood-tracker/{memberId}")
+    public ResponseEntity<?> getMoodTracker(@PathVariable Long memberId, @RequestParam("year") int year, @RequestParam("month") int month){
+        //  Long requesterId = MemberContextHolder.memberIdHolder.get();
+        Long requesterId = 2L; // // 무드트래커 조회 요청자 ID (테스트용)
+        MoodTrackerListResponse moodTrackerListResponse = findDiaryService.getMoodTracker(requesterId, memberId, year, month);
+        return ResponseEntity.ok(moodTrackerListResponse);
+    }
 }
