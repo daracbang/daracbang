@@ -23,9 +23,6 @@ public class Diary extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
-    private List<Comment> comments =new ArrayList<>(); // 댓글
-
     @Column(nullable = false)
     private Long memberId;
 
