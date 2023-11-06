@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress-test
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: svc-echo-1
+                port:
+                  number: 9000
+          - path: /v2
+            pathType: Prefix
+            backend:
+              service:
+                name: svc-echo-2
+                port:
+                  number: 9001
