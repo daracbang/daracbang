@@ -23,8 +23,8 @@ public class WriteDiaryService {
     private final AnalysisSentimentService analysisSentimentService;
 
     public void writeDiary(Long memberId, WriteDiaryRequest writeDiaryRequest) throws JsonProcessingException {
-//        if(!diaryTimePolicy.verify(memberId, LocalDate.now()))
-//            throw new DiaryAlreadyWrittenException(DiaryErrorCode.ALREADYWRITTEN_DIARY);
+        if(!diaryTimePolicy.verify(memberId, LocalDate.now()))
+            throw new DiaryAlreadyWrittenException(DiaryErrorCode.ALREADYWRITTEN_DIARY);
         Diary diary = writeDiaryRequest.toEntity(memberId);
         diaryRepository.save(diary);
         SentimentResponse sentimentResponse = analysisSentimentService.requestCLOVA(diary);

@@ -31,16 +31,12 @@ public class FindDiaryService {
 
     public DiaryListResponse getDiaryList(Long requesterId, Long memberId) {
         List<Diary> diaryList = diaryRepository.findAllByMemberId(memberId);
-        if(diaryList.isEmpty())
-            throw new DiaryNotFoundException(DiaryErrorCode.NOTFOUND_DIARY);
         // todo: 다이어리 공개범위와 사용자 이웃여부 비교해서, 이웃공개나 비공개 처리하기
         return new DiaryListResponse(diaryList);
     }
 
     public MoodTrackerListResponse getMoodTracker(Long requesterId, Long memberId, int year, int month) {
         List<Diary> diaryList = diaryRepository.findByMemberIdAndCreatedAtYearAndMonth(memberId, year, month);
-        if(diaryList.isEmpty())
-            throw new MoodTrackerNotFoundException(DiaryErrorCode.NOTFOUND_MOODTRACKER);
         // todo: 다이어리 공개범위와 사용자 이웃여부 비교해서, 이웃공개나 비공개 처리하기
         return new MoodTrackerListResponse(diaryList);
     }
