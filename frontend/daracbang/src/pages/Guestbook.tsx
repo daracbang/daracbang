@@ -3,50 +3,46 @@ import Head from '../components/Head';
 import styled from "@emotion/styled";
 import MyDarac from "../assets/images/room2.png";
 import Dial from '../components/SpeedDial';
-import { Button, FormControlLabel, Paper, Radio, RadioGroup, TextField, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import NeighPost from '../components/NeighPost';
+import { Button, Card, TextField, ThemeProvider, Typography, createTheme } from '@mui/material';
+import Sun from '../assets/images/sun.png';
 
 
 const Guestbook = () => {
+
+    const theme = createTheme({
+        typography: {
+            fontFamily: "KyoboHand"
+        },
+    });
 
     return (
         <div>
             <Head />
             <ContainerWrap style={{ backgroundColor: "#F2EBEB" }}>
-                <img src={MyDarac} alt='myDarac' style={{ marginLeft: "50px", height: "300px", marginTop: "260px" }} />
+                <img src={MyDarac} alt='myDarac' style={{ marginLeft: "80px", height: "300px", marginTop: "300px" }} />
 
                 <ContentWrap>
-                    <Paper style={{ height: "530px", borderRadius: "10px", boxShadow: "3px 3px 5px 1px #bdbdbd" }}>
-                        <Typography style={{ marginLeft: "50px", paddingTop: "30px", fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "30px" }}>공개범위</Typography>
-                        <RadioGroup
-                            row
-                            aria-labelledby="demo-row-radio-buttons-group-label"
-                            name="row-radio-buttons-group"
-                            style={{ display: "flex", justifyContent: "center", marginTop: "15px" }}
-                        >
-                            <FormControlLabel value="female" control={<Radio />} label="전체공개" style={{ marginRight: "80px" }} sx={{ '.MuiFormControlLabel-label': { fontFamily: "omyu_pretty", fontSize: "20px" } }} />
-                            <FormControlLabel value="male" control={<Radio />} label="친구만공개" style={{ marginRight: "80px" }} sx={{ '.MuiFormControlLabel-label': { fontFamily: "omyu_pretty", fontSize: "20px" } }} />
-                            <FormControlLabel value="other" control={<Radio />} label="나만보기" sx={{ '.MuiFormControlLabel-label': { fontFamily: "omyu_pretty", fontSize: "20px" } }} />
-                        </RadioGroup>
+                    <Card style={{ height: "480px", width: "700px", backgroundColor: "rgba( 255, 255, 255, 0.3 )", marginLeft: "130px" }} >
+                        <NeighPost />
+                        <NeighPost />
+                        <NeighPost />
+                    </Card>
 
-                        <TextField variant="outlined" multiline
-                            rows={10} inputProps={{ maxLength: 1000 }} style={{ width: "600px", height: "100px", marginLeft: "50px", marginTop: "30px" }}>
+                    <Card style={{ height: "135px", width: "700px", marginLeft: "130px", marginTop: "10px" }}>
+                        <NeighInfo style={{ display: "flex", flexDirection: "row", marginTop: "10px" }}>
+                            <img src={Sun} alt='sun' style={{ height: "20px", marginLeft: "10px" }} />
+                            <Typography style={{ fontFamily: "omyu_pretty", fontWeight: "bold", marginLeft: "10px" }}>김싸피</Typography>
+                            <Typography style={{ height: "20px", marginLeft: "550px", fontFamily: "omyu_pretty", fontWeight: "bold" }} >2023.11.03</Typography>
+                        </NeighInfo>
+                        <ThemeProvider theme={theme}>
+                            <TextField style={{ fontFamily: "KyoboHand", width: "650px", marginLeft: "25px", marginTop: "10px" }}>안녕~!</TextField>
+                        </ThemeProvider>
 
-                            일기작성
+                        <Button variant='outlined' style={{ fontFamily: "omyu_pretty", marginLeft: "580px", marginTop: "5px", height: "25px" }}>방명록남기기</Button>
+                    </Card>
 
-                        </TextField>
-                        <Typography style={{ marginTop: "10px", marginLeft: "55px" }} sx={{ fontFamily: "omyu_pretty", color: "#B22727" }}>* 감정분석을 위해 최소 50자 이상 작성해야 등록이 가능합니다</Typography>
-
-
-
-                        <Link to="/diary">
-                            <Button variant='outlined' style={{ left: "570px", marginTop: "10px", fontFamily: "omyu_pretty" }}>작성완료</Button>
-                        </Link>
-
-                    </Paper>
                 </ContentWrap>
-
-
                 <Navi style={{ transform: 'translateZ(0px)', flexGrow: 1 }}>
                     <Dial />
                 </Navi>
@@ -58,19 +54,22 @@ const Guestbook = () => {
 const ContainerWrap = styled.div`
     display: flex;
     flex-direction: row;
-    padding-top: 40px;
-    padding-bottom: 66px;
+    padding-top: 20px;
+    padding-bottom: 22px;
+`;
+
+const ContentWrap = styled.div`
+    display: flex;
+    flex-direction: column;
 `;
 
 const Navi = styled.div`
 
 `;
 
-const ContentWrap = styled.div`
-    padding-top: 20px;
-    margin-left: 150px;
-    width:  700px;
-    
+const NeighInfo = styled.div`
+
 `;
+
 
 export default Guestbook;
