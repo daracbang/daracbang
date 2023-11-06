@@ -11,8 +11,7 @@ public enum DiaryErrorCode implements ErrorCode {
     NOTWRITER_DIARY("DIARY_003","다이어리를 삭제할 권한이 없습니다.",403),
     SCOPENOTEXISTS_DIARY("DIARY_004","공개범위 설정이 잘못되었습니다.",400),
     BLANK_DIARY("DIARY_006","다이어리의 내용을 입력해주세요.",400),
-    OUTOFLENGTH_DIARY("DIARY_006","다이어리는 최소 50자, 최대 1000자 입력할 수 있습니다.",400),
-    NOTFOUND_MOODTRACKER("DIARY_007","해당 기간에 무드트래커가 존재하지 않습니다.",404);
+    OUTOFLENGTH_DIARY("DIARY_006","다이어리는 최소 50자, 최대 1000자 입력할 수 있습니다.",400);
 
     private String errorCode;
     private String message;
