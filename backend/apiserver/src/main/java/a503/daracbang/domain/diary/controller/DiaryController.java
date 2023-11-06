@@ -26,16 +26,11 @@ public class DiaryController {
     private final FindDiaryService findDiaryService;
     private final DeleteDiaryService deleteDiaryService;
 
-    @GetMapping("/test")
-    public ResponseEntity<?> test(){
-        return ResponseEntity.ok("테스트 성공");
-    }
-
     @PostMapping()
     public ResponseEntity<?> writeDiary(@RequestBody @Valid WriteDiaryRequest writeDiaryRequest) throws JsonProcessingException {
 //      Long memberId = MemberContextHolder.memberIdHolder.get();
-        Long membedId = 2L; // 테스트용
-        writeDiaryService.writeDiary(membedId, writeDiaryRequest);
+        Long memberId = 2L; // 테스트용
+        writeDiaryService.writeDiary(memberId, writeDiaryRequest);
         return ResponseEntity.ok("다이어리가 작성되었습니다.");
     }
 

@@ -1,11 +1,13 @@
 package a503.daracbang.domain.comment.entity;
 
+import a503.daracbang.domain.diary.dto.response.SentimentResponse;
 import a503.daracbang.domain.diary.entity.Diary;
 import a503.daracbang.domain.diary.entity.Sentiment;
 import a503.daracbang.domain.member.entity.Member;
 import a503.daracbang.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,13 +20,11 @@ public class Comment extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @Column(nullable = false)
+    private Long memberId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "diary_id")
-    private Diary diary;
+    @Column(nullable = false)
+    private Long diaryId;
 
     @Column(nullable = false)
     private String content;
@@ -32,4 +32,14 @@ public class Comment extends BaseTimeEntity {
     @Embedded
     private Sentiment sentiment;
 
+    @Builder
+    public Comment(Long memberId, Long diaryId, String content){
+        this.memberId = memberId;
+        this.diaryId = diaryId;
+        this.content = content;
+    }
+
+    public void addSentiment(SentimentResponse response){
+        this.sentiment = new Sentiment(response);
+    }
 }

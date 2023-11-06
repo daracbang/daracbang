@@ -27,7 +27,7 @@ public class WriteDiaryService {
             throw new DiaryAlreadyWrittenException(DiaryErrorCode.ALREADYWRITTEN_DIARY);
         Diary diary = writeDiaryRequest.toEntity(memberId);
         diaryRepository.save(diary);
-        SentimentResponse sentimentResponse = analysisSentimentService.requestCLOVA(diary);
+        SentimentResponse sentimentResponse = analysisSentimentService.requestCLOVA(diary.getContent());
         diary.addSentiment(sentimentResponse);
         diaryRepository.save(diary);
     }

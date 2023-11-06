@@ -27,7 +27,6 @@ public class WriteDiaryRequest {
     }
 
     public Diary toEntity(Long memberId){
-
         return Diary.builder()
                 .scope(this.scope)
                 .content(this.content)
