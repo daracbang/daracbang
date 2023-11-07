@@ -1,16 +1,21 @@
 package a503.daracbang.domain.guestbook.controller;
 
+import a503.daracbang.config.WebConfig;
 import a503.daracbang.domain.guestbook.dto.request.RegisterGuestbookRequest;
 import a503.daracbang.domain.guestbook.dto.response.GuestbookListResponse;
 import a503.daracbang.domain.guestbook.dto.response.GuestbookResponse;
 import a503.daracbang.domain.guestbook.service.CreateGuestbookService;
 import a503.daracbang.domain.guestbook.service.DeleteGuestbookService;
 import a503.daracbang.domain.guestbook.service.FindGuestBookService;
+import a503.daracbang.domain.member.interceptor.ValidTokenInterceptor;
+import a503.daracbang.domain.member.util.JwtUtil;
 import a503.daracbang.global.ApiDocsTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.operation.preprocess.Preprocessors;
@@ -25,7 +30,12 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(GuestbookController.class)
+@WebMvcTest(value = GuestbookController.class,
+	excludeFilters = {
+		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebConfig.class),
+		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = ValidTokenInterceptor.class),
+		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = JwtUtil.class)
+	})
 @SuppressWarnings("NonAsciiCharacters")
 class GuestbookTest extends ApiDocsTest {
 
