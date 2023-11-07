@@ -5,7 +5,6 @@ import a503.daracbang.domain.comment.dto.response.CommentListResponse;
 import a503.daracbang.domain.comment.service.DeleteCommentService;
 import a503.daracbang.domain.comment.service.FindCommentService;
 import a503.daracbang.domain.comment.service.WriteCommentService;
-import a503.daracbang.domain.diary.entity.Diary;
 import a503.daracbang.domain.member.util.MemberContextHolder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
