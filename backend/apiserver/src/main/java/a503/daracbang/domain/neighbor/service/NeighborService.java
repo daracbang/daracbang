@@ -91,7 +91,7 @@ public class NeighborService {
 
 	private Member findById(Long id) {
 		return memberRepository.findById(id)
-			.orElseThrow(() -> new CustomException(MemberErrorCode.NOTFOUND_MEMBER));
+			.orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
 	}
 
 }
