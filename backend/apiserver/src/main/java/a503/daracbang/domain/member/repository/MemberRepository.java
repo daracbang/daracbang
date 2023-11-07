@@ -1,6 +1,7 @@
 package a503.daracbang.domain.member.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,5 +12,6 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
 	boolean existsByLoginId(String loginId);
 	boolean existsByNickname(String nickname);
 
+	Optional<Member> findByLoginId(String loginId);
 	List<Member> findAllByNicknameContaining(String nickname);
 }

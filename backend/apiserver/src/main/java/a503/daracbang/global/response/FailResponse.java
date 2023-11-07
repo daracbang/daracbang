@@ -1,7 +1,9 @@
 package a503.daracbang.global.response;
 
 import a503.daracbang.global.exception.ErrorCode;
+import lombok.Getter;
 
+@Getter
 public class FailResponse {
     private String message;
     private String errorCode;
