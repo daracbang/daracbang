@@ -29,6 +29,9 @@ public class WriteCommentRequest {
                 .build();
     }
 
+    public WriteCommentRequest(){
+    }
+
 
 
 
