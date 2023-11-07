@@ -44,4 +44,8 @@ public class SignUpMemberRequest {
 			.profileImage(profileImage)
 			.build();
 	}
+
+	public SignUpMemberRequest(){
+	}
+
 }

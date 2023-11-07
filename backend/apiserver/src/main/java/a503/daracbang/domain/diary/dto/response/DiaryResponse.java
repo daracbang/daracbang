@@ -8,7 +8,6 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 @Getter
 @NoArgsConstructor
 public class DiaryResponse {
