@@ -2,7 +2,7 @@ package a503.daracbang.domain.comment.service;
 
 import a503.daracbang.domain.comment.dto.request.WriteCommentRequest;
 import a503.daracbang.domain.comment.entity.Comment;
-import a503.daracbang.domain.comment.repository.CommentRepositoty;
+import a503.daracbang.domain.comment.repository.CommentRepository;
 import a503.daracbang.domain.diary.dto.response.SentimentResponse;
 import a503.daracbang.domain.diary.entity.Diary;
 import a503.daracbang.domain.diary.exception.DiaryErrorCode;
@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class WriteCommentService {
 
-    private final CommentRepositoty commentRepositoty;
+    private final CommentRepository commentRepository;
     private final AnalysisSentimentService analysisSentimentService;
     private final MemberRepository memberRepository;
     private final DiaryRepository diaryRepository;
@@ -33,9 +33,9 @@ public class WriteCommentService {
         Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(()->new CustomException(DiaryErrorCode.NOTFOUND_DIARY));
         Comment comment = writeCommentRequest.toEntity(member, diary);
-        commentRepositoty.save(comment);
+        commentRepository.save(comment);
         SentimentResponse sentimentResponse = analysisSentimentService.requestCLOVA(comment.getContent());
         comment.addSentiment(sentimentResponse);
-        commentRepositoty.save(comment);
+        commentRepository.save(comment);
     }
 }

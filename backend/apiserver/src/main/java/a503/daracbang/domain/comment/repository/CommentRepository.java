@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CommentRepositoty extends JpaRepository<Comment, Long> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findAllByDiaryId(Long diaryId);
 }
