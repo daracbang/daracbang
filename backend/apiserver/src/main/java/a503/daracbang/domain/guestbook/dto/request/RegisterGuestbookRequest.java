@@ -15,7 +15,7 @@ public class RegisterGuestbookRequest {
         this.content = content;
     }
 
-    public Guestbook toEntity(long memberId) {
-        return new Guestbook(memberId, content);
+    public Guestbook toEntity(Member member) {
+        return new Guestbook(member, content);
     }
 }
