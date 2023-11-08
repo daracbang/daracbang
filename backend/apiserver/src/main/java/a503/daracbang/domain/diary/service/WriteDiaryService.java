@@ -28,8 +28,8 @@ public class WriteDiaryService {
     private final AnalysisSentimentService analysisSentimentService;
 
     public void writeDiary(Long memberId, WriteDiaryRequest writeDiaryRequest) throws JsonProcessingException {
-        if(!diaryTimePolicy.verify(memberId, LocalDate.now()))
-            throw new DiaryAlreadyWrittenException(DiaryErrorCode.ALREADYWRITTEN_DIARY);
+//        if(!diaryTimePolicy.verify(memberId, LocalDate.now()))
+//            throw new DiaryAlreadyWrittenException(DiaryErrorCode.ALREADYWRITTEN_DIARY);
         Diary diary = writeDiaryRequest.toEntity(memberRepository.findById(memberId)
                 .orElseThrow(()->new CustomException(MemberErrorCode.MEMBER_NOT_FOUND)));
         diaryRepository.save(diary);

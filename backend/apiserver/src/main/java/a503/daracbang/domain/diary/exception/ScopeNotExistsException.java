@@ -4,7 +4,7 @@ import a503.daracbang.global.exception.CustomException;
 import a503.daracbang.global.exception.ErrorCode;
 
 public class ScopeNotExistsException extends CustomException {
-    public ScopeNotExistsException(ErrorCode errorCode) {
-        super(errorCode);
+    public ScopeNotExistsException() {
+        super(DiaryErrorCode.SCOPENOTEXISTS_DIARY);
     }
 }
