@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,19 +23,20 @@ public class Guestbook extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column(nullable = false, length = 200)
     private String content;
 
-    public Guestbook(Long memberId, String content) {
-        this.memberId = memberId;
+    public Guestbook(Member member, String content) {
+        this.member = member;
         this.content = content;
     }
 
     public boolean isWriter(long memberId) {
-        if (this.memberId == memberId) {
+        if (this.member.getId() == memberId) {
             return true;
         }
         return false;
