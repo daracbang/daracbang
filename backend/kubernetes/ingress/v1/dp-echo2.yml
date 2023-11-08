@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dp-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dp-nginx
+  template:
+    metadata:
+      labels:
+        app: dp-nginx
+    spec:
+      containers:
+        - name: pod-dp-nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-nginx
+spec:
+  ports:
+    - name: port-nginx
+      port: 9000
+      targetPort: 80
+  selector:
+    app: dp-nginx
