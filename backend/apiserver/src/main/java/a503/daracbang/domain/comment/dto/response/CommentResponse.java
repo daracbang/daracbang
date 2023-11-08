@@ -23,7 +23,7 @@ public class CommentResponse {
     @Builder
     public CommentResponse(Comment comment){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        this.memberId = comment.getMemberId();
+        this.memberId = comment.getMember().getId();
         this.diaryId = comment.getDiaryId();
         this.createdAt = comment.getCreatedAt().format(formatter);
         this.content = comment.getContent();

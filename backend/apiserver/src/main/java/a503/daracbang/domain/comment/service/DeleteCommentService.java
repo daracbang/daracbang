@@ -19,7 +19,7 @@ public class DeleteCommentService {
     public void deleteComment(Long memberId, Long commentId) {
         Comment comment = commentRepositoty.findById(commentId)
                 .orElseThrow(()->new CommentNotFoundException(CommentErrorCode.NOTFOUND_COMMENT));
-        if(memberId!=comment.getMemberId())
+        if(memberId!=comment.getMember().getId())
             throw new DiaryNotWriterException(CommentErrorCode.NOTWRITER_COMMENT);
         commentRepositoty.delete(comment);
     }
