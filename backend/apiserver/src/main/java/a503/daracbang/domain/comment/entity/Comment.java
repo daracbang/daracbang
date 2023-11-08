@@ -24,8 +24,9 @@ public class Comment extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(nullable = false)
-    private Long diaryId;
+    @ManyToOne
+    @JoinColumn(name = "diary_id")
+    private Diary diary;
 
     @Column(nullable = false)
     private String content;
@@ -34,9 +35,9 @@ public class Comment extends BaseTimeEntity {
     private Sentiment sentiment;
 
     @Builder
-    public Comment(Member member, Long diaryId, String content){
+    public Comment(Member member, Diary diary, String content){
         this.member = member;
-        this.diaryId = diaryId;
+        this.diary = diary;
         this.content = content;
     }
 

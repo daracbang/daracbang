@@ -24,7 +24,7 @@ public class CommentResponse {
     public CommentResponse(Comment comment){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         this.memberId = comment.getMember().getId();
-        this.diaryId = comment.getDiaryId();
+        this.diaryId = comment.getDiary().getId();
         this.createdAt = comment.getCreatedAt().format(formatter);
         this.content = comment.getContent();
         this.sentimentResult = comment.getSentiment().getSentimentResult();
