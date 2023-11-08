@@ -20,8 +20,9 @@ public class Comment extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column(nullable = false)
     private Long diaryId;
@@ -33,8 +34,8 @@ public class Comment extends BaseTimeEntity {
     private Sentiment sentiment;
 
     @Builder
-    public Comment(Long memberId, Long diaryId, String content){
-        this.memberId = memberId;
+    public Comment(Member member, Long diaryId, String content){
+        this.member = member;
         this.diaryId = diaryId;
         this.content = content;
     }

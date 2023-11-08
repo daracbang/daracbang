@@ -30,11 +30,11 @@ public class FindDiaryService {
                 .orElseThrow(()->new DiaryNotFoundException(DiaryErrorCode.NOTFOUND_DIARY));
         // todo: 다이어리 공개범위와 사용자 이웃여부 비교해서, 이웃공개나 비공개 처리하기
         Scope scope = diary.getScope();
-        if(requesterId==diary.getMemberId())
+        if(requesterId==diary.getMember().getId())
             return new DiaryResponse(diary);
         if(scope.equals("PRIVATE"))
             throw new DiaryNoPermissionException(DiaryErrorCode.NOPERMISSION_DIARY);
-        if(scope.equals("NEIGHBOR") && !neighborService.isNeighbor(requesterId, diary.getMemberId()))
+        if(scope.equals("NEIGHBOR") && !neighborService.isNeighbor(requesterId, diary.getMember().getId()))
             throw new DiaryNoPermissionException(DiaryErrorCode.NOPERMISSION_DIARY);
         return new DiaryResponse(diary);
     }

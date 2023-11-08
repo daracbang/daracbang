@@ -94,12 +94,8 @@ public class NeighborService {
 	@Transactional
 	public boolean isNeighbor(Long myId, Long memberId) {
 		List<Neighbor> myNeighbors = neighborRepository.findAllMyNeighbor(myId);
-
-		Neighbor resultNeighbor = myNeighbors.stream()
-												.filter(neighbor -> neighbor.getId().equals(memberId))
-												.findFirst()
-												.orElseThrow(() -> new CustomException(NeighborErrorCode.NEIGHBOR_NOT_FOUND));
-		return true;
+		return myNeighbors.stream()
+				.anyMatch(neighbor -> neighbor.getId().equals(memberId));
 	}
 
 	private Member findById(Long id) {

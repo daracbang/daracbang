@@ -2,6 +2,7 @@ package a503.daracbang.domain.comment.dto.request;
 
 import a503.daracbang.domain.comment.entity.Comment;
 import a503.daracbang.domain.diary.dto.request.WriteDiaryRequest;
+import a503.daracbang.domain.member.entity.Member;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,9 +22,9 @@ public class WriteCommentRequest {
         this.content = content;
     }
 
-    public Comment toEntity(Long memberId, Long diaryId){
+    public Comment toEntity(Member member, Long diaryId){
         return Comment.builder()
-                .memberId(memberId)
+                .member(member)
                 .diaryId(diaryId)
                 .content(this.content)
                 .build();

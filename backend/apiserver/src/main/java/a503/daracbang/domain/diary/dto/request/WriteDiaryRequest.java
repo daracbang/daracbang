@@ -5,6 +5,7 @@ import a503.daracbang.domain.diary.controller.DiaryLengthCheck;
 import a503.daracbang.domain.diary.controller.ValidEnum;
 import a503.daracbang.domain.diary.entity.Diary;
 import a503.daracbang.domain.diary.entity.Scope;
+import a503.daracbang.domain.member.entity.Member;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -26,11 +27,11 @@ public class WriteDiaryRequest {
         this.scope = scope;
     }
 
-    public Diary toEntity(Long memberId){
+    public Diary toEntity(Member member){
         return Diary.builder()
                 .scope(this.scope)
                 .content(this.content)
-                .memberId(memberId)
+                .member(member)
                 .build();
     }
 
