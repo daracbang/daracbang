@@ -12,14 +12,17 @@ import a503.daracbang.domain.diary.exception.DiaryNotWriterException;
 import a503.daracbang.domain.diary.repository.DiaryRepository;
 import a503.daracbang.domain.neighbor.service.NeighborService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class FindDiaryService {
 
     private final DiaryRepository diaryRepository;
@@ -27,27 +30,43 @@ public class FindDiaryService {
 
     public DiaryResponse getDiary(Long requesterId, Long diaryId) {
         Diary diary = diaryRepository.findById(diaryId)
-                .orElseThrow(()->new DiaryNotFoundException(DiaryErrorCode.NOTFOUND_DIARY));
-        // todo: 다이어리 공개범위와 사용자 이웃여부 비교해서, 이웃공개나 비공개 처리하기
-        Scope scope = diary.getScope();
-        if(requesterId==diary.getMember().getId())
+                .orElseThrow(DiaryNotFoundException::new);
+        if(diary.isOwner(requesterId)){
             return new DiaryResponse(diary);
-        if(scope.equals("PRIVATE"))
-            throw new DiaryNoPermissionException(DiaryErrorCode.NOPERMISSION_DIARY);
-        if(scope.equals("NEIGHBOR") && !neighborService.isNeighbor(requesterId, diary.getMember().getId()))
-            throw new DiaryNoPermissionException(DiaryErrorCode.NOPERMISSION_DIARY);
+        }
+        if(!isViewableDiary(diary, requesterId))
+            throw new DiaryNoPermissionException();
         return new DiaryResponse(diary);
     }
 
     public DiaryListResponse getDiaryList(Long requesterId, Long memberId) {
-        List<Diary> diaryList = diaryRepository.findAllByMemberId(memberId);
-        // todo: 다이어리 공개범위와 사용자 이웃여부 비교해서, 이웃공개나 비공개 처리하기
-        return new DiaryListResponse(diaryList);
+        List<Diary> scopeCheckedDiaryList = checkDiaryListScope(diaryRepository.findAllByMemberId(memberId), requesterId);
+        return new DiaryListResponse(scopeCheckedDiaryList);
     }
 
     public MoodTrackerListResponse getMoodTracker(Long requesterId, Long memberId, int year, int month) {
-        List<Diary> diaryList = diaryRepository.findByMemberIdAndCreatedAtYearAndMonth(memberId, year, month);
-        // todo: 다이어리 공개범위와 사용자 이웃여부 비교해서, 이웃공개나 비공개 처리하기
-        return new MoodTrackerListResponse(diaryList);
+        List<Diary> scopeCheckedDiaryList = checkDiaryListScope(diaryRepository.findByMemberIdAndCreatedAtYearAndMonth(memberId, year, month), requesterId);
+        return new MoodTrackerListResponse(scopeCheckedDiaryList);
+    }
+
+    // 요청한 유저가 볼 수있는지 체크
+    private boolean isViewableDiary(Diary diary, Long requesterId){
+        Scope diaryScope = diary.getScope();
+        if(Scope.PUBLIC.equals(diaryScope)){
+            return true;
+        }
+        if(Scope.NEIGHBOR.equals(diaryScope)){
+            return neighborService.isNeighbor(diary.getMember().getId(), requesterId);
+        }
+        return false;
+    }
+
+    private List<Diary> checkDiaryListScope(List<Diary> diaryList, Long requesterId){
+        List<Diary> filteredDiaryList = new ArrayList<>();
+        for(Diary diary:diaryList){
+            if(isViewableDiary(diary,requesterId))
+                filteredDiaryList.add(diary);
+        }
+        return filteredDiaryList;
     }
 }

@@ -4,7 +4,7 @@ import a503.daracbang.global.exception.CustomException;
 import a503.daracbang.global.exception.ErrorCode;
 
 public class DiaryNotWriterException extends CustomException {
-    public DiaryNotWriterException(ErrorCode errorCode) {
-        super(errorCode);
+    public DiaryNotWriterException() {
+        super(DiaryErrorCode.NOTWRITER_DIARY);
     }
 }

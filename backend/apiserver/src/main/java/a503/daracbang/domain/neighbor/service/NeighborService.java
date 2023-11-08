@@ -93,7 +93,7 @@ public class NeighborService {
 
 	@Transactional
 	public boolean isNeighbor(Long myId, Long memberId) {
-		List<Neighbor> myNeighbors = neighborRepository.findAllMyNeighbor(myId);
+		List<Neighbor>  myNeighbors = neighborRepository.findAllMyNeighbor(myId);
 		return myNeighbors.stream()
 				.anyMatch(neighbor -> neighbor.getId().equals(memberId));
 	}

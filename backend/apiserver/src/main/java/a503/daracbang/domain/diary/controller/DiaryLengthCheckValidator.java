@@ -11,9 +11,9 @@ public class DiaryLengthCheckValidator implements ConstraintValidator<DiaryLengt
     @Override
     public boolean isValid(String content, ConstraintValidatorContext context) {
         if(content==null||content.trim().isEmpty())
-            throw new DiaryBlankException(DiaryErrorCode.BLANK_DIARY);
+            throw new DiaryBlankException();
         if(content.length()<50 || content.length()>1000)
-            throw new DiaryLengthException(DiaryErrorCode.OUTOFLENGTH_DIARY);
+            throw new DiaryLengthException();
         return true;
     }
 }
