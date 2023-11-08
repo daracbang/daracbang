@@ -1,6 +1,8 @@
 package a503.daracbang.domain.neighbor.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,9 +91,15 @@ public class NeighborService {
 
 	}
 
-	private Member findById(Long id) {
-		return memberRepository.findById(id)
-			.orElseThrow(() -> new CustomException(MemberErrorCode.NOTFOUND_MEMBER));
+	@Transactional
+	public boolean isNeighbor(Long myId, Long memberId) {
+		List<Neighbor> myNeighbors = neighborRepository.findAllMyNeighbor(myId);
+		return myNeighbors.stream()
+				.anyMatch(neighbor -> neighbor.getId().equals(memberId));
 	}
 
+	private Member findById(Long id) {
+		return memberRepository.findById(id)
+			.orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
+	}
 }

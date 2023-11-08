@@ -1,0 +1,15 @@
+= bgm API 문서
+bgm 검색, 조회, 삭제, 생성할 수 있습니다.
+
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+
+== bgm 유튜브 검색
+=== Request
+include::{snippets}/bgms/search/http-request.adoc[]
+
+=== Response
+include::{snippets}/bgms/search/http-response.adoc[]

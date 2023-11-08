@@ -1,4 +1,4 @@
-package a503.daracbang.domain.member.dto;
+package a503.daracbang.domain.member.dto.request;
 
 import a503.daracbang.domain.member.entity.Member;
 import jakarta.validation.constraints.NotBlank;
@@ -6,10 +6,10 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@NoArgsConstructor
+@Setter
 public class SignUpMemberRequest {
 
 	@NotBlank
@@ -44,4 +44,8 @@ public class SignUpMemberRequest {
 			.profileImage(profileImage)
 			.build();
 	}
+
+	public SignUpMemberRequest(){
+	}
+
 }

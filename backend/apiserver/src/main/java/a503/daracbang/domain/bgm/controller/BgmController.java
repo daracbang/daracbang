@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
-@RequestMapping("/api/bgm")
+@RequestMapping("/api/bgms")
 @RestController
 @RequiredArgsConstructor
 public class BgmController {
@@ -31,7 +31,7 @@ public class BgmController {
     private final DeleteBgmService deleteBgmService;
     private final FindBgmService findBgmService;
 
-    @PostMapping
+    @PostMapping("/url")
     public ResponseEntity<Void> createByUrl(@Valid @RequestBody RegisterBgmUrlRequest registerBgmUrlRequest) {
         // Long myId = MemberContextHolder.memberIdHolder.get();
         createBgmService.saveBgmUrl(registerBgmUrlRequest, 1L);

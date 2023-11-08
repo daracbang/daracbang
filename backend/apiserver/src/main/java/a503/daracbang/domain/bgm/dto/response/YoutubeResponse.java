@@ -5,12 +5,12 @@ import lombok.Getter;
 @Getter
 public class YoutubeResponse {
 
-    private String id;
+    private String videoId;
 
     private String title;
 
-    public YoutubeResponse(String id, String title) {
-        this.id = id;
+    public YoutubeResponse(String videoId, String title) {
+        this.videoId = videoId;
         this.title = title;
     }
 }

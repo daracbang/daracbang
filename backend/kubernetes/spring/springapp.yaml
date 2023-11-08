@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dp-darac-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pod-darac-api
+  template:
+    metadata:
+      labels:
+        app: pod-darac-api
+    spec:
+      containers:
+        - name: darac-api
+          image: dls3145/darac-api:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PROFILE
+              value: "dev"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-darac-api
+spec:
+  selector:
+    app: pod-darac-api
+  ports:
+    - name: port-api
+      port: 8080
+      targetPort: 8080
