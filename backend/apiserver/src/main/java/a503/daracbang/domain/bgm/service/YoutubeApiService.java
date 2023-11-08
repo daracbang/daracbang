@@ -1,11 +1,9 @@
 package a503.daracbang.domain.bgm.service;
 
-import a503.daracbang.domain.bgm.dto.response.BgmListResponse;
-import a503.daracbang.domain.bgm.dto.response.BgmResponse;
+import a503.daracbang.domain.bgm.dto.response.YoutubeListResponse;
+import a503.daracbang.domain.bgm.dto.response.YoutubeResponse;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.api.services.youtube.model.SearchListResponse;
-import com.google.api.services.youtube.model.SearchResult;
 import org.springframework.stereotype.Component;
 
 import java.net.http.HttpClient;
@@ -29,7 +27,7 @@ public class YoutubeApiService {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public BgmListResponse findMusic(String q) {
+    public YoutubeListResponse findMusic(String q) {
         String url = String.format("https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=%d&order=viewCount&q=%s&key=%s", maxResults, q, KEY);
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -40,20 +38,17 @@ public class YoutubeApiService {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             String responseBody = response.body();
 
-            // 여기서 responseBody를 처리
-            // Gson 라이브러리를 사용하여 JSON을 Java 객체로 변환
             JsonNode rootNode = mapper.readTree(responseBody);
             JsonNode itemsNode = rootNode.path(ITEMS);
-            List<BgmResponse> bgms = new ArrayList<>();
+
+            List<YoutubeResponse> bgms = new ArrayList<>();
             for (int i = 0; i < maxResults; i++) {
                 JsonNode itemNode = itemsNode.get(i);
                 String id = itemNode.path(ITEM_ID).path(VIDEO_ID).asText();
                 String title = itemNode.path(SNIPPET).path(TITLE).asText();
-                bgms.add(new BgmResponse(id, title));
+                bgms.add(new YoutubeResponse(id, title));
             }
-
-            // items의 첫 번째 원소의 title과 id 추출;
-            return new BgmListResponse(bgms);
+            return new YoutubeListResponse(bgms);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {

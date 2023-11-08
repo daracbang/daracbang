@@ -5,26 +5,29 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 유튜브 동영상 ID 값이 아닌 링크로 대체할 때 사용
+ */
 @Getter
 @NoArgsConstructor
-public class RegisterBgmRequest {
+public class RegisterBgmUrlRequest {
 
     @Size(min = 1, max = 100, message = "1 ~ 100 자 내로 입력해주세요.")
-    private String musicName;
+    private String bgmName;
 
     @Size(min = 1, max = 200, message = "1 ~ 200 자 내로 입력해주세요.")
-    private String musicUrl;
+    private String url;
 
-    public RegisterBgmRequest(String musicName, String musicUrl) {
-        this.musicName = musicName;
-        this.musicUrl = musicUrl;
+    public RegisterBgmUrlRequest(String bgmName, String url) {
+        this.bgmName = bgmName;
+        this.url = url;
     }
 
     public Bgm toEntity() {
         return Bgm.builder()
             .memberId(1L)
-            .musicName(musicName)
-            .musicUrl(musicUrl)
+            .bgmName(bgmName)
+            .url(url)
             .build();
     }
 }

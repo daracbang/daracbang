@@ -23,15 +23,20 @@ public class Bgm {
     private Long memberId;
 
     @Column(nullable = false)
-    private String musicName;
+    private String bgmName;
 
-    @Column(nullable = false)
-    private String musicUrl;
+    private String videoId;
+
+    private String url;
 
     @Builder
-    public Bgm(Long memberId, String musicName, String musicUrl) {
+    public Bgm(Long memberId, String bgmName, String url) {
         this.memberId = memberId;
-        this.musicName = musicName;
-        this.musicUrl = musicUrl;
+        this.bgmName = bgmName;
+        this.url = url;
+    }
+
+    public void setVideoId(String videoId) {
+        this.videoId = videoId;
     }
 }

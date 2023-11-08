@@ -15,6 +15,7 @@ import static a503.daracbang.domain.guestbook.exception.GuestbookErrorCode.NOTWR
 public class DeleteGuestbookService {
 
     private final GuestbookRepository guestbookRepository;
+
     private final FindGuestBookService findGuestBookService;
 
     @Transactional

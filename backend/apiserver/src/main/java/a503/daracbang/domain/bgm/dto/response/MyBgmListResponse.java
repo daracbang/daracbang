@@ -5,11 +5,11 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class BgmListResponse {
+public class MyBgmListResponse {
 
-    private final List<BgmResponse> bgms;
+    private List<MyBgmResponse> bgms;
 
-    public BgmListResponse(List<BgmResponse> bgms) {
+    public MyBgmListResponse(List<MyBgmResponse> bgms) {
         this.bgms = bgms;
     }
 }

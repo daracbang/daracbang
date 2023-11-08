@@ -1,14 +1,19 @@
 package a503.daracbang.domain.bgm.controller;
 
-import a503.daracbang.domain.bgm.dto.request.RegisterBgmRequest;
-import a503.daracbang.domain.bgm.dto.response.BgmListResponse;
+import a503.daracbang.domain.bgm.dto.request.RegisterBgmIdRequest;
+import a503.daracbang.domain.bgm.dto.request.RegisterBgmUrlRequest;
+import a503.daracbang.domain.bgm.dto.response.MyBgmListResponse;
+import a503.daracbang.domain.bgm.dto.response.YoutubeListResponse;
 import a503.daracbang.domain.bgm.service.CreateBgmService;
 import a503.daracbang.domain.bgm.service.DeleteBgmService;
 import a503.daracbang.domain.bgm.service.FindBgmService;
+import a503.daracbang.domain.member.util.MemberContextHolder;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,16 +32,36 @@ public class BgmController {
     private final FindBgmService findBgmService;
 
     @PostMapping
-    public ResponseEntity<Void> create(@Valid @RequestBody RegisterBgmRequest registerBgmRequest) {
-        createBgmService.saveBgm(registerBgmRequest);
+    public ResponseEntity<Void> createByUrl(@Valid @RequestBody RegisterBgmUrlRequest registerBgmUrlRequest) {
+        // Long myId = MemberContextHolder.memberIdHolder.get();
+        createBgmService.saveBgmUrl(registerBgmUrlRequest, 1L);
+        return ResponseEntity.created(URI.create("/api/bgm")).build();
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> createById(@Valid @RequestBody RegisterBgmIdRequest registerBgmIdRequest) {
+        // Long myId = MemberContextHolder.memberIdHolder.get();
+        createBgmService.saveBgmId(registerBgmIdRequest, 1L);
         return ResponseEntity.created(URI.create("/api/bgm")).build();
     }
 
     @GetMapping("/search")
-    public ResponseEntity<BgmListResponse> search(@RequestParam("q") String q) {
-        if(q == null)
+    public ResponseEntity<YoutubeListResponse> searchYoutube(@RequestParam("q") String q) {
+        if (q == null)
             return ResponseEntity.badRequest().build();
-        BgmListResponse bgms = findBgmService.findMusic(q);
+        YoutubeListResponse bgms = findBgmService.findYoutube(q);
         return ResponseEntity.ok(bgms);
+    }
+
+    @GetMapping("/{memberId}")
+    public ResponseEntity<MyBgmListResponse> getMyBgms(@PathVariable("memberId") Long memberId) {
+        MyBgmListResponse myBgms = findBgmService.getMyBgms(memberId);
+        return ResponseEntity.ok(myBgms);
+    }
+
+    @DeleteMapping("/{bgmId}")
+    public ResponseEntity<Void> delete(@PathVariable("bgmId") Long bgmId) {
+        deleteBgmService.delete(bgmId);
+        return ResponseEntity.noContent().build();
     }
 }
