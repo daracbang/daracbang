@@ -14,12 +14,12 @@ spec:
     spec:
       containers:
         - name: darac-api
-          image: dls3145/darac-api:latest
+          image: dls3145/test-rp:latest
           ports:
             - containerPort: 8080
-          env:
-            - name: PROFILE
-              value: "dev"
+          envFrom:
+            - configMapRef:
+                name: spring-config
 ---
 apiVersion: v1
 kind: Service
@@ -32,3 +32,17 @@ spec:
     - name: port-api
       port: 8080
       targetPort: 8080
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-config
+data:
+  DATASOURCE_URL: ""
+  DATABASE_USERNAME: ""
+  DATABASE_PASSWORD: ""
+  ACTUATOR_PORT: ""
+  CLOVA_ID: ""
+  CLOVA_SECRET: ""
+  JWT_SECRET: ""
+  PROFILE: ""
