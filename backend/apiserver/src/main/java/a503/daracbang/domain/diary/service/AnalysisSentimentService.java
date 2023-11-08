@@ -27,7 +27,7 @@ public class AnalysisSentimentService {
     @Value("${clova.secret}")
     private String clovaSecret;
 
-    public SentimentResponse requestCLOVA(Diary diary) throws JsonProcessingException {
+    public SentimentResponse requestCLOVA(String content) throws JsonProcessingException {
 
         String url = "https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze";
         RestTemplate restTemplate = new RestTemplate();
@@ -38,7 +38,7 @@ public class AnalysisSentimentService {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         Map<String, String> body = new HashMap<>();
-        body.put("content",diary.getContent());
+        body.put("content", content);
 
         HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
 
