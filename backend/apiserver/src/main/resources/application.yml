@@ -1,4 +1,47 @@
 spring:
   profiles:
-    active: local
-    include: jwt
+    default: local # default 는 local로 실행한다.
+
+  datasource:
+    url: ${DATASOURCE_URL}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: Asia/Seoul
+
+management:
+  server:
+    port: 9293
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    build:
+      enabled: true
+    env:
+      enabled: true
+    java:
+      enabled: true
+    os:
+      enabled: true
+
+
+clova:
+  id: ${CLOVA_ID}
+  secret: ${CLOVA_SECRET}
+
+jwt:
+  secret: ${JWT_SECRET}
