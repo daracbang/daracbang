@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dp-darac-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pod-darac-web
+  template:
+    metadata:
+      labels:
+        app: pod-darac-web
+    spec:
+      containers:
+        - name: darac-web
+          image: dls3145/darac-front:latest
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-darac-web
+spec:
+  selector:
+    app: pod-darac-web
+  ports:
+    - name: port-web
+      port: 80
+      targetPort: 80
