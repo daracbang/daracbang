@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: darac-api
-          image: dls3145/test-rp:latest
+          image: dls3145/darac-api:latest
           ports:
             - containerPort: 8080
           envFrom:

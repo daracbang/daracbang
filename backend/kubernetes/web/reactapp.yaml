@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dp-nginx
+  name: dp-darac-web
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dp-nginx
+      app: pod-darac-web
   template:
     metadata:
       labels:
-        app: dp-nginx
+        app: pod-darac-web
     spec:
       containers:
-        - name: pod-dp-nginx
-          image: nginx
+        - name: darac-web
+          image: dls3145/darac-front:latest
           ports:
             - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-nginx
+  name: svc-darac-web
 spec:
-  ports:
-    - name: port-nginx
-      port: 9000
-      targetPort: 80
   selector:
-    app: dp-nginx
+    app: pod-darac-web
+  ports:
+    - name: port-web
+      port: 80
+      targetPort: 80

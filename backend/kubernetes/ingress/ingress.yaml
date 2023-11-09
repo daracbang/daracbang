@@ -12,19 +12,12 @@ spec:
       http:
         paths:
           - path: /
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: svc-echo-1
-                port:
-                  number: 9000
-          - path: /v2
             pathType: Prefix
             backend:
               service:
-                name: svc-nginx
+                name: svc-darac-web
                 port:
-                  number: 9001
+                  number: 80
     - host: api.daracbang.co.kr
       http:
         paths:
@@ -32,9 +25,9 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: svc-echo-1
+                name: svc-darac-api
                 port:
-                  number: 9000
+                  number: 8080
   tls:
     - hosts:
         - www.daracbang.co.kr
