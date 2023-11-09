@@ -18,9 +18,9 @@ public class DeleteCommentService {
 
     public void deleteComment(Long memberId, Long commentId) {
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(()->new CommentNotFoundException(CommentErrorCode.NOTFOUND_COMMENT));
-        if(memberId!=comment.getMember().getId())
-            throw new DiaryNotWriterException(CommentErrorCode.NOTWRITER_COMMENT);
+                .orElseThrow(CommentNotFoundException::new);
+        if(!memberId.equals(comment.getMember().getId()))
+            throw new DiaryNotWriterException();
         commentRepository.delete(comment);
     }
 }

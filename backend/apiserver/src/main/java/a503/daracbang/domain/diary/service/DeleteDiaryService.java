@@ -21,10 +21,10 @@ public class DeleteDiaryService {
 
     public void deleteDiary(long memberId, long diaryId) {
         Diary diary = diaryRepository.findById(diaryId)
-                .orElseThrow(() -> new DiaryNotFoundException(DiaryErrorCode.NOTFOUND_DIARY));
+                .orElseThrow(DiaryNotFoundException::new);
         long diaryMemberId = diary.getMember().getId();
         if(diaryMemberId!= memberId)
-            throw new DiaryNotWriterException(DiaryErrorCode.NOTWRITER_DIARY);
+            throw new DiaryNotWriterException();
         diaryRepository.delete(diary);
     }
 }
