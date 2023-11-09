@@ -4,5 +4,7 @@ import a503.daracbang.global.exception.CustomException;
 import a503.daracbang.global.exception.ErrorCode;
 
 public class DiaryNoPermissionException extends CustomException {
-    public DiaryNoPermissionException(ErrorCode errorCode){super(errorCode);}
+    public DiaryNoPermissionException(){
+        super(DiaryErrorCode.NOPERMISSION_DIARY);
+    }
 }

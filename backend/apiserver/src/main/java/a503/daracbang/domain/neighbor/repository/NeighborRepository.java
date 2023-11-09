@@ -1,6 +1,7 @@
 package a503.daracbang.domain.neighbor.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,5 +23,6 @@ public interface NeighborRepository extends JpaRepository<Neighbor, Long> {
 	Neighbor findByRequesterAndAccepter(Member requester, Member accepter);
 	boolean existsByRequesterAndAccepter(Member requester, Member accepter);
 	void deleteByRequesterAndAccepter(Member requester, Member accepter);
-
+	@Query("SELECT n.isCon FROM Neighbor n WHERE n.accepter.id = :accepterId AND n.requester.id= :requesterId")
+	Optional<Boolean> findIsConByAccepterIdAndRequesterId(@Param("accepterId") Long accepterId, @Param("requesterId") Long requesterId);
 }

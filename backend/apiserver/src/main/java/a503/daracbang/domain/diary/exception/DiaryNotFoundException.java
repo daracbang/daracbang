@@ -4,7 +4,7 @@ import a503.daracbang.global.exception.CustomException;
 import a503.daracbang.global.exception.ErrorCode;
 
 public class DiaryNotFoundException extends CustomException {
-    public DiaryNotFoundException(ErrorCode errorCode){
-        super(errorCode);
+    public DiaryNotFoundException(){
+        super(DiaryErrorCode.NOTFOUND_DIARY);
     }
 }
