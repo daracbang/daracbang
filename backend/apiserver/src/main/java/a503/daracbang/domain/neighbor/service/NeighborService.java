@@ -1,5 +1,6 @@
 package a503.daracbang.domain.neighbor.service;
 
+import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -92,10 +93,12 @@ public class NeighborService {
 	}
 
 	@Transactional
-	public boolean isNeighbor(Long myId, Long memberId) {
-		List<Neighbor>  myNeighbors = neighborRepository.findAllMyNeighbor(myId);
-		return myNeighbors.stream()
-				.anyMatch(neighbor -> neighbor.getId().equals(memberId));
+	public boolean isNeighbor(Long accepterId, Long requesterId) {
+		Optional<Boolean> myNeighborStatus = neighborRepository.findIsConByAccepterIdAndRequesterId(accepterId, requesterId);
+		Optional<Boolean> requesterNeighborStatus = neighborRepository.findIsConByAccepterIdAndRequesterId(requesterId, accepterId);
+		if(myNeighborStatus.isEmpty() || requesterNeighborStatus.isEmpty())
+			return false;
+		return myNeighborStatus.get() && requesterNeighborStatus.get();
 	}
 
 	private Member findById(Long id) {

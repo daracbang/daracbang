@@ -40,11 +40,15 @@ public class FindDiaryService {
     }
 
     public DiaryListResponse getDiaryList(Long requesterId, Long memberId) {
+        if(requesterId.equals(memberId))
+            return new DiaryListResponse(diaryRepository.findAllByMemberId(memberId));
         List<Diary> scopeCheckedDiaryList = checkDiaryListScope(diaryRepository.findAllByMemberId(memberId), requesterId);
         return new DiaryListResponse(scopeCheckedDiaryList);
     }
 
     public MoodTrackerListResponse getMoodTracker(Long requesterId, Long memberId, int year, int month) {
+        if(requesterId.equals(memberId))
+            return new MoodTrackerListResponse(diaryRepository.findByMemberIdAndCreatedAtYearAndMonth(memberId, year, month));
         List<Diary> scopeCheckedDiaryList = checkDiaryListScope(diaryRepository.findByMemberIdAndCreatedAtYearAndMonth(memberId, year, month), requesterId);
         return new MoodTrackerListResponse(scopeCheckedDiaryList);
     }
