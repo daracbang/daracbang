@@ -73,4 +73,9 @@ public class MemberController {
         Long id = MemberContextHolder.memberIdHolder.get();
         return ResponseEntity.ok(getMemberInfoService.getMemberInfo(id));
     }
+
+    @GetMapping("/{loginId}/info")
+    public ResponseEntity<?> getMemberInfoByLoginId(@PathVariable Long loginId) {
+        return ResponseEntity.ok(getMemberInfoService.getMemberInfo(loginId));
+    }
 }
