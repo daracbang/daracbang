@@ -29,14 +29,23 @@ public class Bgm {
 
     private String url;
 
-    @Builder
+    public boolean isOwner(long memberId) {
+        if(this.memberId != memberId) {
+            return false;
+        }
+        return true;
+    }
+
     public Bgm(Long memberId, String bgmName, String url) {
         this.memberId = memberId;
         this.bgmName = bgmName;
         this.url = url;
     }
 
-    public void setVideoId(String videoId) {
+    public Bgm(Long memberId, String bgmName, String videoId, String url) {
+        this.memberId = memberId;
+        this.bgmName = bgmName;
         this.videoId = videoId;
+        this.url = url;
     }
 }

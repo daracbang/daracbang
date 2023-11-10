@@ -35,7 +35,7 @@ public class BgmController {
     public ResponseEntity<Void> createByUrl(@Valid @RequestBody RegisterBgmUrlRequest registerBgmUrlRequest) {
         // Long myId = MemberContextHolder.memberIdHolder.get();
         createBgmService.saveBgmUrl(registerBgmUrlRequest, 1L);
-        return ResponseEntity.created(URI.create("/api/bgm")).build();
+        return ResponseEntity.created(URI.create("/api/bgm/url")).build();
     }
 
     @PostMapping
@@ -61,7 +61,7 @@ public class BgmController {
 
     @DeleteMapping("/{bgmId}")
     public ResponseEntity<Void> delete(@PathVariable("bgmId") Long bgmId) {
-        deleteBgmService.delete(bgmId);
+        deleteBgmService.delete(bgmId, 1L);
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,8 +1,13 @@
 package a503.daracbang.domain.bgm.controller;
 
 import a503.daracbang.config.WebConfig;
+import a503.daracbang.domain.bgm.dto.request.RegisterBgmIdRequest;
+import a503.daracbang.domain.bgm.dto.request.RegisterBgmUrlRequest;
+import a503.daracbang.domain.bgm.dto.response.MyBgmListResponse;
+import a503.daracbang.domain.bgm.dto.response.MyBgmResponse;
 import a503.daracbang.domain.bgm.dto.response.YoutubeListResponse;
 import a503.daracbang.domain.bgm.dto.response.YoutubeResponse;
+import a503.daracbang.domain.bgm.entity.Bgm;
 import a503.daracbang.domain.bgm.service.CreateBgmService;
 import a503.daracbang.domain.bgm.service.DeleteBgmService;
 import a503.daracbang.domain.bgm.service.FindBgmService;
@@ -20,10 +25,10 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -56,20 +61,115 @@ public class BgmTest extends ApiDocsTest {
         YoutubeResponse youtubeResponse2 = new YoutubeResponse("kdOS94IjzzE", "Attention");
         List<YoutubeResponse> youtubeResponses = Arrays.asList(youtubeResponse1, youtubeResponse2);
         YoutubeListResponse listResponse = new YoutubeListResponse(youtubeResponses);
-        String s = "mockJwtToken";
+        String jwt = "mockJwtToken";
 
         // when
-        when(jwtUtil.generateJwt(1L)).thenReturn(s);
+        when(jwtUtil.generateJwt(1L)).thenReturn(jwt);
         when(findBgmService.findYoutube(q)).thenReturn(listResponse);
 
         // then
         mockMvc.perform(MockMvcRequestBuilders.get("/api/bgms/search?q=" + q)
-                .header("Authorization", s)
+                .header("Authorization", jwt)
                 .contentType(MediaType.APPLICATION_JSON))
 //            .andDo(MockMvcResultHandlers.print())                 // 디버깅용 print 코드. 주석해도 됨
-            .andDo(MockMvcRestDocumentation.document("bgms/search",
+            .andDo(MockMvcRestDocumentation.document("/api/bgms/search",
                 Preprocessors.preprocessRequest(prettyPrint()),
                 Preprocessors.preprocessResponse(prettyPrint())))
             .andExpect(status().isOk());
+    }
+
+    @Test
+    void BGM_등록_videoId_버전() throws Exception {
+        // given
+        RegisterBgmIdRequest req = new RegisterBgmIdRequest("videoId", "bgmName");
+        String jwt = "mockJwtToken";
+
+        // when
+        when(jwtUtil.generateJwt(1L)).thenReturn(jwt);
+        doNothing().when(createBgmService).saveBgmId(req, 1L);
+
+        // then
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/bgms")
+                .header("Authorization", jwt)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(req)))
+            .andDo(MockMvcRestDocumentation.document("/api/bgms",
+                Preprocessors.preprocessRequest(prettyPrint()),
+                Preprocessors.preprocessResponse(prettyPrint())))
+            .andExpect(status().isCreated());
+    }
+
+    /**
+     * 해당 테스트는 프론트가 iframe 적용할 시간이 없는 경우에 맞춰 만들어짐
+     */
+    @Test
+    void BGM_등록_URL_버전() throws Exception {
+        // given
+        RegisterBgmUrlRequest req = new RegisterBgmUrlRequest("bgmName", "url");
+        String jwt = "mockJwtToken";
+
+        // when
+        when(jwtUtil.generateJwt(1L)).thenReturn(jwt);
+        doNothing().when(createBgmService).saveBgmUrl(req, 1L);
+
+        // then
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/bgms/url")
+            .header("Authorization", jwt)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(new ObjectMapper().writeValueAsString(req)))
+            .andDo(MockMvcRestDocumentation.document("/api/bgms/url",
+                Preprocessors.preprocessRequest(prettyPrint()),
+                Preprocessors.preprocessResponse(prettyPrint())))
+            .andExpect(status().isCreated());
+    }
+
+    @Test
+    void 내가_등록한_BGM_보기() throws Exception {
+        // given
+        MyBgmResponse response1 = new MyBgmResponse(bgm1_만들기(1L));
+        MyBgmResponse response2 = new MyBgmResponse(bgm2_만들기(1L));
+        MyBgmListResponse responseList = new MyBgmListResponse(Arrays.asList(response1, response2));
+        String jwt = "mockJwtToken";
+
+        // when
+        when(jwtUtil.generateJwt(1L)).thenReturn(jwt);
+        when(findBgmService.getMyBgms(1L)).thenReturn(responseList);
+
+        // then
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/bgms/1")
+                .header("Authorization", jwt)
+                .contentType(MediaType.APPLICATION_JSON))
+            .andDo(MockMvcRestDocumentation.document("/api/bgms/my",
+                Preprocessors.preprocessRequest(prettyPrint()),
+                Preprocessors.preprocessResponse(prettyPrint())))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    void BGM_삭제() throws Exception {
+        // given
+        Bgm bgm = bgm1_만들기(1L);
+        String jwt = "mockJwtToken";
+
+        // when
+        when(jwtUtil.generateJwt(1L)).thenReturn(jwt);
+        doNothing().when(deleteBgmService).delete(bgm.getId(), 1L);
+
+        // then
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/bgms/1")
+                .header("Authorization", jwt))
+            .andDo(MockMvcRestDocumentation.document("/api/bgms/delete",
+                Preprocessors.preprocessRequest(prettyPrint()),
+                Preprocessors.preprocessResponse(prettyPrint())))
+            .andExpect(status().isNoContent());
+        
+    }
+
+    private Bgm bgm1_만들기(long memberId) {
+        return new Bgm(memberId, "bgmName1", "videoId1", "url1");
+    }
+
+    private Bgm bgm2_만들기(long memberId) {
+        return new Bgm(memberId, "bgmName2", "videoId2", "url2");
     }
 }

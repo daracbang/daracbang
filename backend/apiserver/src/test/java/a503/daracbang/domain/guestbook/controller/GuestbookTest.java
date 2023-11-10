@@ -1,7 +1,6 @@
 package a503.daracbang.domain.guestbook.controller;
 
 import a503.daracbang.config.WebConfig;
-import a503.daracbang.domain.guestbook.controller.GuestbookController;
 import a503.daracbang.domain.guestbook.dto.request.RegisterGuestbookRequest;
 import a503.daracbang.domain.guestbook.dto.response.GuestbookListResponse;
 import a503.daracbang.domain.guestbook.dto.response.GuestbookResponse;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -57,17 +55,17 @@ class GuestbookTest extends ApiDocsTest {
         // given
         RegisterGuestbookRequest form = new RegisterGuestbookRequest("test");
         doNothing().when(createGuestbookService).save(1L, form);
-        String s = "mockJwtToken";
+        String jwt = "mockJwtToken";
 
         // when & then
-        when(jwtUtil.generateJwt(1L)).thenReturn(s);
+        when(jwtUtil.generateJwt(1L)).thenReturn(jwt);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/guestbooks/1")
-                .header("Authorization", s)
+                .header("Authorization", jwt)
                 .contentType(MediaType.APPLICATION_JSON)                // request body 포맷
                 .content(new ObjectMapper().writeValueAsString(form)))  // request body 전달
 //            .andDo(MockMvcResultHandlers.print())                 // 디버깅용 print 코드. 주석해도 됨
             // rest doc 에 보여지는 상단 이름이 "guestbooks/save" 이 됨
-            .andDo(MockMvcRestDocumentation.document("guestbooks/save", // .adoc 에서 구분할 식별자
+            .andDo(MockMvcRestDocumentation.document("/api/guestbooks/save", // .adoc 에서 구분할 식별자
                 Preprocessors.preprocessRequest(prettyPrint()),     // rest doc 이쁘게 출력하기
                 Preprocessors.preprocessResponse(prettyPrint())))   // rest doc 이쁘게 출력하기
             .andExpect(status().isCreated()); // 201 response 를 받아야 테스트를 통과한다.
@@ -77,14 +75,13 @@ class GuestbookTest extends ApiDocsTest {
     void 방명록_삭제_성공() throws Exception {
         // given
         doNothing().when(deleteGuestbookService).delete(1L, 1L);
-        String s = "mockJwtToken";
+        String jwt = "mockJwtToken";
 
         // when & then
-        when(jwtUtil.generateJwt(1L)).thenReturn(s);
+        when(jwtUtil.generateJwt(1L)).thenReturn(jwt);
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/guestbooks/1")
-                .header("Authorization", s)
-                .contentType(MediaType.APPLICATION_JSON))
-            .andDo(MockMvcRestDocumentation.document("guestbooks/delete",
+                .header("Authorization", jwt))
+            .andDo(MockMvcRestDocumentation.document("/api/guestbooks/delete",
                 Preprocessors.preprocessRequest(prettyPrint()),
                 Preprocessors.preprocessResponse(prettyPrint())))
             .andExpect(status().isNoContent());
@@ -97,17 +94,17 @@ class GuestbookTest extends ApiDocsTest {
         guestbooks.add(new GuestbookResponse(1L, "nickname1", "profileImage1", "content1"));
         guestbooks.add(new GuestbookResponse(2L, "nickname2", "profileImage2", "content2"));
         GuestbookListResponse responses = new GuestbookListResponse(guestbooks);
-        String s = "mockJwtToken";
+        String jwt = "mockJwtToken";
 
         // when
-        when(jwtUtil.generateJwt(1L)).thenReturn(s);
+        when(jwtUtil.generateJwt(1L)).thenReturn(jwt);
         when(findGuestBookService.getGuestbooks(1L, 0)).thenReturn(responses);
 
         // then
         mockMvc.perform(MockMvcRequestBuilders.get("/api/guestbooks/1?lastId=0")
-                .header("Authorization", s)
+                .header("Authorization", jwt)
                 .contentType(MediaType.APPLICATION_JSON))
-            .andDo(MockMvcRestDocumentation.document("guestbooks/pagination",
+            .andDo(MockMvcRestDocumentation.document("/api/guestbooks/pagination",
                 Preprocessors.preprocessRequest(prettyPrint()),
                 Preprocessors.preprocessResponse(prettyPrint())))
             .andExpect(status().isOk())

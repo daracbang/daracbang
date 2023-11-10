@@ -24,10 +24,6 @@ public class RegisterBgmUrlRequest {
     }
 
     public Bgm toEntity() {
-        return Bgm.builder()
-            .memberId(1L)
-            .bgmName(bgmName)
-            .url(url)
-            .build();
+        return new Bgm(1L, bgmName, "default videoId", url);
     }
 }

@@ -9,7 +9,42 @@ bgm 검색, 조회, 삭제, 생성할 수 있습니다.
 
 == bgm 유튜브 검색
 === Request
-include::{snippets}/bgms/search/http-request.adoc[]
+include::{snippets}/api/bgms/search/http-request.adoc[]
 
 === Response
-include::{snippets}/bgms/search/http-response.adoc[]
+include::{snippets}/api/bgms/search/http-response.adoc[]
+
+== video로 추가하기
+=== Request
+include::{snippets}/api/bgms/http-request.adoc[]
+
+=== Response
+include::{snippets}/api/bgms/http-response.adoc[]
+
+== bgm Url로 추가하기 (video로 iframe에 추가하기 힘들 때 사용)
+=== Request
+include::{snippets}/api/bgms/url/http-request.adoc[]
+
+=== Response
+include::{snippets}/api/bgms/url/http-response.adoc[]
+
+== video Id로 추가하기
+=== Request
+include::{snippets}/api/bgms/http-request.adoc[]
+
+=== Response
+include::{snippets}/api/bgms/http-response.adoc[]
+
+== 내가 등록한 bgm 조회
+=== Request
+include::{snippets}/api/bgms/my/http-request.adoc[]
+
+=== Response
+include::{snippets}/api/bgms/my/http-response.adoc[]
+
+== bgm 삭제
+=== Request
+include::{snippets}/api/bgms/delete/http-request.adoc[]
+
+=== Response
+include::{snippets}/api/bgms/delete/http-response.adoc[]
