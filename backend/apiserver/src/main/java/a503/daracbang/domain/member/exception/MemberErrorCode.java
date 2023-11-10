@@ -6,7 +6,10 @@ public enum MemberErrorCode implements ErrorCode {
     MEMBER_NOT_FOUND("MEMBER_001","해당 회원을 찾을 수 없습니다.",404),
     DUPLICATE_MEMBER_LOGIN_ID("MEMBER_002", "중복된 아이디입니다.", 409),
     DUPLICATE_MEMBER_NICKNAME("MEMBER_003", "중복된 닉네임입니다.", 409),
-    INCORRECT_PASSWORD("MEMBER_004", "비밀번호가 올바르지 않습니다", 400)
+    INCORRECT_PASSWORD("MEMBER_004", "비밀번호가 올바르지 않습니다", 400),
+
+    INVALID_JWT("MEMBER_005", "인증에 실패했습니다.", 401),
+
     ;
 
     private String errorCode;
