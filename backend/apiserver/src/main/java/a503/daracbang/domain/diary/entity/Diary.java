@@ -48,4 +48,8 @@ public class Diary extends BaseTimeEntity {
         this.sentiment = new Sentiment(response);
     }
 
+    public boolean isOwner(Long requesterId){
+        return this.member.getId().equals(requesterId);
+    }
+
 }

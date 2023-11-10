@@ -4,5 +4,7 @@ import a503.daracbang.global.exception.CustomException;
 import a503.daracbang.global.exception.ErrorCode;
 
 public class CommentNotWriterException extends CustomException {
-    public CommentNotWriterException(ErrorCode errorCode){super(errorCode);}
+    public CommentNotWriterException(){
+        super(CommentErrorCode.NOTWRITER_COMMENT);
+    }
 }

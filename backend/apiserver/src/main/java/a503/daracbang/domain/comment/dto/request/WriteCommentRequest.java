@@ -34,7 +34,4 @@ public class WriteCommentRequest {
     public WriteCommentRequest(){
     }
 
-
-
-
 }

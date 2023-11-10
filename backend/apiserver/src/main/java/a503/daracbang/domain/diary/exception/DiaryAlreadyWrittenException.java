@@ -4,7 +4,7 @@ import a503.daracbang.global.exception.CustomException;
 import a503.daracbang.global.exception.ErrorCode;
 
 public class DiaryAlreadyWrittenException extends CustomException {
-    public DiaryAlreadyWrittenException(ErrorCode errorCode){
-        super(errorCode);
+    public DiaryAlreadyWrittenException(){
+        super(DiaryErrorCode.ALREADYWRITTEN_DIARY);
     }
 }
