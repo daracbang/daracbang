@@ -14,6 +14,13 @@ public class MyBgmResponse {
 
     private String url;
 
+    public MyBgmResponse(Long bgmId, String bgmName, String videoId, String url) {
+        this.bgmId = bgmId;
+        this.bgmName = bgmName;
+        this.videoId = videoId;
+        this.url = url;
+    }
+
     public MyBgmResponse(Bgm bgm) {
         this.bgmId = bgm.getId();
         this.bgmName = bgm.getBgmName();

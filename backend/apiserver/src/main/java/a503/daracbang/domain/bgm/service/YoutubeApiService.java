@@ -2,6 +2,7 @@ package a503.daracbang.domain.bgm.service;
 
 import a503.daracbang.domain.bgm.dto.response.YoutubeListResponse;
 import a503.daracbang.domain.bgm.dto.response.YoutubeResponse;
+import a503.daracbang.domain.bgm.exception.YoutubeErrorException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,8 @@ import java.net.URI;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static a503.daracbang.domain.bgm.exception.BgmErrorCode.YOUTUBE_ERROR_BGM;
 
 @Component
 public class YoutubeApiService {
@@ -50,9 +53,9 @@ public class YoutubeApiService {
             }
             return new YoutubeListResponse(bgms);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new YoutubeErrorException(YOUTUBE_ERROR_BGM);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new YoutubeErrorException(YOUTUBE_ERROR_BGM);
         }
     }
 }

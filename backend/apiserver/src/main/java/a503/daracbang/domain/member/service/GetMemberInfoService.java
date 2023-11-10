@@ -33,4 +33,8 @@ public class GetMemberInfoService {
 		return memberInfoResponse;
 	}
 
+	public Member getMember(Long id) {
+		return memberRepository.findById(id)
+			.orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
+	}
 }

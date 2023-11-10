@@ -5,6 +5,7 @@ import a503.daracbang.domain.guestbook.dto.response.GuestbookListResponse;
 import a503.daracbang.domain.guestbook.service.CreateGuestbookService;
 import a503.daracbang.domain.guestbook.service.DeleteGuestbookService;
 import a503.daracbang.domain.guestbook.service.FindGuestBookService;
+import a503.daracbang.domain.member.util.MemberContextHolder;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,8 @@ public class GuestbookController {
 
     @DeleteMapping("/{guestbookId}")
     public ResponseEntity<Void> delete(@PathVariable("guestbookId") Long guestbookId) {
-        deleteGuestbookService.delete(guestbookId, 1L);
+        Long memberId = MemberContextHolder.memberIdHolder.get();
+        deleteGuestbookService.delete(guestbookId, memberId);
         return ResponseEntity.noContent().build();
     }
 

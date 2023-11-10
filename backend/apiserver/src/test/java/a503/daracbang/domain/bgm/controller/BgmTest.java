@@ -11,7 +11,9 @@ import a503.daracbang.domain.bgm.entity.Bgm;
 import a503.daracbang.domain.bgm.service.CreateBgmService;
 import a503.daracbang.domain.bgm.service.DeleteBgmService;
 import a503.daracbang.domain.bgm.service.FindBgmService;
+import a503.daracbang.domain.member.entity.Member;
 import a503.daracbang.domain.member.interceptor.ValidTokenInterceptor;
+import a503.daracbang.domain.member.repository.MemberRepository;
 import a503.daracbang.domain.member.util.JwtUtil;
 import a503.daracbang.global.ApiDocsTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,6 +51,9 @@ public class BgmTest extends ApiDocsTest {
 
     @MockBean
     private FindBgmService findBgmService;
+
+    @MockBean
+    private MemberRepository memberRepository;
 
     @MockBean
     private JwtUtil jwtUtil;
@@ -106,6 +111,7 @@ public class BgmTest extends ApiDocsTest {
     void BGM_등록_URL_버전() throws Exception {
         // given
         RegisterBgmUrlRequest req = new RegisterBgmUrlRequest("bgmName", "url");
+        memberRepository.save(멤버_만들기());
         String jwt = "mockJwtToken";
 
         // when
@@ -126,8 +132,8 @@ public class BgmTest extends ApiDocsTest {
     @Test
     void 내가_등록한_BGM_보기() throws Exception {
         // given
-        MyBgmResponse response1 = new MyBgmResponse(bgm1_만들기(1L));
-        MyBgmResponse response2 = new MyBgmResponse(bgm2_만들기(1L));
+        MyBgmResponse response1 = new MyBgmResponse(bgm1_만들기(멤버_만들기()));
+        MyBgmResponse response2 = new MyBgmResponse(bgm2_만들기(멤버_만들기()));
         MyBgmListResponse responseList = new MyBgmListResponse(Arrays.asList(response1, response2));
         String jwt = "mockJwtToken";
 
@@ -148,7 +154,7 @@ public class BgmTest extends ApiDocsTest {
     @Test
     void BGM_삭제() throws Exception {
         // given
-        Bgm bgm = bgm1_만들기(1L);
+        Bgm bgm = bgm1_만들기(멤버_만들기());
         String jwt = "mockJwtToken";
 
         // when
@@ -165,11 +171,20 @@ public class BgmTest extends ApiDocsTest {
         
     }
 
-    private Bgm bgm1_만들기(long memberId) {
-        return new Bgm(memberId, "bgmName1", "videoId1", "url1");
+    private Bgm bgm1_만들기(Member member) {
+        return new Bgm(member, "bgmName1", "videoId1", "url1");
     }
 
-    private Bgm bgm2_만들기(long memberId) {
-        return new Bgm(memberId, "bgmName2", "videoId2", "url2");
+    private Bgm bgm2_만들기(Member member) {
+        return new Bgm(member, "bgmName2", "videoId2", "url2");
+    }
+
+    private Member 멤버_만들기() {
+        return Member.builder()
+            .loginId("loginId")
+            .password("password")
+            .nickname("nickname")
+            .profileImage("profileImage")
+            .build();
     }
 }

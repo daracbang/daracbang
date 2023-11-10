@@ -1,6 +1,7 @@
 package a503.daracbang.domain.bgm.dto.request;
 
 import a503.daracbang.domain.bgm.entity.Bgm;
+import a503.daracbang.domain.member.entity.Member;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
@@ -18,7 +19,7 @@ public class RegisterBgmIdRequest {
         this.bgmName = bgmName;
     }
 
-    public Bgm toEntity() {
-        return new Bgm(1L, bgmName, videoId, "default url");
+    public Bgm toEntity(Member member) {
+        return new Bgm(member, bgmName, videoId, "default url");
     }
 }

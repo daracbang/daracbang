@@ -33,15 +33,15 @@ public class BgmController {
 
     @PostMapping("/url")
     public ResponseEntity<Void> createByUrl(@Valid @RequestBody RegisterBgmUrlRequest registerBgmUrlRequest) {
-        // Long myId = MemberContextHolder.memberIdHolder.get();
-        createBgmService.saveBgmUrl(registerBgmUrlRequest, 1L);
+        Long memberId = MemberContextHolder.memberIdHolder.get();
+        createBgmService.saveBgmUrl(registerBgmUrlRequest, memberId);
         return ResponseEntity.created(URI.create("/api/bgm/url")).build();
     }
 
     @PostMapping
     public ResponseEntity<Void> createById(@Valid @RequestBody RegisterBgmIdRequest registerBgmIdRequest) {
-        // Long myId = MemberContextHolder.memberIdHolder.get();
-        createBgmService.saveBgmId(registerBgmIdRequest, 1L);
+        Long memberId = MemberContextHolder.memberIdHolder.get();
+        createBgmService.saveBgmId(registerBgmIdRequest, memberId);
         return ResponseEntity.created(URI.create("/api/bgm")).build();
     }
 
@@ -61,7 +61,8 @@ public class BgmController {
 
     @DeleteMapping("/{bgmId}")
     public ResponseEntity<Void> delete(@PathVariable("bgmId") Long bgmId) {
-        deleteBgmService.delete(bgmId, 1L);
+        Long memberId = MemberContextHolder.memberIdHolder.get();
+        deleteBgmService.delete(bgmId, memberId);
         return ResponseEntity.noContent().build();
     }
 }
