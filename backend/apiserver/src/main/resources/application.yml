@@ -1,6 +1,10 @@
 spring:
   profiles:
     default: local # default 는 local로 실행한다.
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
 
   datasource:
     url: ${DATASOURCE_URL}
@@ -45,3 +49,9 @@ clova:
 
 jwt:
   secret: ${JWT_SECRET}
+
+s3:
+  bucket: ${S3_bUCKET}
+  aws_url: ${S3_AWS_URL}
+  access_key: ${S3_ACCESS_KEY}
+  secret_key: ${S3_SECRET_KEY}

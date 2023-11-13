@@ -9,7 +9,8 @@ public enum MemberErrorCode implements ErrorCode {
     INCORRECT_PASSWORD("MEMBER_004", "비밀번호가 올바르지 않습니다", 400),
 
     INVALID_JWT("MEMBER_005", "인증에 실패했습니다.", 401),
-
+    INVALID_PROFILE_IMAGE("MEMBER_006","잘못된 이미지 파일입니다",400),
+    NOT_CONTAIN_JWT("MEMBER_006","헤더에 토큰이 없습니다",401);
     ;
 
     private String errorCode;

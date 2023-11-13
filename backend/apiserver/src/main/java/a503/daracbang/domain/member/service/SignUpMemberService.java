@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class SignUpMemberService {
 
 	private final MemberRepository memberRepository;
+	private final ProfileImageUploader profileImageUploader;
 
 	public Member signUp(SignUpMemberRequest signUpMemberRequest) {
 		boolean isExist = memberRepository.existsByLoginId(signUpMemberRequest.getLoginId());
@@ -29,10 +30,10 @@ public class SignUpMemberService {
 		if (isExist) {
 			throw new CustomException(MemberErrorCode.DUPLICATE_MEMBER_NICKNAME);
 		}
-
 		signUpMemberRequest.setPassword(encodePassword(signUpMemberRequest.getPassword()));
+		String profileImageUrl = profileImageUploader.upload(signUpMemberRequest.getImage());
 
-		return memberRepository.save(signUpMemberRequest.toEntity());
+		return memberRepository.save(signUpMemberRequest.toEntity(profileImageUrl));
 	}
 
 	private String encodePassword(String password) {
