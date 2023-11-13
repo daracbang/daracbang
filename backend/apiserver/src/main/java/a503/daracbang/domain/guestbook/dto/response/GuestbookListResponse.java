@@ -7,12 +7,12 @@ import java.util.List;
 @Getter
 public class GuestbookListResponse {
 
-    List<GuestbookResponse> guestbooks;
+    List<GuestbookResponse> datas;
 
     long lastId;
 
     public GuestbookListResponse(List<GuestbookResponse> guestbooks, long lastId) {
-        this.guestbooks = guestbooks;
+        this.datas = guestbooks;
         this.lastId = lastId;
     }
 }
