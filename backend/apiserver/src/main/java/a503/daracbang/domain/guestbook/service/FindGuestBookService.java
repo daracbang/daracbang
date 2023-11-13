@@ -31,24 +31,13 @@ public class FindGuestBookService {
             .orElseThrow(() -> new GuestbookNotFoundException(NOTFOUND_GUESTBOOK));
     }
 
-    public GuestbookListResponse getFirstPage(Long ownerId) {
-        final PageRequest pageRequest  = PageRequest.of(0, PAGE_SIZE);
-        List<GuestbookResponse> firstPage = guestbookRepository.findGuestBookFirstPage(ownerId, pageRequest);
-        long lastId = 0L;
-        if (!firstPage.isEmpty()) {
-            lastId = firstPage.get(firstPage.size() - 1).getGuestBookId();
-        }
-        return new GuestbookListResponse(firstPage, lastId);
-
-    }
-
-    public GuestbookListResponse getNextPage(Long ownerId, Long lastId) {
+    public GuestbookListResponse getGuestBooks(Long ownerId, Long lastId) {
         PageRequest pageRequest  = PageRequest.of(0, PAGE_SIZE);
-        List<GuestbookResponse> nextPage = guestbookRepository.findGuestBookNextPage(ownerId, lastId, pageRequest);
+        List<GuestbookResponse> guestBooks = guestbookRepository.findGuestBooks(ownerId, lastId, pageRequest);
         long nextId = 0L;
-        if (!nextPage.isEmpty()) {
-            nextId = nextPage.get(nextPage.size() - 1).getGuestBookId();
+        if (!guestBooks.isEmpty()) {
+            nextId = guestBooks.get(guestBooks.size() - 1).getGuestBookId();
         }
-        return new GuestbookListResponse(nextPage, nextId);
+        return new GuestbookListResponse(guestBooks, nextId);
     }
 }

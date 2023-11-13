@@ -51,11 +51,9 @@ public class GuestbookController {
                                                        @RequestParam(value = "lastId", required = false) Long lastId) {
         GuestbookListResponse response;
         if (lastId == null || lastId < 1) {
-            response = findGuestBookService.getFirstPage(ownerId);
+            lastId = Long.MAX_VALUE;
         }
-        else {
-            response = findGuestBookService.getNextPage(ownerId, lastId);
-        }
+        response = findGuestBookService.getGuestBooks(ownerId, lastId);
         return ResponseEntity.ok(response);
     }
 }
