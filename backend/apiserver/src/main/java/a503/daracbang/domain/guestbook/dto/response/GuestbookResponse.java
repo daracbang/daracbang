@@ -10,7 +10,7 @@ public class GuestbookResponse {
 
     private Long guestBookId;
 
-    private Long memberId;
+    private Long writerId;
 
     private String nickname;
 
@@ -21,9 +21,9 @@ public class GuestbookResponse {
 
     private LocalDateTime createdAt;
 
-    public GuestbookResponse(Long guestBookId, Long memberId, String nickname, String profileImage, String content, LocalDateTime createdAt) {
+    public GuestbookResponse(Long guestBookId, Long writerId, String nickname, String profileImage, String content, LocalDateTime createdAt) {
         this.guestBookId = guestBookId;
-        this.memberId = memberId;
+        this.writerId = writerId;
         this.nickname = nickname;
         this.profileImage = profileImage;
         this.content = content;
