@@ -3,6 +3,7 @@ package a503.daracbang.domain.member.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import a503.daracbang.domain.bgm.entity.Bgm;
 import a503.daracbang.domain.comment.entity.Comment;
 import a503.daracbang.domain.diary.entity.Diary;
 import a503.daracbang.domain.guestbook.entity.Guestbook;
@@ -43,6 +44,9 @@ public class Member extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Guestbook> guestbooks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Bgm> bgms = new ArrayList<>();
 
     @OneToMany(mappedBy = "requester", cascade = CascadeType.ALL)
     private List<Neighbor> requesters = new ArrayList<>();
