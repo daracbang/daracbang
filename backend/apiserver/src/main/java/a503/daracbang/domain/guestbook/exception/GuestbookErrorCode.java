@@ -3,8 +3,8 @@ package a503.daracbang.domain.guestbook.exception;
 import a503.daracbang.global.exception.ErrorCode;
 
 public enum GuestbookErrorCode implements ErrorCode {
-    NOTWRITER_GUESTBOOK("GUESTBOOK_002","방명록 작성자가 아닙니다.",403),
-    NOTFOUND_GUESTBOOK("GUESTBOOK_001","해당 방명록을 찾을 수 없습니다.",404);
+    NOTWRITER_GUESTBOOK("GUESTBOOK_001","방명록 작성자가 아닙니다.",403),
+    NOTFOUND_GUESTBOOK("GUESTBOOK_002","해당 방명록을 찾을 수 없습니다.",404);
 
     private String errorCode;
     private String message;

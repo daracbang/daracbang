@@ -50,7 +50,7 @@ public class GuestbookController {
     public ResponseEntity<GuestbookListResponse> reads(@PathVariable("ownerId") Long ownerId,
                                                        @RequestParam(value = "lastId", required = false) Long lastId) {
         GuestbookListResponse response;
-        if (lastId == null || lastId <= 1) {
+        if (lastId == null || lastId < 1) {
             response = findGuestBookService.getFirstPage(ownerId);
         }
         else {
