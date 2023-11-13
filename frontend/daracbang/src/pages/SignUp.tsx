@@ -51,17 +51,17 @@ const SignUp = () => {
     // 아이디 중복 확인 함수
     const checkLoginId = () => {
         axios
-            .get(`http://localhost:8080/api/members/login-id/${loginId}`) 
+            .get(`http://localhost:8080/api/members/login-id/${loginId}`)
             .then((response) => {
                 alert("사용 가능한 아이디입니다.");
                 setLoginId(loginId);
             })
             .catch((error) => {
                 console.log(error);
-                alert("중복된 아이디입니다."); 
+                alert("중복된 아이디입니다.");
             });
     };
-    
+
 
     // 닉네임 변경
     const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {

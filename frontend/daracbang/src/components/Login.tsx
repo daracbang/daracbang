@@ -5,10 +5,13 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function FormDialog() {
     const [open, setOpen] = React.useState(false);
+    const [loginId, setLoginId] = React.useState("");
+    const [password, setPassword] = React.useState("");
+
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -17,6 +20,35 @@ export default function FormDialog() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const loginIdHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setLoginId(event.target.value);
+    }
+
+    const passwordHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(event.target.value);
+    }
+
+    const clickLogin = () => {
+        axios
+            .post(`http://localhost:8080/api/members/login`, {
+                loginId: loginId,
+                password: password
+
+            })
+            .then((response) => {
+                if (response.data) {
+                    localStorage.setItem("accessToken", JSON.stringify(response.data.jwt));
+                    window.location.replace("/daracbang");
+                }
+
+            })
+            .catch((error) => {
+                console.log(error);
+
+                alert("아이디 및 비밀번호를 다시 확인해주세요.");
+            });
+    }
 
     return (
         <div>
@@ -29,27 +61,26 @@ export default function FormDialog() {
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="name"
                         label="아이디"
-                        type="email"
+                        value={loginId}
+                        onChange={loginIdHandle}
                         fullWidth
                         variant="standard"
                     />
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="name"
                         label="비밀번호"
-                        type="email"
+                        value={password}
+                        onChange={passwordHandle}
+                        type="password"
                         fullWidth
                         variant="standard"
                     />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>취소</Button>
-                    <Link to={"/daracbang"}>
-                        <Button onClick={handleClose}>시작하기</Button>
-                    </Link>
+                    <Button onClick={clickLogin}>시작하기</Button>
                 </DialogActions>
             </Dialog>
         </div>
