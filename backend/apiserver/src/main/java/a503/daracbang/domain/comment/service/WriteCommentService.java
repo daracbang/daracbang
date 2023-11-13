@@ -38,4 +38,5 @@ public class WriteCommentService {
         comment.addSentiment(sentimentResponse);
         commentRepository.save(comment);
     }
+
 }
