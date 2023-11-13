@@ -1,14 +1,10 @@
 package a503.daracbang.domain.diary.service;
 
-import a503.daracbang.domain.diary.dto.response.DiaryListResponse;
-import a503.daracbang.domain.diary.dto.response.DiaryResponse;
-import a503.daracbang.domain.diary.dto.response.MoodTrackerListResponse;
+import a503.daracbang.domain.diary.dto.response.*;
 import a503.daracbang.domain.diary.entity.Diary;
 import a503.daracbang.domain.diary.entity.Scope;
-import a503.daracbang.domain.diary.exception.DiaryErrorCode;
 import a503.daracbang.domain.diary.exception.DiaryNoPermissionException;
 import a503.daracbang.domain.diary.exception.DiaryNotFoundException;
-import a503.daracbang.domain.diary.exception.DiaryNotWriterException;
 import a503.daracbang.domain.diary.repository.DiaryRepository;
 import a503.daracbang.domain.neighbor.service.NeighborService;
 import lombok.RequiredArgsConstructor;
@@ -42,15 +38,34 @@ public class FindDiaryService {
     public DiaryListResponse getDiaryList(Long requesterId, Long memberId) {
         if(requesterId.equals(memberId))
             return new DiaryListResponse(diaryRepository.findAllByMemberId(memberId));
-        List<Diary> scopeCheckedDiaryList = checkDiaryListScope(diaryRepository.findAllByMemberId(memberId), requesterId);
+        List<Diary> scopeCheckedDiaryList = getViewableDiaryList(diaryRepository.findAllByMemberId(memberId), requesterId);
         return new DiaryListResponse(scopeCheckedDiaryList);
     }
 
     public MoodTrackerListResponse getMoodTracker(Long requesterId, Long memberId, int year, int month) {
         if(requesterId.equals(memberId))
             return new MoodTrackerListResponse(diaryRepository.findByMemberIdAndCreatedAtYearAndMonth(memberId, year, month));
-        List<Diary> scopeCheckedDiaryList = checkDiaryListScope(diaryRepository.findByMemberIdAndCreatedAtYearAndMonth(memberId, year, month), requesterId);
+        List<Diary> scopeCheckedDiaryList = getViewableDiaryList(diaryRepository.findByMemberIdAndCreatedAtYearAndMonth(memberId, year, month), requesterId);
         return new MoodTrackerListResponse(scopeCheckedDiaryList);
+    }
+
+    public MoodStatusResponse getMoodStatus(Long memberId) {
+        List<Diary> diaryList = diaryRepository.findByMemberIdOrderByCreatedAt(memberId);
+        if(!diaryList.isEmpty()){
+            return new MoodStatusResponse(diaryList.get(0));
+        }
+        return new MoodStatusResponse();
+    }
+
+    public RecentDiaryResponse getRecentDiary(Long requesterId, Long memberId){
+        if(requesterId.equals(memberId)) {
+            List<Diary> myDiaryList = diaryRepository.findAllByMemberId(memberId);
+            return new RecentDiaryResponse(myDiaryList.get(myDiaryList.size()-1));
+        }
+        List<Diary> viewableDiaryList = getViewableDiaryList(diaryRepository.findAllByMemberId(memberId), requesterId);
+        if(viewableDiaryList.isEmpty())
+            return new RecentDiaryResponse();
+        return new RecentDiaryResponse(viewableDiaryList.get(viewableDiaryList.size()-1));
     }
 
     // 요청한 유저가 볼 수있는지 체크
@@ -65,7 +80,7 @@ public class FindDiaryService {
         return false;
     }
 
-    private List<Diary> checkDiaryListScope(List<Diary> diaryList, Long requesterId){
+    private List<Diary> getViewableDiaryList(List<Diary> diaryList, Long requesterId){
         List<Diary> filteredDiaryList = new ArrayList<>();
         for(Diary diary:diaryList){
             if(isViewableDiary(diary,requesterId))
@@ -73,4 +88,5 @@ public class FindDiaryService {
         }
         return filteredDiaryList;
     }
+
 }

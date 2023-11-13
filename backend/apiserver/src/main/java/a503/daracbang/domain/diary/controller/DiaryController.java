@@ -1,9 +1,7 @@
 package a503.daracbang.domain.diary.controller;
 
 import a503.daracbang.domain.diary.dto.request.WriteDiaryRequest;
-import a503.daracbang.domain.diary.dto.response.DiaryListResponse;
-import a503.daracbang.domain.diary.dto.response.DiaryResponse;
-import a503.daracbang.domain.diary.dto.response.MoodTrackerListResponse;
+import a503.daracbang.domain.diary.dto.response.*;
 import a503.daracbang.domain.diary.exception.DiaryErrorCode;
 import a503.daracbang.domain.diary.exception.ScopeNotExistsException;
 import a503.daracbang.domain.diary.service.DeleteDiaryService;
@@ -48,7 +46,6 @@ public class DiaryController {
         return ResponseEntity.ok(diaryResponse);
     }
 
-
     @GetMapping("/list/{memberId}")
     public ResponseEntity<?> getDiaryList(@PathVariable Long memberId){
         Long requesterId = MemberContextHolder.memberIdHolder.get();
@@ -62,5 +59,18 @@ public class DiaryController {
         Long requesterId = MemberContextHolder.memberIdHolder.get();
         MoodTrackerListResponse moodTrackerListResponse = findDiaryService.getMoodTracker(requesterId, memberId, year, month);
         return ResponseEntity.ok(moodTrackerListResponse);
+    }
+
+    @GetMapping("/mood-status/{memberId}")
+    public ResponseEntity<?> getMoodStatus(@PathVariable Long memberId){
+        MoodStatusResponse moodStatusResponse = findDiaryService.getMoodStatus(memberId);
+        return ResponseEntity.ok(moodStatusResponse);
+    }
+
+    @GetMapping("/recent/{memberId}")
+    public ResponseEntity<?> getRecentDiary(@PathVariable Long memberId){
+        Long requesterId = MemberContextHolder.memberIdHolder.get();
+        RecentDiaryResponse recentDiaryResponse = findDiaryService.getRecentDiary(requesterId, memberId);
+        return ResponseEntity.ok(recentDiaryResponse);
     }
 }
