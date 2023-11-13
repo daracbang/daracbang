@@ -18,8 +18,9 @@ public class CreateGuestbookService {
     private final GetMemberInfoService getMemberInfoService;
 
     @Transactional
-    public void save(Long memberId, RegisterGuestbookRequest form) {
-        Member member = getMemberInfoService.getMember(memberId);
-        guestbookRepository.save(form.toEntity(member));
+    public void save(Long ownerId, Long writerId, RegisterGuestbookRequest form) {
+        Member owner = getMemberInfoService.getMember(ownerId);
+        Member writer = getMemberInfoService.getMember(writerId);
+        guestbookRepository.save(form.toEntity(owner, writer));
     }
 }
