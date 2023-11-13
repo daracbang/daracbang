@@ -8,7 +8,7 @@ import axios from 'axios';
 let formData = new FormData();
 
 const SignUp = () => {
-
+    const [profilefile, setProfileFile] = useState<any>(null);
     const [img, setImg] = useState(DefaultImg);
     const [loginId, setLoginId] = useState("");
     const [nickname, setNickname] = useState("");
@@ -30,11 +30,9 @@ const SignUp = () => {
         const file = e.target.files && e.target.files[0];
 
         if (file) {
-            formData.append("file", file);
-            formData.append("fileType", file.type);
 
             setImg(URL.createObjectURL(file));
-
+            setProfileFile(file);
             for (const key of formData.keys()) {
                 console.log(key);
             }
@@ -52,27 +50,18 @@ const SignUp = () => {
 
     // 아이디 중복 확인 함수
     const checkLoginId = () => {
-        setLoginId(loginId);
-
         axios
-            .get(`http://localhost:8080/api/members/login-id/` + loginId, {
-                params: {
-                    loginId: loginId,
-                },
-            })
+            .get(`http://localhost:8080/api/members/login-id/${loginId}`) 
             .then((response) => {
-
-                if (response.data !== loginId) {
-
-                    alert("사용 가능한 아이디입니다.");
-                }
+                alert("사용 가능한 아이디입니다.");
+                setLoginId(loginId);
             })
             .catch((error) => {
                 console.log(error);
-                alert("중복된 아이디입니다.");
+                alert("중복된 아이디입니다."); 
             });
     };
-
+    
 
     // 닉네임 변경
     const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,18 +72,11 @@ const SignUp = () => {
 
     // 닉네임 중복 확인 함수
     const checkNickname = () => {
-        setNickname(nickname);
-
         axios
-            .get(`http://localhost:8080/api/members/nickname/` + nickname, {
-                params: {
-                    nickname: nickname,
-                },
-            })
+            .get(`http://localhost:8080/api/members/nickname/${nickname}`)
             .then((response) => {
-                if (response.data !== nickname) {
-                    alert("사용 가능한 닉네임입니다.");
-                }
+                alert("사용 가능한 닉네임입니다.");
+                setNickname(nickname);
             })
             .catch((error) => {
                 console.log(error);
@@ -140,11 +122,12 @@ const SignUp = () => {
         console.log("nickName :" + nickname);
         console.log("loginId :" + loginId);
         console.log("password :" + password);
-        console.log("img :" + img);
+        console.log("img :" + profilefile);
 
-        formData.append("loginId", encodeURIComponent(loginId));
-        formData.append("nickname", encodeURIComponent(nickname));
-        formData.append("password", encodeURIComponent(password));
+        formData.append("loginId", loginId);
+        formData.append("nickname", nickname);
+        formData.append("password", password);
+        formData.append("image", profilefile);
 
         axios
             .post(`http://localhost:8080/api/members`, formData, {
