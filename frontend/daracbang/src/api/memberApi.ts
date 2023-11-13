@@ -23,3 +23,9 @@ export const signUp = async (formdata: FormData) => {
     },
   });
 };
+
+export const login = async (loginId: string, password: string) => {
+  const LOGIN_URL = "/api/members/login";
+
+  return await http.post(LOGIN_URL, { loginId, password });
+};

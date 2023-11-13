@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { Avatar, Button, TextField } from "@mui/material";
 import DefaultImg from "../assets/images/defaultImg.png";
 import { isAxiosError } from "axios";
-import * as signUpApis from "../api/signUpApi";
+import * as signUpApis from "../api/memberApi";
 import { ResponseDataType } from "../api/responseType";
 import { loginIdValidator, nicknameValidator } from "../utils/validator";
 import { useNavigate } from "react-router-dom";
@@ -79,11 +79,11 @@ const SignUp = () => {
       setLoginHelperText("사용 가능한 아이디입니다!");
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
-        if (error.status === 409) {
+        if (error.response!.status === 409) {
           alert("중복된 아이디 입니다.");
           return;
         }
-        if (error.status === 400) {
+        if (error.response!.status === 400) {
           alert("잘못된 ID 입니다.");
           return;
         }
