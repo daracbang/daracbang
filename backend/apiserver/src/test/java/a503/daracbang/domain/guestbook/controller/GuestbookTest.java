@@ -21,6 +21,7 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +55,7 @@ class GuestbookTest extends ApiDocsTest {
     void 방명록_생성_성공() throws Exception {
         // given
         RegisterGuestbookRequest form = new RegisterGuestbookRequest("test");
-        doNothing().when(createGuestbookService).save(1L, form);
+        doNothing().when(createGuestbookService).save(1L, 2L, form);
         String jwt = "mockJwtToken";
 
         // when & then
@@ -91,8 +92,8 @@ class GuestbookTest extends ApiDocsTest {
     void 방명록_페이지네이션() throws Exception {
         // given
         List<GuestbookResponse> guestbooks = new ArrayList<>();
-        guestbooks.add(new GuestbookResponse(1L, "nickname1", "profileImage1", "content1"));
-        guestbooks.add(new GuestbookResponse(2L, "nickname2", "profileImage2", "content2"));
+        guestbooks.add(방명록1_조회_응답_생성());
+        guestbooks.add(방명록2_조회_응답_생성());
         GuestbookListResponse responses = new GuestbookListResponse(guestbooks, 1);
         String jwt = "mockJwtToken";
 
@@ -117,5 +118,13 @@ class GuestbookTest extends ApiDocsTest {
             .andExpect(jsonPath("$.guestbooks[1].nickname").value("nickname2"))
             .andExpect(jsonPath("$.guestbooks[1].profileImage").value("profileImage2"))
             .andExpect(jsonPath("$.guestbooks[1].content").value("content2"));
+    }
+
+    private GuestbookResponse 방명록1_조회_응답_생성() {
+        return new GuestbookResponse(1L, 1L, "nickname1", "profileImage1", "content1", LocalDateTime.now());
+    }
+
+    private GuestbookResponse 방명록2_조회_응답_생성() {
+        return new GuestbookResponse(2L, 2L, "nickname1", "profileImage1", "content1", LocalDateTime.now());
     }
 }

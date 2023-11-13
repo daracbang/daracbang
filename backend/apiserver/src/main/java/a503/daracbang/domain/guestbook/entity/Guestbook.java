@@ -24,19 +24,24 @@ public class Guestbook extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "owner_id")
+    private Member owner;
+
+    @ManyToOne
+    @JoinColumn(name = "writer_id")
+    private Member writer;
 
     @Column(nullable = false, length = 200)
     private String content;
 
-    public Guestbook(Member member, String content) {
-        this.member = member;
+    public Guestbook(Member owner, Member writer, String content) {
+        this.owner = owner;
+        this.writer = writer;
         this.content = content;
     }
 
     public boolean isWriter(long memberId) {
-        if (this.member.getId() == memberId) {
+        if (this.writer.getId() == memberId) {
             return true;
         }
         return false;
