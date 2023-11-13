@@ -9,22 +9,22 @@
 
 == 방명록 생성
 === Request
-include::{snippets}/guestbooks/save/http-request.adoc[]
+include::{snippets}/api/guestbooks/save/http-request.adoc[]
 
 === Response
-include::{snippets}/guestbooks/save/http-response.adoc[]
+include::{snippets}/api/guestbooks/save/http-response.adoc[]
 
 == 방명록 삭제
 === Request
-include::{snippets}/guestbooks/delete/http-request.adoc[]
+include::{snippets}/api/guestbooks/delete/http-request.adoc[]
 
 === Response
-include::{snippets}/guestbooks/delete/http-response.adoc[]
+include::{snippets}/api/guestbooks/delete/http-response.adoc[]
 
 == 방명록 리스트 조회
 === Request
-include::{snippets}/guestbooks/pagination/http-request.adoc[]
+include::{snippets}/api/guestbooks/pagination/http-request.adoc[]
 
 === Response
-include::{snippets}/guestbooks/pagination/http-response.adoc[]
+include::{snippets}/api/guestbooks/pagination/http-response.adoc[]
 
