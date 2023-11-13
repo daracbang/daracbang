@@ -1,16 +1,18 @@
 package a503.daracbang.domain.guestbook.dto.response;
 
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
 public class GuestbookListResponse {
 
-    List<GuestbookResponse> guestbooks;
+    List<GuestbookResponse> datas;
 
-    public GuestbookListResponse(List<GuestbookResponse> guestbooks) {
-        this.guestbooks = guestbooks;
-    }
+    long lastId;
 
-    public List<GuestbookResponse> getGuestbooks() {
-        return guestbooks;
+    public GuestbookListResponse(List<GuestbookResponse> guestbooks, long lastId) {
+        this.datas = guestbooks;
+        this.lastId = lastId;
     }
 }
