@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  namespace: jenkins
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-nginx
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: jenkins.daracbang.co.kr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: jenkins-service
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - jenkins.daracbang.co.kr
+      secretName: letsencrypt-nginx
