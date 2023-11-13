@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class GuestbookResponse {
 
-    private Long memberId;
+    private Long guestBookId;
 
     private String nickname;
 
@@ -15,8 +15,8 @@ public class GuestbookResponse {
     @Size(min = 1, max = 200, message = "1 ~ 200 자까지 가능합니다.")
     private String content;
 
-    public GuestbookResponse(Long memberId, String nickname, String profileImage, String content) {
-        this.memberId = memberId;
+    public GuestbookResponse(Long guestBookId, String nickname, String profileImage, String content) {
+        this.guestBookId = guestBookId;
         this.nickname = nickname;
         this.profileImage = profileImage;
         this.content = content;

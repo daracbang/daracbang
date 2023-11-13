@@ -12,15 +12,21 @@ import java.util.List;
 
 public interface GuestbookRepository extends JpaRepository<Guestbook, Long> {
 
-    /**
-     * Member 구현이 안 돼서 주석처리함
-     */
-    @Query("SELECT new a503.daracbang.domain.guestbook.dto.response.GuestbookResponse(m.id, m.nickname, m.profileImage, gb.content) " +
+    @Query("SELECT new a503.daracbang.domain.guestbook.dto.response.GuestbookResponse(g.id, m.nickname, m.profileImage, gb.content) " +
         "FROM Guestbook gb " +
         "LEFT JOIN gb.member m ON gb.member.id = m.id " +
         "WHERE gb.member.id = :memberId " +
-        "AND gb.id < :nextId ")
-    List<GuestbookResponse> findAllGuestbookByPaging(@Param("memberId") long memberId,
-                                                     @Param("nextId") long nextId,
+        "ORDER BY id DESC")
+    List<GuestbookResponse> findGuestBookFirstPage(@Param("memberId") long memberId,
+                                                     Pageable pageable);
+
+    @Query("SELECT new a503.daracbang.domain.guestbook.dto.response.GuestbookResponse(g.id, m.nickname, m.profileImage, gb.content) " +
+        "FROM Guestbook gb " +
+        "LEFT JOIN gb.member m ON gb.member.id = m.id " +
+        "WHERE gb.member.id = :memberId " +
+        "AND gb.id < :lastId " +
+        "ORDER BY id DESC")
+    List<GuestbookResponse> findGuestBookNextPage(@Param("memberId") long memberId,
+                                                     @Param("lastId") long lastId,
                                                      Pageable pageable);
 }

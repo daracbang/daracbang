@@ -93,12 +93,12 @@ class GuestbookTest extends ApiDocsTest {
         List<GuestbookResponse> guestbooks = new ArrayList<>();
         guestbooks.add(new GuestbookResponse(1L, "nickname1", "profileImage1", "content1"));
         guestbooks.add(new GuestbookResponse(2L, "nickname2", "profileImage2", "content2"));
-        GuestbookListResponse responses = new GuestbookListResponse(guestbooks);
+        GuestbookListResponse responses = new GuestbookListResponse(guestbooks, 1);
         String jwt = "mockJwtToken";
 
         // when
         when(jwtUtil.generateJwt(1L)).thenReturn(jwt);
-        when(findGuestBookService.getGuestbooks(1L, 0)).thenReturn(responses);
+        when(findGuestBookService.getNextPage(1L, 1L)).thenReturn(responses);
 
         // then
         mockMvc.perform(MockMvcRequestBuilders.get("/api/guestbooks/1?lastId=0")
