@@ -1,5 +1,6 @@
 package a503.daracbang.domain.member.dto.request;
 
+import a503.daracbang.domain.member.dto.request.valid.AllowedContentType;
 import a503.daracbang.domain.member.entity.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -26,23 +28,26 @@ public class SignUpMemberRequest {
 	@Pattern(regexp = "^[a-zA-Z0-9가-힣]*$")
 	private String nickname;
 
-	private String profileImage;
+	@AllowedContentType(allowedTypes = {"image/jpg", "image/jpeg", "image/png"},
+			allowedExtensions = {"jpg", "jpeg", "png"})
+	private MultipartFile image;
 
 	@Builder
-	public SignUpMemberRequest(String loginId, String password, String nickname, String profileImage) {
+	public Member toEntity(String imageUrl) {
+		return Member.builder()
+					 .loginId(loginId)
+					 .password(password)
+					 .nickname(nickname)
+					 .profileImage(imageUrl)
+					 .build();
+	}
+	@Builder
+	public SignUpMemberRequest(String loginId, String password, String nickname,
+			MultipartFile image) {
 		this.loginId = loginId;
 		this.password = password;
 		this.nickname = nickname;
-		this.profileImage = profileImage;
-	}
-
-	public Member toEntity() {
-		return Member.builder()
-			.loginId(loginId)
-			.password(password)
-			.nickname(nickname)
-			.profileImage(profileImage)
-			.build();
+		this.image = image;
 	}
 
 	public SignUpMemberRequest(){
