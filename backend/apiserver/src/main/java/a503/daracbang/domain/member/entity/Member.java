@@ -42,8 +42,11 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Diary> diaries = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Guestbook> guestbooks = new ArrayList<>();
+    @OneToMany(mappedBy = "writer")
+    private List<Guestbook> writtenGuestbooks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "owner")
+    private List<Guestbook> ownedGuestbooks = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Bgm> bgms = new ArrayList<>();

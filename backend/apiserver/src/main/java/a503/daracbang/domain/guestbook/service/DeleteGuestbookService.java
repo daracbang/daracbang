@@ -19,9 +19,9 @@ public class DeleteGuestbookService {
     private final FindGuestBookService findGuestBookService;
 
     @Transactional
-    public void delete(Long guestbookId, Long memberId) {
+    public void delete(Long guestbookId, Long writerId) {
         Guestbook guestbook = findGuestBookService.getGuestbook(guestbookId);
-        if (!guestbook.isWriter(memberId)) {
+        if (!guestbook.isWriter(writerId)) {
             throw new GuestbookNotWriterException(NOTWRITER_GUESTBOOK);
         }
         guestbookRepository.delete(guestbook);
