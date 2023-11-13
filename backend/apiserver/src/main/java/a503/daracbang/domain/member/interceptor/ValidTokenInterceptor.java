@@ -1,5 +1,7 @@
 package a503.daracbang.domain.member.interceptor;
 
+import a503.daracbang.domain.member.exception.MemberErrorCode;
+import a503.daracbang.global.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -26,6 +28,13 @@ public class ValidTokenInterceptor implements HandlerInterceptor {
 		log.info("interceptor 호출");
 
 		String jwt = jwtUtil.getJwtFromHeader(request);
+
+		// NPP 발생 막기
+		if(jwt == null){
+			throw new CustomException(MemberErrorCode.NOT_CONTAIN_JWT);
+		}
+
+
 		jwtUtil.validateToken(jwt);
 		MemberContextHolder.memberIdHolder.set(jwtUtil.getIdFromJwt(jwt));
 

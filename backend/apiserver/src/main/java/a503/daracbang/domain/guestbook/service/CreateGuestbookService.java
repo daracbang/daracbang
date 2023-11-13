@@ -3,12 +3,10 @@ package a503.daracbang.domain.guestbook.service;
 import a503.daracbang.domain.guestbook.dto.request.RegisterGuestbookRequest;
 import a503.daracbang.domain.guestbook.repository.GuestbookRepository;
 import a503.daracbang.domain.member.entity.Member;
-import a503.daracbang.domain.member.repository.MemberRepository;
+import a503.daracbang.domain.member.service.GetMemberInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Transactional(readOnly = true)
 @Service
@@ -17,11 +15,12 @@ public class CreateGuestbookService {
 
     private final GuestbookRepository guestbookRepository;
 
-    private final MemberRepository memberRepository;
+    private final GetMemberInfoService getMemberInfoService;
 
     @Transactional
-    public void save(Long memberId, RegisterGuestbookRequest form) {
-        Optional<Member> member = memberRepository.findById(memberId);
-        guestbookRepository.save(form.toEntity(member.get()));
+    public void save(Long ownerId, Long writerId, RegisterGuestbookRequest form) {
+        Member owner = getMemberInfoService.getMember(ownerId);
+        Member writer = getMemberInfoService.getMember(writerId);
+        guestbookRepository.save(form.toEntity(owner, writer));
     }
 }

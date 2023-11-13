@@ -15,14 +15,15 @@ import static a503.daracbang.domain.guestbook.exception.GuestbookErrorCode.NOTWR
 public class DeleteGuestbookService {
 
     private final GuestbookRepository guestbookRepository;
+
     private final FindGuestBookService findGuestBookService;
 
     @Transactional
-    public void delete(Long guestbookId, Long memberId) {
-//        Member 엔티티가 구현되지 않아 주석처리
+    public void delete(Long guestbookId, Long writerId) {
         Guestbook guestbook = findGuestBookService.getGuestbook(guestbookId);
-        if (!guestbook.isWriter(memberId)) {
+        if (!guestbook.isWriter(writerId)) {
             throw new GuestbookNotWriterException(NOTWRITER_GUESTBOOK);
         }
+        guestbookRepository.delete(guestbook);
     }
 }
