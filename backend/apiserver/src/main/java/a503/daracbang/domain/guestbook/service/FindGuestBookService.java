@@ -31,11 +31,25 @@ public class FindGuestBookService {
             .orElseThrow(() -> new GuestbookNotFoundException(NOTFOUND_GUESTBOOK));
     }
 
-    public GuestbookListResponse getGuestbooks(Long memberId, Integer lastId) {
-        PageRequest pageRequest  = PageRequest.of(0, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "id"));
-        int nextId = lastId + PAGE_SIZE;
-//        Member Entity가 구현되지 않아 null 및 주석처리
-//        List<GuestbookResponse> guestbooks = guestbookRepository.findAllGuestbookByPaging(memberId, nextId, pageRequest);
-        return new GuestbookListResponse(null);
+    public GuestbookListResponse getFirstPage(Long memberId) {
+        final PageRequest pageRequest  = PageRequest.of(0, PAGE_SIZE);
+        List<GuestbookResponse> firstPage = guestbookRepository.findGuestBookFirstPage(memberId, pageRequest);
+        long lastId = 0L;
+        if (!firstPage.isEmpty()) {
+            lastId = firstPage.get(firstPage.size() - 1).getGuestBookId();
+        }
+        return new GuestbookListResponse(firstPage, lastId);
+
+    }
+
+
+    public GuestbookListResponse getNextPage(Long memberId, Long lastId) {
+        PageRequest pageRequest  = PageRequest.of(0, PAGE_SIZE);
+        List<GuestbookResponse> nextPage = guestbookRepository.findGuestBookNextPage(memberId, lastId, pageRequest);
+        long nextId = 0L;
+        if (!nextPage.isEmpty()) {
+            nextId = nextPage.get(nextPage.size() - 1).getGuestBookId();
+        }
+        return new GuestbookListResponse(nextPage, nextId);
     }
 }

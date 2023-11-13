@@ -20,10 +20,10 @@ public class DeleteGuestbookService {
 
     @Transactional
     public void delete(Long guestbookId, Long memberId) {
-//        Member 엔티티가 구현되지 않아 주석처리
         Guestbook guestbook = findGuestBookService.getGuestbook(guestbookId);
         if (!guestbook.isWriter(memberId)) {
             throw new GuestbookNotWriterException(NOTWRITER_GUESTBOOK);
         }
+        guestbookRepository.delete(guestbook);
     }
 }
