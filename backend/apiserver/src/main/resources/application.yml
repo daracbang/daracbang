@@ -1,6 +1,10 @@
 spring:
   profiles:
     default: local # default 는 local로 실행한다.
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
 
   datasource:
     url: ${DATASOURCE_URL}

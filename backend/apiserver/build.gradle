@@ -38,6 +38,9 @@ dependencies {
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
 	implementation 'com.google.apis:google-api-services-youtube:v3-rev222-1.25.0'
 
+	implementation platform('com.amazonaws:aws-java-sdk-bom:1.12.268')
+	implementation 'com.amazonaws:aws-java-sdk-s3'
+
 	implementation 'javax.xml.bind:jaxb-api:2.3.1'
 	implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
 	implementation 'org.mindrot:jbcrypt:0.4'
