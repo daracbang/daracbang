@@ -44,6 +44,11 @@ public class Diary extends BaseTimeEntity {
         this.sentiment = null;
     }
 
+    @Builder
+    public Diary(Sentiment sentiment){
+        this.sentiment = sentiment;
+    }
+
     public void addSentiment(SentimentResponse response){
         this.sentiment = new Sentiment(response);
     }

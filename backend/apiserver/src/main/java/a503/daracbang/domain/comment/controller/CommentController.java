@@ -28,7 +28,6 @@ public class CommentController {
         return ResponseEntity.ok("댓글이 작성되었습니다.");
     }
 
-    // 댓글 삭제
     @DeleteMapping("/{commentId}")
     public ResponseEntity<?> deleteComment(@PathVariable Long commentId){
         Long memberId = MemberContextHolder.memberIdHolder.get();
@@ -36,7 +35,6 @@ public class CommentController {
         return ResponseEntity.ok("댓글이 삭제되었습니다.");
     }
 
-    // 댓글 조회
     @GetMapping("/{diaryId}")
     public ResponseEntity<?> getCommentList(@PathVariable Long diaryId){
         CommentListResponse commentListResponse = findCommentService.getCommentList(diaryId);
