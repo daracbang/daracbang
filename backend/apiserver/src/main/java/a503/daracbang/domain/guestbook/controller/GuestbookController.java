@@ -31,29 +31,30 @@ public class GuestbookController {
 
     private final int PAGE_SIZE = 15;
 
-    @PostMapping("/{memberId}")
-    public ResponseEntity<Void> create(@PathVariable("memberId") Long memberId,
+    @PostMapping("/{ownerId}")
+    public ResponseEntity<Void> create(@PathVariable("ownerId") Long ownerId,
                                        @Valid @RequestBody RegisterGuestbookRequest form) {
-        createGuestbookService.save(memberId, form);
-        return ResponseEntity.created(URI.create("/api/guestbook/" + memberId)).build();
+        Long writerId = MemberContextHolder.memberIdHolder.get();
+        createGuestbookService.save(ownerId, writerId, form);
+        return ResponseEntity.created(URI.create("/api/guestbook/" + ownerId)).build();
     }
 
     @DeleteMapping("/{guestbookId}")
     public ResponseEntity<Void> delete(@PathVariable("guestbookId") Long guestbookId) {
-        Long memberId = MemberContextHolder.memberIdHolder.get();
-        deleteGuestbookService.delete(guestbookId, memberId);
+        Long writerId = MemberContextHolder.memberIdHolder.get();
+        deleteGuestbookService.delete(guestbookId, writerId);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{memberId}")
-    public ResponseEntity<GuestbookListResponse> reads(@PathVariable("memberId") Long memberId,
+    @GetMapping("/{ownerId}")
+    public ResponseEntity<GuestbookListResponse> reads(@PathVariable("ownerId") Long ownerId,
                                                        @RequestParam(value = "lastId", required = false) Long lastId) {
         GuestbookListResponse response;
         if (lastId == null || lastId <= 1) {
-            response = findGuestBookService.getFirstPage(memberId);
+            response = findGuestBookService.getFirstPage(ownerId);
         }
         else {
-            response = findGuestBookService.getNextPage(memberId, lastId);
+            response = findGuestBookService.getNextPage(ownerId, lastId);
         }
         return ResponseEntity.ok(response);
     }

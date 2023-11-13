@@ -12,21 +12,23 @@ import java.util.List;
 
 public interface GuestbookRepository extends JpaRepository<Guestbook, Long> {
 
-    @Query("SELECT new a503.daracbang.domain.guestbook.dto.response.GuestbookResponse(g.id, m.id, m.nickname, m.profileImage, g.content, g.createdAt) " +
+    @Query("SELECT new a503.daracbang.domain.guestbook.dto.response.GuestbookResponse(g.id, w.id, w.nickname, w.profileImage, g.content, g.createdAt) " +
           "FROM Guestbook g " +
-          "JOIN g.member m " +
-          "WHERE m.id = :memberId " +
+          "JOIN g.owner o " +
+          "JOIN g.writer w " +
+          "WHERE o.id = :ownerId " +
           "ORDER BY g.id DESC")
-    List<GuestbookResponse> findGuestBookFirstPage(@Param("memberId") long memberId,
+    List<GuestbookResponse> findGuestBookFirstPage(@Param("ownerId") long ownerId,
                                                      Pageable pageable);
 
-    @Query("SELECT new a503.daracbang.domain.guestbook.dto.response.GuestbookResponse(g.id, m.id, m.nickname, m.profileImage, g.content, g.createdAt) " +
+    @Query("SELECT new a503.daracbang.domain.guestbook.dto.response.GuestbookResponse(g.id, w.id, w.nickname, w.profileImage, g.content, g.createdAt) " +
           "FROM Guestbook g " +
-          "JOIN g.member m " +
-          "WHERE m.id = :memberId " +
+          "JOIN g.owner o " +
+          "JOIN g.writer w " +
+          "WHERE o.id = :ownerId " +
           "AND g.id < :lastId " +
           "ORDER BY g.id DESC")
-    List<GuestbookResponse> findGuestBookNextPage(@Param("memberId") long memberId,
+    List<GuestbookResponse> findGuestBookNextPage(@Param("ownerId") long ownerId,
                                                      @Param("lastId") long lastId,
                                                      Pageable pageable);
 }
