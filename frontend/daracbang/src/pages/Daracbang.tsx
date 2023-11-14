@@ -112,7 +112,7 @@ const Daracbang: React.FC = () => {
               </CardContent>
             </Card>
           </Emotions>
-          <MoodTracker />
+          <MoodTracker memberId={member!.id} onClickTracker={() => {}} />
           <SumDiary>
             <Card style={{ height: "100px", borderRadius: "10px", boxShadow: "3px 3px 5px 1px #bdbdbd" }}>
               <CardContent style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px" }}>
