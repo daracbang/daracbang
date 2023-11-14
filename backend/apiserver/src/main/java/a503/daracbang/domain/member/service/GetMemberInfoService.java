@@ -24,6 +24,7 @@ public class GetMemberInfoService {
 			.orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
 		MemberInfoResponse memberInfoResponse
 			= MemberInfoResponse.builder()
+								.id(id)
 								.loginId(member.getLoginId())
 								.nickname(member.getNickname())
 								.profileImage(member.getProfileImage())
@@ -31,6 +32,12 @@ public class GetMemberInfoService {
 								.build();
 
 		return memberInfoResponse;
+	}
+
+	public Long getMemberId(String nickname) {
+		Member member = memberRepository.findByNickname(nickname)
+			.orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
+		return member.getId();
 	}
 
 	public Member getMember(Long id) {
