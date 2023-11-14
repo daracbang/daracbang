@@ -67,6 +67,9 @@ const Daracbang: React.FC = () => {
               <Typography style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "20px" }}>
                 {daracMemberInfo?.nickname} 님 다락방 소개글
               </Typography>
+              <Typography style={{ fontFamily: "omyu_pretty", fontSize: "20px" }}>
+                {daracMemberInfo?.introduce ? daracMemberInfo.introduce : "소개글이 없습니다."}
+              </Typography>
             </Card>
           </Intro>
           <Emotions>
