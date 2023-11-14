@@ -33,6 +33,12 @@ public class GetMemberInfoService {
 		return memberInfoResponse;
 	}
 
+	public Long getMemberId(String nickname) {
+		Member member = memberRepository.findByNickname(nickname)
+			.orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
+		return member.getId();
+	}
+
 	public Member getMember(Long id) {
 		return memberRepository.findById(id)
 			.orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));

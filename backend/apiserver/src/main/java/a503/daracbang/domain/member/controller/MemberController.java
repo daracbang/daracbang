@@ -75,8 +75,8 @@ public class MemberController {
         return ResponseEntity.ok(getMemberInfoService.getMemberInfo(id));
     }
 
-    @GetMapping("/{loginId}/info")
-    public ResponseEntity<?> getMemberInfoByLoginId(@PathVariable Long loginId) {
-        return ResponseEntity.ok(getMemberInfoService.getMemberInfo(loginId));
+    @GetMapping("/{nickname}/info")
+    public ResponseEntity<?> getMemberId(@PathVariable String nickname) {
+        return ResponseEntity.ok(getMemberInfoService.getMemberId(nickname));
     }
 }
