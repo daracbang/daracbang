@@ -1,8 +1,7 @@
 package a503.daracbang.domain.bgm.controller;
 
 import a503.daracbang.config.WebConfig;
-import a503.daracbang.domain.bgm.dto.request.RegisterBgmIdRequest;
-import a503.daracbang.domain.bgm.dto.request.RegisterBgmUrlRequest;
+import a503.daracbang.domain.bgm.dto.request.RegisterBgmRequest;
 import a503.daracbang.domain.bgm.dto.response.MyBgmListResponse;
 import a503.daracbang.domain.bgm.dto.response.MyBgmResponse;
 import a503.daracbang.domain.bgm.dto.response.YoutubeListResponse;
@@ -86,44 +85,19 @@ public class BgmTest extends ApiDocsTest {
     @Test
     void BGM_등록_videoId_버전() throws Exception {
         // given
-        RegisterBgmIdRequest req = new RegisterBgmIdRequest("videoId", "bgmName");
+        RegisterBgmRequest req = new RegisterBgmRequest("videoId", "bgmName");
         String jwt = "mockJwtToken";
 
         // when
         when(jwtUtil.generateJwt(1L)).thenReturn(jwt);
-        doNothing().when(createBgmService).saveBgmId(req, 1L);
+        doNothing().when(createBgmService).saveBgm(req, 1L);
 
         // then
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/bgms")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/bgms/1")
                 .header("Authorization", jwt)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(req)))
             .andDo(MockMvcRestDocumentation.document("/api/bgms",
-                Preprocessors.preprocessRequest(prettyPrint()),
-                Preprocessors.preprocessResponse(prettyPrint())))
-            .andExpect(status().isCreated());
-    }
-
-    /**
-     * 해당 테스트는 프론트가 iframe 적용할 시간이 없는 경우에 맞춰 만들어짐
-     */
-    @Test
-    void BGM_등록_URL_버전() throws Exception {
-        // given
-        RegisterBgmUrlRequest req = new RegisterBgmUrlRequest("bgmName", "url");
-        memberRepository.save(멤버_만들기());
-        String jwt = "mockJwtToken";
-
-        // when
-        when(jwtUtil.generateJwt(1L)).thenReturn(jwt);
-        doNothing().when(createBgmService).saveBgmUrl(req, 1L);
-
-        // then
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/bgms/url")
-            .header("Authorization", jwt)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(req)))
-            .andDo(MockMvcRestDocumentation.document("/api/bgms/url",
                 Preprocessors.preprocessRequest(prettyPrint()),
                 Preprocessors.preprocessResponse(prettyPrint())))
             .andExpect(status().isCreated());
@@ -172,11 +146,11 @@ public class BgmTest extends ApiDocsTest {
     }
 
     private Bgm bgm1_만들기(Member member) {
-        return new Bgm(member, "bgmName1", "videoId1", "url1");
+        return new Bgm(member, "bgmName1", "url1");
     }
 
     private Bgm bgm2_만들기(Member member) {
-        return new Bgm(member, "bgmName2", "videoId2", "url2");
+        return new Bgm(member, "bgmName2",  "url2");
     }
 
     private Member 멤버_만들기() {

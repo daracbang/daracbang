@@ -29,8 +29,6 @@ public class Bgm {
     @Column(nullable = false)
     private String bgmName;
 
-    private String videoId;
-
     private String url;
 
     public boolean isOwner(long memberId) {
@@ -43,13 +41,6 @@ public class Bgm {
     public Bgm(Member member, String bgmName, String url) {
         this.member = member;
         this.bgmName = bgmName;
-        this.url = url;
-    }
-
-    public Bgm(Member member, String bgmName, String videoId, String url) {
-        this.member = member;
-        this.bgmName = bgmName;
-        this.videoId = videoId;
         this.url = url;
     }
 }
