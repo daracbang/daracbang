@@ -14,7 +14,8 @@ const initialState: memberState = {
 
 // user 정보
 export interface MemberInfo {
-  memberId: number;
+  id: number;
+  loginId: string;
   nickname: string;
   profileImage: string;
   introduce: string;

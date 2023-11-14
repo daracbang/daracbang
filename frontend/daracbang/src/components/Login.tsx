@@ -47,7 +47,7 @@ export default function FormDialog() {
       const memberInfo = response.data;
       dispatch(loginAction(memberInfo));
       alert("로그인 성공!");
-      navigate("/daracbang");
+      navigate(`/daracbang/${memberInfo.id}`);
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
         if (error.response?.status === 400) {

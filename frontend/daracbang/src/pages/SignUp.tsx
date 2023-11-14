@@ -159,7 +159,7 @@ const SignUp = () => {
     try {
       await signUpApis.signUp(formData);
       alert("회원가입 성공!");
-      navigate("/daracbang");
+      navigate("/");
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
         if (error.status === 409) {

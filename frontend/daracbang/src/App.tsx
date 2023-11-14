@@ -8,18 +8,24 @@ import Neighbor from "./pages/Neighbor";
 import Guestbook from "./pages/Guestbook";
 import SignUp from "./pages/SignUp";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import PublicPage from "./pages/PublicPage";
+import PrivatePage from "./pages/PriviatePage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />}></Route>
-        <Route path="/daracbang" element={<Daracbang />}></Route>
-        <Route path="/diary" element={<Diary />}></Route>
-        <Route path="/diary-write" element={<DiaryWrite />}></Route>
-        <Route path="/neighbor" element={<Neighbor />}></Route>
-        <Route path="/guestbook" element={<Guestbook />}></Route>
-        <Route path="/signup" element={<SignUp />}></Route>
+        <Route element={<PublicPage />}>
+          <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/" element={<Main />}></Route>
+        </Route>
+        <Route element={<PrivatePage />}>
+          <Route path="/daracbang/:memberId" element={<Daracbang />}></Route>
+          <Route path="/diary" element={<Diary />}></Route>
+          <Route path="/diary-write" element={<DiaryWrite />}></Route>
+          <Route path="/neighbor" element={<Neighbor />}></Route>
+          <Route path="/guestbook" element={<Guestbook />}></Route>
+        </Route>
       </Routes>
       <ReactQueryDevtools initialIsOpen={false} position="bottom" />
     </BrowserRouter>

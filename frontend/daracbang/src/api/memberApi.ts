@@ -36,3 +36,8 @@ export const getMyMemberInfo = async (): Promise<AxiosResponse<MemberInfo>> => {
   const GET_MY_INFO_URL = "/api/members/info";
   return await jwtHttp.get(GET_MY_INFO_URL);
 };
+
+export const otherMemberInfo = async (memberId: number) => {
+  const OTHER_MEMBER_INFO = `/api/members/${memberId}/info`;
+  return await jwtHttp.get(OTHER_MEMBER_INFO);
+};
