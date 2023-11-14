@@ -36,6 +36,7 @@ const Daracbang: React.FC = () => {
     return state.memberReducer.member;
   });
   const params = useParams();
+  console.log(member);
 
   useEffect(() => {
     async function getOtherMemberInfo(id: number) {
@@ -44,11 +45,8 @@ const Daracbang: React.FC = () => {
     }
     if (params.memberId) {
       getOtherMemberInfo(parseInt(params.memberId));
-      if (daracMemberInfo && daracMemberInfo.id === member?.id) {
-        console.log("본인 글입니다.!!"); ///  단순 본인인지 체크 용, 삭제해도 무방.
-      }
     }
-  }, []);
+  }, [params]);
 
   return (
     <div>

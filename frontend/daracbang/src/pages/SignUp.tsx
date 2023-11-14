@@ -183,7 +183,7 @@ const SignUp = () => {
       alert("이미지를 업로드해주세요");
       return false;
     }
-    if (!loginIdValidator(loginId) || !nicknameValidator(nickname) || password.length == 0) {
+    if (!loginIdValidator(loginId) || !nicknameValidator(nickname) || password.length === 0) {
       alert("값을 정확히 입력해주세요");
       return false;
     }
