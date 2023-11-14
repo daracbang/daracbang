@@ -24,6 +24,7 @@ public class GetMemberInfoService {
 			.orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
 		MemberInfoResponse memberInfoResponse
 			= MemberInfoResponse.builder()
+								.id(id)
 								.loginId(member.getLoginId())
 								.nickname(member.getNickname())
 								.profileImage(member.getProfileImage())

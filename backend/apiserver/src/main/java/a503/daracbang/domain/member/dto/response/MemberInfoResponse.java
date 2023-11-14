@@ -6,6 +6,8 @@ import lombok.Getter;
 @Getter
 public class MemberInfoResponse {
 
+	private Long id;
+
 	private String loginId;
 
 	private String nickname;
@@ -15,7 +17,8 @@ public class MemberInfoResponse {
 	private String introduce;
 
 	@Builder
-	public MemberInfoResponse(String loginId, String nickname, String profileImage, String introduce) {
+	public MemberInfoResponse(Long id, String loginId, String nickname, String profileImage, String introduce) {
+		this.id = id;
 		this.loginId = loginId;
 		this.nickname = nickname;
 		this.profileImage = profileImage;
