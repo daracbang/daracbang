@@ -8,7 +8,6 @@ import Neighbor from "./pages/Neighbor";
 import Guestbook from "./pages/Guestbook";
 import SignUp from "./pages/SignUp";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import LoginIn from "./pages/Login";
 
 function App() {
   return (
@@ -21,7 +20,6 @@ function App() {
         <Route path="/neighbor" element={<Neighbor />}></Route>
         <Route path="/guestbook" element={<Guestbook />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
-        <Route path="/login" element={<LoginIn />}></Route>
       </Routes>
       <ReactQueryDevtools initialIsOpen={false} position="bottom" />
     </BrowserRouter>
