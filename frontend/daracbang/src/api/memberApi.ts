@@ -1,8 +1,10 @@
-import { AxiosError, isAxiosError } from "axios";
-import { backApiInstance } from "./http";
+import { AxiosError, AxiosResponse, isAxiosError } from "axios";
+import { backApiInstance, jwtApiInstance } from "./http";
 import { ResponseDataType } from "./responseType";
+import { MemberInfo } from "../store/memberReducer";
 
 const http = backApiInstance();
+const jwtHttp = jwtApiInstance();
 
 export const checkDuplicateLoginId = async (loginId: string): Promise<void> => {
   const CHECK_LOGINID_URL = "/api/members/login-id";
@@ -28,4 +30,9 @@ export const login = async (loginId: string, password: string) => {
   const LOGIN_URL = "/api/members/login";
 
   return await http.post(LOGIN_URL, { loginId, password });
+};
+
+export const getMyMemberInfo = async (): Promise<AxiosResponse<MemberInfo>> => {
+  const GET_MY_INFO_URL = "/api/members/info";
+  return await jwtHttp.get(GET_MY_INFO_URL);
 };

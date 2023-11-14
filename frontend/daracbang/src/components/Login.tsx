@@ -7,12 +7,18 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { AxiosResponse, isAxiosError } from "axios";
 
+import * as tokenUtil from "../utils/tokenUtil";
 import * as loginApi from "../api/memberApi";
 import { ResponseDataType } from "../api/responseType";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginAction } from "../store/memberReducer";
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
   const [loginId, setLoginId] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -36,7 +42,12 @@ export default function FormDialog() {
     }
     try {
       const data: AxiosResponse<{ jwt: string }> = await loginApi.login(loginId, password);
-      console.log(data.data.jwt);
+      tokenUtil.saveToken(data.data.jwt);
+      const response = await loginApi.getMyMemberInfo();
+      const memberInfo = response.data;
+      dispatch(loginAction(memberInfo));
+      alert("로그인 성공!");
+      navigate("/daracbang");
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
         if (error.response?.status === 400) {
