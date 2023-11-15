@@ -4,16 +4,21 @@ import MyDarac from "../assets/images/room2.png";
 import Head from "../components/Head";
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import LinearProgress, { linearProgressClasses } from "@mui/material/LinearProgress";
-import {  Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Dial from "../components/SpeedDial";
 import Happy from "../assets/images/happy.png";
 import Think from "../assets/images/thinking.png";
 import Angry from "../assets/images/angry.png";
 import MoodTracker from "../components/MoodTracker";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/rootReducer";
 import { otherMemberInfo } from "../api/memberApi";
-import { MemberInfo } from "../store/memberReducer";
+import { MemberInfo, logoutAction } from "../store/memberReducer";
+import { isAxiosError } from "axios";
+import { ResponseDataType } from "../api/responseType";
+import { deleteToken } from "../utils/tokenUtil";
+import { DiaryDetail, MoodTrackerItemType, MoodeStatus, getDiaryDeatailApi, getMoodStatusApi } from "../api/diaryApi";
+import { formatDate } from "../utils/dateUtil";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 15,
@@ -32,21 +37,69 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 const Daracbang: React.FC = () => {
   const [daracMemberInfo, setDaracMemberInfo] = useState<MemberInfo>();
+  const [activeDiary, setActiveDiary] = useState<MoodTrackerItemType | null>(null);
+  const [activeDiaryInfo, setActiveDiaryInfo] = useState<DiaryDetail | null>(null);
+  const [moodeStatus, setMoodStatus] = useState<MoodeStatus | null>(null);
   const member = useSelector((state: RootState) => {
     return state.memberReducer.member;
   });
   const params = useParams();
+  const navigator = useNavigate();
+  const dispatch = useDispatch();
 
+  const onActive = (diary: MoodTrackerItemType) => {
+    setActiveDiary(diary);
+  };
+
+  async function getDiaryDetail(id: number) {
+    const res = await getDiaryDeatailApi(id);
+    setActiveDiaryInfo(res.data);
+  }
+  useEffect(() => {
+    if (activeDiary != null) {
+      getDiaryDetail(activeDiary.diaryId);
+    }
+  }, [activeDiary]);
+
+  async function getMoodStatus(id: number) {
+    try {
+      const res = await getMoodStatusApi(id);
+      setMoodStatus(res.data);
+    } catch (error) {
+      if (isAxiosError<ResponseDataType>(error)) {
+        if (error.response?.status === 401) {
+          alert("로그인이 필요합니다.");
+          dispatch(logoutAction());
+          deleteToken();
+          navigator("/");
+          return;
+        }
+        console.error(error);
+      }
+    }
+  }
   useEffect(() => {
     async function getOtherMemberInfo(id: number) {
-      const res = await otherMemberInfo(id);
-      setDaracMemberInfo(res.data);
+      try {
+        const res = await otherMemberInfo(id);
+        setDaracMemberInfo(res.data);
+      } catch (error) {
+        if (isAxiosError<ResponseDataType>(error)) {
+          if (error.response?.status === 401) {
+            alert("로그인이 필요합니다.");
+            dispatch(logoutAction());
+            deleteToken();
+            navigator("/");
+            return;
+          }
+          console.error(error);
+        }
+      }
     }
+
     if (params.memberId) {
       getOtherMemberInfo(parseInt(params.memberId));
-      if (daracMemberInfo && daracMemberInfo.id === member?.id) {
-        console.log("본인 글입니다.!!"); ///  단순 본인인지 체크 용, 삭제해도 무방.
-      }
+      getMoodStatus(parseInt(params.memberId));
     }
   }, []);
 
@@ -83,38 +136,66 @@ const Daracbang: React.FC = () => {
               <CardContent style={{ marginLeft: "10px" }}>
                 <MoodIcon>
                   <img src={Happy} alt="happy" style={{ height: "20px", width: "20px", marginRight: "5px" }} />
-                  <BorderLinearProgress variant="determinate" value={50} style={{ marginTop: "2px" }} />
+                  <BorderLinearProgress
+                    variant="determinate"
+                    value={moodeStatus ? moodeStatus.positiveRate : 50}
+                    style={{ marginTop: "2px" }}
+                  />
                 </MoodIcon>
                 <MoodIcon>
                   <img src={Think} alt="think" style={{ height: "20px", width: "20px", marginRight: "5px" }} />
-                  <BorderLinearProgress variant="determinate" value={50} style={{ marginTop: "2px" }} />
+                  <BorderLinearProgress
+                    variant="determinate"
+                    value={moodeStatus ? moodeStatus.neutralRate : 50}
+                    style={{ marginTop: "2px" }}
+                  />
                 </MoodIcon>
                 <MoodIcon>
                   <img src={Angry} alt="angry" style={{ height: "20px", width: "20px", marginRight: "5px" }} />
-                  <BorderLinearProgress variant="determinate" value={50} style={{ marginTop: "2px" }} />
+                  <BorderLinearProgress
+                    variant="determinate"
+                    value={moodeStatus ? moodeStatus.negativeRate : 50}
+                    style={{ marginTop: "2px" }}
+                  />
                 </MoodIcon>
               </CardContent>
             </Card>
           </Emotions>
-          <MoodTracker />
+          <MoodTracker memberId={member!.id} onClickTracker={onActive} />
           <SumDiary>
-            <Card style={{ height: "100px", borderRadius: "10px", boxShadow: "3px 3px 5px 1px #bdbdbd" }}>
+            <Card style={{ height: "130px", borderRadius: "10px", boxShadow: "3px 3px 5px 1px #bdbdbd" }}>
               <CardContent style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px" }}>
-                오늘의 일기
+                {activeDiaryInfo === null ? (
+                  "다이어리를 선택해주세요"
+                ) : (
+                  <div>
+                    <div>{formatDate(activeDiaryInfo.createdAt)}</div>
+                    <br />
+                    <div className="content-hidden">{activeDiaryInfo.content}</div>
+                  </div>
+                )}
               </CardContent>
-              <Link to={"/diary"}>
-                <Button
-                  size="small"
-                  variant="contained"
-                  style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px" }}
-                >
-                  더 읽으러 가기
-                </Button>
-              </Link>
+              <Button
+                size="small"
+                variant="contained"
+                onClick={() => {
+                  if (activeDiaryInfo == null) {
+                    alert("다이어리를 선택해주세요 ");
+                    return;
+                  }
+                  navigator(`/daracbang/${member?.id}/diary/${activeDiaryInfo.id}`);
+                }}
+                style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px" }}
+              >
+                더 읽으러 가기
+              </Button>
             </Card>
           </SumDiary>
         </SideWrap>
-      <Link to={`/daracbang/${params.memberId}/guestbook`}> <img src={MyDarac} alt="myDarac" /></Link>
+        <Link to={`/daracbang/${params.memberId}/guestbook`}>
+          {" "}
+          <img src={MyDarac} alt="myDarac" />
+        </Link>
         <Navi style={{ transform: "translateZ(0px)", flexGrow: 1 }}>
           <Dial />
         </Navi>
@@ -130,6 +211,13 @@ const ContainerWrap = styled.div`
   padding-bottom: 25px;
   padding-left: 50px;
   padding-right: 50px;
+  .content-hidden {
+    display: inline-block;
+    width: 350px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 const SideWrap = styled.div`
