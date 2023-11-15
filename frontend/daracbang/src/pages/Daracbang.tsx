@@ -17,6 +17,7 @@ import { MemberInfo, logoutAction } from "../store/memberReducer";
 import { isAxiosError } from "axios";
 import { ResponseDataType } from "../api/responseType";
 import { deleteToken } from "../utils/tokenUtil";
+import { DiaryDetail, MoodTrackerItemType, MoodeStatus, getDiaryDeatailApi, getMoodStatusApi } from "../api/diaryApi";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 15,
@@ -35,6 +36,9 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 const Daracbang: React.FC = () => {
   const [daracMemberInfo, setDaracMemberInfo] = useState<MemberInfo>();
+  const [activeDiary, setActiveDiary] = useState<MoodTrackerItemType | null>(null);
+  const [activeDiaryInfo, setActiveDiaryInfo] = useState<DiaryDetail | null>(null);
+  const [moodeStatus, setMoodStatus] = useState<MoodeStatus | null>(null);
   const member = useSelector((state: RootState) => {
     return state.memberReducer.member;
   });
@@ -42,6 +46,37 @@ const Daracbang: React.FC = () => {
   const navigator = useNavigate();
   const dispatch = useDispatch();
 
+  const onActive = (diary: MoodTrackerItemType) => {
+    setActiveDiary(diary);
+  };
+
+  async function getDiaryDetail(id: number) {
+    const res = await getDiaryDeatailApi(id);
+    setActiveDiaryInfo(res.data);
+  }
+  useEffect(() => {
+    if (activeDiary != null) {
+      getDiaryDetail(activeDiary.diaryId);
+    }
+  }, [activeDiary]);
+
+  async function getMoodStatus(id: number) {
+    try {
+      const res = await getMoodStatusApi(id);
+      setMoodStatus(res.data);
+    } catch (error) {
+      if (isAxiosError<ResponseDataType>(error)) {
+        if (error.response?.status === 401) {
+          alert("로그인이 필요합니다.");
+          dispatch(logoutAction());
+          deleteToken();
+          navigator("/");
+          return;
+        }
+        console.error(error);
+      }
+    }
+  }
   useEffect(() => {
     async function getOtherMemberInfo(id: number) {
       try {
@@ -63,6 +98,7 @@ const Daracbang: React.FC = () => {
 
     if (params.memberId) {
       getOtherMemberInfo(parseInt(params.memberId));
+      getMoodStatus(parseInt(params.memberId));
     }
   }, []);
 
@@ -99,29 +135,56 @@ const Daracbang: React.FC = () => {
               <CardContent style={{ marginLeft: "10px" }}>
                 <MoodIcon>
                   <img src={Happy} alt="happy" style={{ height: "20px", width: "20px", marginRight: "5px" }} />
-                  <BorderLinearProgress variant="determinate" value={50} style={{ marginTop: "2px" }} />
+                  <BorderLinearProgress
+                    variant="determinate"
+                    value={moodeStatus ? moodeStatus.positiveRate : 50}
+                    style={{ marginTop: "2px" }}
+                  />
                 </MoodIcon>
                 <MoodIcon>
                   <img src={Think} alt="think" style={{ height: "20px", width: "20px", marginRight: "5px" }} />
-                  <BorderLinearProgress variant="determinate" value={50} style={{ marginTop: "2px" }} />
+                  <BorderLinearProgress
+                    variant="determinate"
+                    value={moodeStatus ? moodeStatus.neutralRate : 50}
+                    style={{ marginTop: "2px" }}
+                  />
                 </MoodIcon>
                 <MoodIcon>
                   <img src={Angry} alt="angry" style={{ height: "20px", width: "20px", marginRight: "5px" }} />
-                  <BorderLinearProgress variant="determinate" value={50} style={{ marginTop: "2px" }} />
+                  <BorderLinearProgress
+                    variant="determinate"
+                    value={moodeStatus ? moodeStatus.negativeRate : 50}
+                    style={{ marginTop: "2px" }}
+                  />
                 </MoodIcon>
               </CardContent>
             </Card>
           </Emotions>
-          <MoodTracker memberId={member!.id} onClickTracker={() => {}} />
+          <MoodTracker memberId={member!.id} onClickTracker={onActive} />
           <SumDiary>
-            <Card style={{ height: "100px", borderRadius: "10px", boxShadow: "3px 3px 5px 1px #bdbdbd" }}>
+            <Card style={{ height: "130px", borderRadius: "10px", boxShadow: "3px 3px 5px 1px #bdbdbd" }}>
               <CardContent style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px" }}>
-                오늘의 일기
+                {activeDiaryInfo === null ? (
+                  "다이어리를 선택해주세요"
+                ) : (
+                  <div>
+                    <div>{activeDiaryInfo.createdAt}</div>
+                    <br />
+                    <div className="content-hidden">{activeDiaryInfo.content}</div>
+                  </div>
+                )}
               </CardContent>
               <Link to={"/diary"}>
                 <Button
                   size="small"
                   variant="contained"
+                  onClick={() => {
+                    if (activeDiaryInfo == null) {
+                      alert("다이어리를 선택해주세요 ");
+                      return;
+                    }
+                    navigator(`/diary/` + activeDiaryInfo.id);
+                  }}
                   style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px" }}
                 >
                   더 읽으러 가기
@@ -148,6 +211,13 @@ const ContainerWrap = styled.div`
   padding-bottom: 25px;
   padding-left: 50px;
   padding-right: 50px;
+  .content-hidden {
+    display: inline-block;
+    width: 350px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 const SideWrap = styled.div`

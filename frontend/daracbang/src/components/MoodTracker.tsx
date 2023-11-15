@@ -14,7 +14,7 @@ import styled from "@emotion/styled";
 
 export type MoodTackerProps = {
   memberId: number;
-  onClickTracker: () => void;
+  onClickTracker: (diary: MoodTrackerItemType) => void;
 };
 const initDay = dayjs();
 
@@ -55,7 +55,7 @@ const MoodTracker: React.FC<MoodTackerProps> = ({ memberId, onClickTracker }: Mo
   function MoodTrackerItem(props: PickersDayProps<Dayjs> & { diaryDay?: MoodTrackerItemType[] }) {
     const { diaryDay = [], day, outsideCurrentMonth, ...other } = props;
     let isSelected = !props.outsideCurrentMonth;
-    let selectedDiary = null;
+    let selectedDiary: MoodTrackerItemType | null = null;
     if (isSelected) {
       const result = diaryDay.filter((value) => dayjs(value.createdAt).get("date") === day.get("date"));
       if (result.length === 0) {
@@ -72,7 +72,15 @@ const MoodTracker: React.FC<MoodTackerProps> = ({ memberId, onClickTracker }: Mo
         badgeContent={
           isSelected ? (
             <EmoziWrapper select={false}>
-              <EmoziImg src={getMoodEmozi(selectedDiary!.sentiment)} alt="sentiment" />
+              <EmoziImg
+                src={getMoodEmozi(selectedDiary!.sentiment)}
+                alt="sentiment"
+                onClick={() => {
+                  if (selectedDiary != null) {
+                    onClickTracker(selectedDiary);
+                  }
+                }}
+              />
             </EmoziWrapper>
           ) : undefined
         }

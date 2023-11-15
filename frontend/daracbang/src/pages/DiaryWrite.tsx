@@ -126,6 +126,7 @@ const Diary: React.FC = () => {
                 multiline
                 rows={10}
                 value={content}
+                className="no-scroll"
                 onChange={onChangeContent}
                 inputProps={{ maxLength: 1000 }}
                 style={{
@@ -140,7 +141,7 @@ const Diary: React.FC = () => {
               </TextField>
             </ThemeProvider>
             <Typography style={{ marginTop: "135px", marginLeft: "590px" }} sx={{ fontFamily: "omyu_pretty" }}>
-              0/{contentLeng}
+              {content.length}/{contentLeng}
             </Typography>
             <Typography
               style={{ marginTop: "10px", marginLeft: "55px" }}
@@ -172,6 +173,11 @@ const ContainerWrap = styled.div`
   flex-direction: row;
   padding-top: 40px;
   padding-bottom: 66px;
+  textarea {
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `;
 
 const Navi = styled.div``;
