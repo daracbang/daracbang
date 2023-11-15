@@ -4,7 +4,7 @@ import MyDarac from "../assets/images/room2.png";
 import Head from "../components/Head";
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import LinearProgress, { linearProgressClasses } from "@mui/material/LinearProgress";
-import { Link, useParams } from "react-router-dom";
+import {  Link, useParams } from "react-router-dom";
 import Dial from "../components/SpeedDial";
 import Happy from "../assets/images/happy.png";
 import Think from "../assets/images/thinking.png";
@@ -114,9 +114,7 @@ const Daracbang: React.FC = () => {
             </Card>
           </SumDiary>
         </SideWrap>
-
-        <img src={MyDarac} alt="myDarac" />
-
+      <Link to={`/daracbang/${params.memberId}/guestbook`}> <img src={MyDarac} alt="myDarac" /></Link>
         <Navi style={{ transform: "translateZ(0px)", flexGrow: 1 }}>
           <Dial />
         </Navi>

@@ -18,16 +18,59 @@ export const getGuestBook = async (ownerId: number): Promise<AxiosResponse<Guest
     });
   };
 
+  export const writeGuestBook = async (ownerId: number, entry: GuestBookEntry) => {
+    const POST_GUESTBOOK = "/api/guestbooks/"+ownerId;
+    const token = getToken();
+    return await http.post(POST_GUESTBOOK, 
+        {
+            content: entry.content
+        }, 
+        {
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        }
+    );
+};
+
+export const deleteGuestBook = async (guestbookId: number) => {
+    const DELETE_GUESTBOOK = "/api/guestbooks/"+guestbookId;
+    const token = getToken();
+    try {
+        await http.delete(DELETE_GUESTBOOK, 
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}` 
+                }
+            }
+        );
+        alert("방명록이 삭제되었습니다.");
+        const event = new CustomEvent('deleteSuccess', { detail: guestbookId });
+        window.dispatchEvent(event);
+    } catch (error) {
+        alert("방명록을 삭제할 권한이 없습니다.");
+        console.error("Failed to delete post:", error);
+    }
+};
+
+export class GuestBookEntry {
+    content: string;
+
+    constructor(content: string) {
+        this.content = content;
+    }
+}
+  
 export class GuestBookItem {
-    gusetBookId: number;
+    guestBookId: number;
     nickname: string;
     writerId: number;
     profileImage: string;
     content: string;
     createdAt: string;
 
-    constructor(gusetBookId: number, nickname: string, writerId: number, profileImage: string, content: string, createdAt: string) {
-        this.gusetBookId = gusetBookId;
+    constructor(guestBookId: number, nickname: string, writerId: number, profileImage: string, content: string, createdAt: string) {
+        this.guestBookId = guestBookId;
         this.nickname = nickname;
         this.writerId = writerId;
         this.profileImage = profileImage;
