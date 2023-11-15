@@ -2,5 +2,10 @@
 export interface MyBgm {
   bgmId: number;
   bgmName: string;
-  url: string;
+  videoId: string;
+}
+
+export interface MusicInfoProps {
+  bgm: MyBgm;
+  onBgmClick: (url: string) => void;
 }
