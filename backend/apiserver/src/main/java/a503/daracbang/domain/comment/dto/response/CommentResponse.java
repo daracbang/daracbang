@@ -14,6 +14,8 @@ public class CommentResponse {
     private Long memberId;
     private Long diaryId;
     private String createdAt;
+    private String nickname;
+    private String profileImage;
     private String content;
     private String sentimentResult; // 감정 분석 결과
     private String positiveProbability;
@@ -24,6 +26,8 @@ public class CommentResponse {
     public CommentResponse(Comment comment){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         this.memberId = comment.getMember().getId();
+        this.nickname = comment.getMember().getNickname();
+        this.profileImage = comment.getMember().getProfileImage();
         this.diaryId = comment.getDiary().getId();
         this.createdAt = comment.getCreatedAt().format(formatter);
         this.content = comment.getContent();
