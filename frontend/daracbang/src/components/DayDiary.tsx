@@ -1,21 +1,69 @@
-import  React,{useEffect} from 'react';
-import Happy from '../assets/images/happy.png';
-import { Card, Typography } from '@mui/material';
+import React,  from "react";
+import { Card, Typography } from "@mui/material";
+import { DiaryDetail } from "../api/diaryApi";
+import { formatDate } from "../utils/dateUtil";
+import HappyURL from "../assets/images/happy.png";
+import ThinkingURL from "../assets/images/thinking.png";
+import AngryURL from "../assets/images/angry.png";
 
- function DayDiary() {
- 
-    return (
-        <div>
-            <Typography style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "20px", marginLeft: "50px", marginTop: "15px" }}>2023.11.02</Typography>
-            <Card style={{ height: "45px", width: "600px", marginLeft: "50px", marginTop: "10px", display: "flex", flexDirection: "row", borderRadius: "10px", boxShadow: "3px 3px 3px #eeeeee", borderStyle: "solid", borderColor: "#eeeeee", borderWidth: "1px" }}>
-                <img src={Happy} alt='happy' style={{ height: "30px", marginLeft: "20px", marginTop: "7px" }} />
-                <Typography style={{ fontFamily: "omyu_pretty", fontSize: "25px", marginLeft: "20px", marginTop: "5px" }}>오늘도 좋은 하루를 보내셨네요</Typography>
-            </Card>
-            <Card style={{ height: "250px", width: "600px", marginLeft: "50px", marginTop: "10px", borderRadius: "10px", boxShadow: "3px 3px 3px #eeeeee", borderStyle: "solid", borderColor: "#eeeeee", borderWidth: "1px" }}>
-                <Typography style={{ fontFamily: "KyoboHand", marginLeft: "20px", marginTop: "20px" }}>내일이 토요일이면 좋겠다 집가서 쉬어야지</Typography>
-            </Card>
+export type DayDiaryProps = {
+  diary: DiaryDetail;
+};
+
+const getMoodEmozi = (sentiment: string) => {
+  let url = HappyURL;
+  if (sentiment === "neutral") {
+    url = ThinkingURL;
+  }
+  if (sentiment === "negative") {
+    url = AngryURL;
+  }
+  return url;
+};
+
+const DayDiary: React.FC<DayDiaryProps> = ({ diary }: DayDiaryProps) => {
+  return (
+    <div>
+      <Typography
+        style={{
+          fontFamily: "omyu_pretty",
+          fontWeight: "bold",
+          fontSize: "20px",
+          marginLeft: "50px",
+          marginTop: "15px",
+          marginRight: "50px",
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          {formatDate(diary?.createdAt)}
+          <img
+            src={getMoodEmozi(diary.sentimentResult)}
+            alt="happy"
+            style={{ height: "30px", marginLeft: "20px", marginTop: "7px" }}
+          />
         </div>
-    );
-}
+      </Typography>
+
+      <Card
+        style={{
+          maxHeight: "250px",
+          width: "600px",
+          marginLeft: "50px",
+          marginTop: "10px",
+          borderRadius: "10px",
+          boxShadow: "3px 3px 3px #eeeeee",
+          borderStyle: "solid",
+          borderColor: "#eeeeee",
+          borderWidth: "1px",
+          overflowY: "scroll",
+        }}
+      >
+        <Typography style={{ fontFamily: "KyoboHand", marginLeft: "20px", marginTop: "20px" }}>
+          {diary?.content}
+        </Typography>
+      </Card>
+    </div>
+  );
+};
 
 export default DayDiary;

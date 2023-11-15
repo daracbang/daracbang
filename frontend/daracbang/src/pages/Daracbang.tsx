@@ -174,22 +174,20 @@ const Daracbang: React.FC = () => {
                   </div>
                 )}
               </CardContent>
-              <Link to={"/diary"}>
-                <Button
-                  size="small"
-                  variant="contained"
-                  onClick={() => {
-                    if (activeDiaryInfo == null) {
-                      alert("다이어리를 선택해주세요 ");
-                      return;
-                    }
-                    navigator(`/diary/` + activeDiaryInfo.id);
-                  }}
-                  style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px" }}
-                >
-                  더 읽으러 가기
-                </Button>
-              </Link>
+              <Button
+                size="small"
+                variant="contained"
+                onClick={() => {
+                  if (activeDiaryInfo == null) {
+                    alert("다이어리를 선택해주세요 ");
+                    return;
+                  }
+                  navigator(`/daracbang/${member?.id}/diary/${activeDiaryInfo.id}`);
+                }}
+                style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px" }}
+              >
+                더 읽으러 가기
+              </Button>
             </Card>
           </SumDiary>
         </SideWrap>

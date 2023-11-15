@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Head from "../components/Head";
 import styled from "@emotion/styled";
 import MyDarac from "../assets/images/room2.png";
@@ -19,10 +19,24 @@ import DayDiary from "../components/DayDiary";
 import Comment from "../components/Comment";
 import Foot from "../assets/images/foot.png";
 import FootPrint from "../assets/images/footprint.png";
+import { useNavigate, useParams } from "react-router-dom";
+import { DiaryDetail, MoodTrackerItemType, getDiaryDeatailApi } from "../api/diaryApi";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../store/memberReducer";
+import { deleteToken } from "../utils/tokenUtil";
+import { isAxiosError } from "axios";
+import { ResponseDataType } from "../api/responseType";
 
 const Diary = () => {
   const [open, setOpen] = React.useState(false);
-
+  const [diary, setDiary] = useState<DiaryDetail | null>(null);
+  const [activeDiary, setActiveDiary] = useState<MoodTrackerItemType | null>(null);
+  const onActive = (diary: MoodTrackerItemType) => {
+    setActiveDiary(diary);
+  };
+  const parma = useParams();
+  const navigator = useNavigate();
+  const dispatch = useDispatch();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -37,12 +51,42 @@ const Diary = () => {
     },
   });
 
+  useEffect(() => {
+    if (activeDiary != null) {
+      getDiaryDetail(activeDiary.diaryId);
+    }
+  }, [activeDiary]);
+
+  async function getDiaryDetail(id: number) {
+    try {
+      const res = await getDiaryDeatailApi(id);
+      setDiary(res.data);
+    } catch (error) {
+      if (isAxiosError<ResponseDataType>(error)) {
+        if (error.response?.status === 401) {
+          alert("로그인이 필요합니다.");
+          dispatch(logoutAction());
+          deleteToken();
+          navigator("/");
+          return;
+        }
+        console.error(error);
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (parma.diaryId) {
+      getDiaryDetail(parseInt(parma.diaryId));
+    }
+  }, []);
+
   return (
     <div>
       <Head />
       <ContainerWrap style={{ backgroundColor: "#F2EBEB" }}>
         <LsideWrap>
-          <MoodTracker memberId={1} onClickTracker={() => {}} />
+          <MoodTracker memberId={1} onClickTracker={onActive} />
           <img src={MyDarac} alt="myDarac" style={{ height: "300px", marginTop: "10px" }} />
         </LsideWrap>
 
@@ -57,7 +101,7 @@ const Diary = () => {
                 boxShadow: "3px 3px 5px 1px #bdbdbd",
               }}
             >
-              <DayDiary />
+              {diary && <DayDiary diary={diary} />}
             </Card>
 
             <Card
