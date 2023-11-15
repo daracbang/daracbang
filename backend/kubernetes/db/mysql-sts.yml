@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-prod # k8s안 DNS명으로등록됨.
+  labels:
+    app: mysql-sts
+spec:
+  selector:
+    app: mysql-sts # sts와 연결
+  clusterIP: None # 헤드리스 셋팅
+  ports:
+    - name: mysql
+      port: 3306
+      targetPort: 3306
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  serviceName: mysql
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-sts
+  template:
+    metadata:
+      labels:
+        app: mysql-sts
+    spec:
+      containers:
+        - image: mysql:8.0
+          name: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: daracbang!ssafy
+            - name: MYSQL_DATABASE
+              value: daracdb
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: host-path
+              mountPath: /var/lib/mysql
+              # subPath: data ## 초기화 시 빈 디렉토리 필요
+          livenessProbe: # MySQL 가동 체크
+            exec:
+              command: ["mysqladmin", "-p$MYSQL_POOT_PASSWORD", "ping"]
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
+      volumes:
+        - name: host-path
+          hostPath:
+            path: /home/ubuntu/volume

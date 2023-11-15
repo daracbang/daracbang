@@ -13,7 +13,7 @@ import FootPrint from '../assets/images/footprint.png';
 
 const Diary = () => {
     const [open, setOpen] = React.useState(false);
-
+    
     const handleClickOpen = () => {
         setOpen(true);
     };

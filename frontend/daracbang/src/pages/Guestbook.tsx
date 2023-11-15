@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Head from '../components/Head';
 import styled from "@emotion/styled";
 import MyDarac from "../assets/images/room2.png";
@@ -6,9 +6,31 @@ import Dial from '../components/SpeedDial';
 import NeighPost from '../components/NeighPost';
 import { Button, Card, TextField, ThemeProvider, Typography, createTheme } from '@mui/material';
 import Sun from '../assets/images/sun.png';
+import { GuestBookObject, getGuestBook } from '../api/guestBookApi';
+import { useInView } from 'react-intersection-observer';
+import { useParams } from 'react-router-dom';
 
 
 const Guestbook = () => {
+
+    const parm = useParams();
+    console.log(parm.memberId);
+    const ownerId = 1;
+    
+    const [guestBook, setGuestBook] = React.useState<GuestBookObject | null>(null);
+
+    useEffect(() => {
+        if(parm.memberId){
+            getOne(parseInt(parm.memberId));
+        }
+        async function getOne(id:number) {
+            const response = await getGuestBook(id);
+            console.log(response.data);
+            setGuestBook(response.data);
+        }
+        
+    }, []);
+    
 
     const theme = createTheme({
         typography: {
@@ -24,9 +46,9 @@ const Guestbook = () => {
 
                 <ContentWrap>
                     <Card style={{ height: "480px", width: "700px", backgroundColor: "rgba( 255, 255, 255, 0.3 )", marginLeft: "130px" }} >
-                        <NeighPost />
-                        <NeighPost />
-                        <NeighPost />
+                        {guestBook && guestBook.datas.map((item, index) => (
+                            <NeighPost key={index} data={item} />
+                        ))}
                     </Card>
 
                     <Card style={{ height: "135px", width: "700px", marginLeft: "130px", marginTop: "10px" }}>
