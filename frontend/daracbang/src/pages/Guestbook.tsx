@@ -8,21 +8,27 @@ import { Button, Card, TextField, ThemeProvider, Typography, createTheme } from 
 import Sun from '../assets/images/sun.png';
 import { GuestBookObject, getGuestBook } from '../api/guestBookApi';
 import { useInView } from 'react-intersection-observer';
+import { useParams } from 'react-router-dom';
 
 
 const Guestbook = () => {
 
+    const parm = useParams();
+    console.log(parm.memberId);
     const ownerId = 1;
     
     const [guestBook, setGuestBook] = React.useState<GuestBookObject | null>(null);
 
     useEffect(() => {
-        async function getOne() {
-            const response = await getGuestBook(ownerId);
+        if(parm.memberId){
+            getOne(parseInt(parm.memberId));
+        }
+        async function getOne(id:number) {
+            const response = await getGuestBook(id);
+            console.log(response.data);
             setGuestBook(response.data);
         }
         
-        getOne();
     }, []);
     
 
