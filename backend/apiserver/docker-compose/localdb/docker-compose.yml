@@ -5,7 +5,7 @@ services:
     container_name: darac-mysql
     image: mysql:8
     ports:
-      - 3307:3306
+      - "3307:3306"
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
@@ -20,6 +20,6 @@ services:
     container_name: darac-redis
     image: redis
     ports:
-      - 6380:6379
+      - "6380:6379"
     command: redis-server --requirepass localpwd --port 6379
     restart: on-failure

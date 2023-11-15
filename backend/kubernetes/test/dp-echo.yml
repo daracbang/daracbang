@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dp-echo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dp-echo
+  template:
+    metadata:
+      labels:
+        app: dp-echo
+    spec:
+      containers:
+        - name: pod-dp-echoapp
+          image: k8s.gcr.io/echoserver:1.5
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-echo
+spec:
+  selector:
+    app: dp-echo
+  type: LoadBalancer
+  ports:
+    - name: svc-echo
+      port: 80
+      targetPort: 8080

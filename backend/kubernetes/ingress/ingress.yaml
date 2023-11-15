@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-nginx
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: www.daracbang.co.kr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: svc-darac-web
+                port:
+                  number: 80
+    - host: api.daracbang.co.kr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: svc-darac-api
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - www.daracbang.co.kr
+        - api.daracbang.co.kr
+      secretName: letsencrypt-nginx
