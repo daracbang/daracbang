@@ -1,4 +1,4 @@
-import React,  from "react";
+import React from "react";
 import { Card, Typography } from "@mui/material";
 import { DiaryDetail } from "../api/diaryApi";
 import { formatDate } from "../utils/dateUtil";
