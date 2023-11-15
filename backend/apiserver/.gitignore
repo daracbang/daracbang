@@ -40,8 +40,12 @@ out/
 
 ### property file
 application-*.yml
+application-*.properties
 
 
 ### de db volum
 
 docker-compose/localdb/db*
+
+### REST Docs ###
+src/main/resources/static/docs/

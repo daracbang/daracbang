@@ -1,9 +1,9 @@
-import * as React from 'react';
+import  React,{useEffect} from 'react';
 import Happy from '../assets/images/happy.png';
 import { Card, Typography } from '@mui/material';
 
-export default function DayDiary() {
-
+ function DayDiary() {
+ 
     return (
         <div>
             <Typography style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "20px", marginLeft: "50px", marginTop: "15px" }}>2023.11.02</Typography>
@@ -17,3 +17,5 @@ export default function DayDiary() {
         </div>
     );
 }
+
+export default DayDiary;
