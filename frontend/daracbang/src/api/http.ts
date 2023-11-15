@@ -24,6 +24,5 @@ export const jwtApiInstance = () => {
       return Promise.reject(error);
     }
   );
-
   return instance;
 };

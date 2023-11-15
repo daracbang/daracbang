@@ -139,8 +139,8 @@ const SignUp = () => {
 
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
-    
-   let formData = new FormData();
+
+    let formData = new FormData();
 
     if (!preSignUpRequestValidation()) {
       return;
@@ -173,11 +173,11 @@ const SignUp = () => {
   // 회원가입전 검사
   // 이미지 파일 있는지,닉네임, loginId 값이 있는지 ?  중복 체크 둘 다 했는지, 패스워드 빈 값인지?
   const preSignUpRequestValidation = (): boolean => {
-    if (profilefile == null) {
+    if (profilefile === null) {
       alert("이미지를 업로드해주세요");
       return false;
     }
-    if (!loginIdValidator(loginId) || !nicknameValidator(nickname) || password.length == 0) {
+    if (!loginIdValidator(loginId) || !nicknameValidator(nickname) || password.length === 0) {
       alert("값을 정확히 입력해주세요");
       return false;
     }
