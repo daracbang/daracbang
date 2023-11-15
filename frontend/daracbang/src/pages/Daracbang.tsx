@@ -192,9 +192,10 @@ const Daracbang: React.FC = () => {
             </Card>
           </SumDiary>
         </SideWrap>
-
-        <img src={MyDarac} alt="myDarac" />
-
+        <Link to={`/daracbang/${params.memberId}/guestbook`}>
+          {" "}
+          <img src={MyDarac} alt="myDarac" />
+        </Link>
         <Navi style={{ transform: "translateZ(0px)", flexGrow: 1 }}>
           <Dial />
         </Navi>
