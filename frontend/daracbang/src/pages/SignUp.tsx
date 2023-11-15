@@ -9,8 +9,6 @@ import { ResponseDataType } from "../api/responseType";
 import { loginIdValidator, nicknameValidator } from "../utils/validator";
 import { useNavigate } from "react-router-dom";
 
-let formData = new FormData();
-
 const SignUp = () => {
   const [profilefile, setProfileFile] = useState<any>(null);
   const [img, setImg] = useState(DefaultImg);
@@ -35,18 +33,11 @@ const SignUp = () => {
 
   // 이미지 파일 변경
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    formData = new FormData();
     const file = e.target.files && e.target.files[0];
 
     if (file) {
       setImg(URL.createObjectURL(file));
       setProfileFile(file);
-      for (const key of formData.keys()) {
-        console.log(key);
-      }
-      for (const value of formData.values()) {
-        console.log(value);
-      }
     }
   };
 
@@ -148,6 +139,9 @@ const SignUp = () => {
 
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
+
+    let formData = new FormData();
+
     if (!preSignUpRequestValidation()) {
       return;
     }
@@ -179,11 +173,11 @@ const SignUp = () => {
   // 회원가입전 검사
   // 이미지 파일 있는지,닉네임, loginId 값이 있는지 ?  중복 체크 둘 다 했는지, 패스워드 빈 값인지?
   const preSignUpRequestValidation = (): boolean => {
-    if (profilefile == null) {
+    if (profilefile === null) {
       alert("이미지를 업로드해주세요");
       return false;
     }
-    if (!loginIdValidator(loginId) || !nicknameValidator(nickname) || password.length == 0) {
+    if (!loginIdValidator(loginId) || !nicknameValidator(nickname) || password.length === 0) {
       alert("값을 정확히 입력해주세요");
       return false;
     }

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dp-darac-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pod-darac-api
+  template:
+    metadata:
+      labels:
+        app: pod-darac-api
+    spec:
+      containers:
+        - name: darac-api
+          image: dls3145/darac-api:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: spring-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-darac-api
+spec:
+  selector:
+    app: pod-darac-api
+  ports:
+    - name: port-api
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-config
+data:
+  DATASOURCE_URL: ""
+  DATABASE_USERNAME: ""
+  DATABASE_PASSWORD: ""
+  ACTUATOR_PORT: ""
+  CLOVA_ID: ""
+  CLOVA_SECRET: ""
+  JWT_SECRET: ""
+  PROFILE: ""
