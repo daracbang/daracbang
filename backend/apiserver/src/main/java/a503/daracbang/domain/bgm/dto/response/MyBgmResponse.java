@@ -10,17 +10,17 @@ public class MyBgmResponse {
 
     private String bgmName;
 
-    private String url;
+    private String videoId;
 
-    public MyBgmResponse(Long bgmId, String bgmName,String url) {
+    public MyBgmResponse(Long bgmId, String bgmName,String videoId) {
         this.bgmId = bgmId;
         this.bgmName = bgmName;
-        this.url = url;
+        this.videoId = videoId;
     }
 
     public MyBgmResponse(Bgm bgm) {
         this.bgmId = bgm.getId();
         this.bgmName = bgm.getBgmName();
-        this.url = bgm.getUrl();
+        this.videoId = bgm.getVideoId();
     }
 }
