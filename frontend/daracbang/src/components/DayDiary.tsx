@@ -2,23 +2,10 @@ import React from "react";
 import { Card, Typography } from "@mui/material";
 import { DiaryDetail } from "../api/diaryApi";
 import { formatDate } from "../utils/dateUtil";
-import HappyURL from "../assets/images/happy.png";
-import ThinkingURL from "../assets/images/thinking.png";
-import AngryURL from "../assets/images/angry.png";
+import { getSentimentDiaryEmozi } from "../utils/getSentimentEmozi";
 
 export type DayDiaryProps = {
   diary: DiaryDetail;
-};
-
-const getMoodEmozi = (sentiment: string) => {
-  let url = HappyURL;
-  if (sentiment === "neutral") {
-    url = ThinkingURL;
-  }
-  if (sentiment === "negative") {
-    url = AngryURL;
-  }
-  return url;
 };
 
 const DayDiary: React.FC<DayDiaryProps> = ({ diary }: DayDiaryProps) => {
@@ -37,7 +24,7 @@ const DayDiary: React.FC<DayDiaryProps> = ({ diary }: DayDiaryProps) => {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           {formatDate(diary?.createdAt)}
           <img
-            src={getMoodEmozi(diary.sentimentResult)}
+            src={getSentimentDiaryEmozi(diary.sentimentResult)}
             alt="happy"
             style={{ height: "30px", marginLeft: "20px", marginTop: "7px" }}
           />
@@ -57,6 +44,7 @@ const DayDiary: React.FC<DayDiaryProps> = ({ diary }: DayDiaryProps) => {
           borderWidth: "1px",
           overflowY: "scroll",
         }}
+        className="noscroll"
       >
         <Typography style={{ fontFamily: "KyoboHand", marginLeft: "20px", marginTop: "20px" }}>
           {diary?.content}

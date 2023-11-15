@@ -26,15 +26,21 @@ import { logoutAction } from "../store/memberReducer";
 import { deleteToken } from "../utils/tokenUtil";
 import { isAxiosError } from "axios";
 import { ResponseDataType } from "../api/responseType";
+import { CommentType, createCommentApi, getCommentApi } from "../api/commentsApi";
 
 const Diary = () => {
   const [open, setOpen] = React.useState(false);
   const [diary, setDiary] = useState<DiaryDetail | null>(null);
   const [activeDiary, setActiveDiary] = useState<MoodTrackerItemType | null>(null);
+  const [commentList, setCommentList] = useState<CommentType[]>([]);
   const onActive = (diary: MoodTrackerItemType) => {
     setActiveDiary(diary);
   };
-  const parma = useParams();
+  const [content, setContent] = useState<string>("");
+  const onChangeContent = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setContent(e.target.value);
+  };
+  const param = useParams();
   const navigator = useNavigate();
   const dispatch = useDispatch();
   const handleClickOpen = () => {
@@ -43,6 +49,29 @@ const Diary = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const onSubmitComment = async () => {
+    if (content.trim().length === 0) {
+      alert("댓글을 입력해주세요!");
+    }
+    try {
+      await createCommentApi(diary!.id, content);
+      alert("댓글 등록 성공");
+      handleClose();
+      getCommentList(diary!.id);
+    } catch (error) {
+      if (isAxiosError<ResponseDataType>(error)) {
+        if (error.response?.status === 401) {
+          alert("로그인이 필요합니다.");
+          dispatch(logoutAction());
+          deleteToken();
+          navigator("/");
+          return;
+        }
+        console.error(error);
+      }
+    }
   };
 
   const theme = createTheme({
@@ -61,6 +90,25 @@ const Diary = () => {
     try {
       const res = await getDiaryDeatailApi(id);
       setDiary(res.data);
+      getCommentList(res.data.id);
+    } catch (error) {
+      if (isAxiosError<ResponseDataType>(error)) {
+        if (error.response?.status === 401) {
+          alert("로그인이 필요합니다.");
+          dispatch(logoutAction());
+          deleteToken();
+          navigator("/");
+          return;
+        }
+        console.error(error);
+      }
+    }
+  }
+
+  async function getCommentList(id: number) {
+    try {
+      const res = await getCommentApi(id);
+      setCommentList(res.data.commentList);
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
         if (error.response?.status === 401) {
@@ -76,8 +124,9 @@ const Diary = () => {
   }
 
   useEffect(() => {
-    if (parma.diaryId) {
-      getDiaryDetail(parseInt(parma.diaryId));
+    if (param.diaryId) {
+      getDiaryDetail(parseInt(param.diaryId));
+      getCommentList(parseInt(param.diaryId));
     }
   }, []);
 
@@ -111,11 +160,14 @@ const Diary = () => {
                 backgroundColor: "rgba( 255, 255, 255, 0.3 )",
                 marginLeft: "100px",
                 marginTop: "10px",
+                paddingBottom: "20px",
+                overflowY: "scroll",
               }}
+              className="noscroll"
             >
-              <Comment />
-              <Comment />
-              <Comment />
+              {commentList.map((com, index) => (
+                <Comment comment={com} key={index} />
+              ))}
             </Card>
           </DiaryWrap>
 
@@ -133,6 +185,8 @@ const Diary = () => {
                 <TextField
                   variant="outlined"
                   multiline
+                  value={content}
+                  onChange={onChangeContent}
                   rows={10}
                   inputProps={{ maxLength: 1000 }}
                   style={{
@@ -157,7 +211,7 @@ const Diary = () => {
               </Typography>
             </DialogContent>
             <DialogActions style={{ marginBottom: "10px" }}>
-              <Button onClick={handleClose}>
+              <Button onClick={onSubmitComment}>
                 <img src={FootPrint} alt="foot" />
               </Button>
             </DialogActions>
@@ -176,6 +230,12 @@ const ContainerWrap = styled.div`
   display: flex;
   padding-top: 20px;
   padding-bottom: 37px;
+
+  .noscroll {
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `;
 
 const LsideWrap = styled.div`

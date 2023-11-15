@@ -5,29 +5,17 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import dayjs, { Dayjs } from "dayjs";
 import { Badge } from "@mui/material";
 import { PickersDay, PickersDayProps } from "@mui/x-date-pickers";
-import HappyURL from "../assets/images/happy.png";
-import ThinkingURL from "../assets/images/thinking.png";
-import AngryURL from "../assets/images/angry.png";
+
 import { DayCalendarSkeleton } from "@mui/x-date-pickers/DayCalendarSkeleton";
 import { MoodTrackerItemType, getMoodTracker } from "../api/diaryApi";
 import styled from "@emotion/styled";
+import { getSentimentDiaryEmozi } from "../utils/getSentimentEmozi";
 
 export type MoodTackerProps = {
   memberId: number;
   onClickTracker: (diary: MoodTrackerItemType) => void;
 };
 const initDay = dayjs();
-
-const getMoodEmozi = (sentiment: string) => {
-  let url = HappyURL;
-  if (sentiment === "neutral") {
-    url = ThinkingURL;
-  }
-  if (sentiment === "negative") {
-    url = AngryURL;
-  }
-  return url;
-};
 
 const MoodTracker: React.FC<MoodTackerProps> = ({ memberId, onClickTracker }: MoodTackerProps) => {
   const [year, setYear] = useState<number>(initDay.get("year"));
@@ -73,7 +61,7 @@ const MoodTracker: React.FC<MoodTackerProps> = ({ memberId, onClickTracker }: Mo
           isSelected ? (
             <EmoziWrapper select={false}>
               <EmoziImg
-                src={getMoodEmozi(selectedDiary!.sentiment)}
+                src={getSentimentDiaryEmozi(selectedDiary!.sentiment)}
                 alt="sentiment"
                 onClick={() => {
                   if (selectedDiary != null) {
@@ -120,7 +108,7 @@ const EmoziWrapper = styled.div<{ select: boolean }>`
 `;
 
 const EmoziImg = styled.img`
-  width: 37px;
-  height: 37px;
+  width: 39px;
+  height: 39px;
   cursor: pointer;
 `;
