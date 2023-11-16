@@ -1,6 +1,8 @@
 // YoutubePlayer 컴포넌트
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import YouTube, { YouTubeProps } from "react-youtube";
+import { RootState } from "../store/rootReducer";
 
 interface YoutubePlayerProps {
   videoId: string;
@@ -11,13 +13,17 @@ export default function YoutubePlayer({
   videoId,
   onReady,
 }: YoutubePlayerProps) {
+  const bgmLists = useSelector((state:RootState) => {
+    return state.BGMReducer.bgmList;
+  })
+
   const onPlayerReady: YouTubeProps["onReady"] = (event) => {
     event.target.pauseVideo();
   };
 
   const opts: YouTubeProps["opts"] = {
-    height: "100",
-    width: "100",
+    height: "100px",
+    width: "100px",
     playerVars: {
       autoplay: 1,
     },
@@ -25,7 +31,8 @@ export default function YoutubePlayer({
 
   return (
     <div>
-      <YouTube videoId={videoId} opts={opts} onReady={onReady} />;
+      {bgmLists.length >= 1 ? <YouTube videoId={bgmLists[0].videoId} opts={opts} onReady={()=> {}} /> : <></> }
+      ;
     </div>
   );
 }

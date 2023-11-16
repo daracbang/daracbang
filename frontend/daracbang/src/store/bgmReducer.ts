@@ -2,11 +2,13 @@
 const SET_BGM_LIST = "bgm/SET_BGM_LIST" as const;
 
 type bgmState = {
-  bgmList: MyBgm[]
+  bgmList: MyBgm[],
+  memberId: number| null
 }
 
 const initalState : bgmState = {
-  bgmList : []
+  bgmList : [],
+  memberId: null
 }
 
 // bgm 정보
@@ -24,9 +26,9 @@ export interface MusicInfoProps {
 // 한 명의 BGM 만 관리하면된다
 
 
-export const setBgmListAction = (data : MyBgm[]) => ({
+export const setBgmListAction = (data : MyBgm[], memberId:number) => ({
   type : SET_BGM_LIST,
-  payload : data
+  payload : {bgms: data , memberId}
 }) 
 
 type bgmAction = ReturnType<typeof setBgmListAction >;
@@ -35,7 +37,8 @@ export const BGMReducer = (state:bgmState = initalState, action:bgmAction) =>{
     case SET_BGM_LIST:
       return {
         ...state,
-        bgmList : action.payload
+        bgmList : action.payload.bgms,
+        memberId : action.payload.memberId
       }
     default:
       return state;

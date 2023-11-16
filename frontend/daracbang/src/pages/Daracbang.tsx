@@ -19,6 +19,8 @@ import { ResponseDataType } from "../api/responseType";
 import { deleteToken } from "../utils/tokenUtil";
 import { DiaryDetail, MoodTrackerItemType, MoodeStatus, getDiaryDeatailApi, getMoodStatusApi } from "../api/diaryApi";
 import { formatDate } from "../utils/dateUtil";
+import { getBgmList } from "../api/bgmApi";
+import { setBgmListAction } from "../store/bgmReducer";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 15,
@@ -78,6 +80,11 @@ const Daracbang: React.FC = () => {
       }
     }
   }
+  async function getMyBgms(id : number) {
+    const response  =  await getBgmList(id);
+    dispatch(setBgmListAction(response.data.bgms, id));
+  }
+
   useEffect(() => {
     async function getOtherMemberInfo(id: number) {
       try {
@@ -100,6 +107,7 @@ const Daracbang: React.FC = () => {
     if (params.memberId) {
       getOtherMemberInfo(parseInt(params.memberId));
       getMoodStatus(parseInt(params.memberId));
+      getMyBgms(parseInt(params.memberId));
     }
   }, []);
 

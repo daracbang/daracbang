@@ -74,7 +74,7 @@ const Neighbor = () => {
     <div>
       <Head />
       <div style={{ height: 100, width: 100, overflow: "hidden" }}>
-        <YoutubePlayer videoId={videoId} onReady={onReady} />
+        {/* <YoutubePlayer videoId={videoId} onReady={onReady} /> */}
       </div>
       <Button onClick={togglePlay}>{isPlaying ? "Pause" : "Play"}</Button>
       <ContainerWrap style={{ backgroundColor: "#F2EBEB" }}>

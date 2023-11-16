@@ -12,4 +12,4 @@ const persistConfig: any = {
 };
 
 export default persistReducer(persistConfig, rootRedcuer);
-export type RootState = ReturnType<typeof rootRedcuer>;
+export type RootState = ReturnType<typeof rootRedcuer> ;
