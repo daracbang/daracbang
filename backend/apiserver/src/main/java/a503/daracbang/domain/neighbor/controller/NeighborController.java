@@ -1,5 +1,6 @@
 package a503.daracbang.domain.neighbor.controller;
 
+import a503.daracbang.domain.neighbor.dto.response.MemberSearchResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,22 +23,47 @@ import lombok.RequiredArgsConstructor;
 public class NeighborController {
 	private final NeighborService neighborService;
 
+
+	/*
+	 *나의 이웃 목록, 조회한 유저 기준으로 다른 사람의 정보를 리턴한다
+	 */
 	@GetMapping
 	public ResponseEntity<DataListResponse<NeighborResponse>> neighborList() {
 		Long myId = MemberContextHolder.memberIdHolder.get();
 		return ResponseEntity.ok(neighborService.findNeighborList(myId));
 	}
 
+	/*
+	 *  내가 신청 받은 회원 정보 리스트.
+	 */
 	@GetMapping("/accepts")
-	public ResponseEntity<DataListResponse<NeighborResponse>> neighborRequestList() {
+	public ResponseEntity<DataListResponse<NeighborResponse>> neighborRequestListAccepterMe() {
 		Long myId = MemberContextHolder.memberIdHolder.get();
-		return ResponseEntity.ok(neighborService.findNeighborRequestList(myId));
+		return ResponseEntity.ok(neighborService.findNeighborAccepterMe(myId));
 	}
 
-	@GetMapping("/search")
-	public ResponseEntity<DataListResponse<NeighborResponse>> memberList(@RequestParam("nickname") String nickname) {
-		return ResponseEntity.ok(neighborService.findMemberList(nickname));
+	@GetMapping("/request")
+	public ResponseEntity<DataListResponse<NeighborResponse>> neighborRequestListRequestMe() {
+		Long myId = MemberContextHolder.memberIdHolder.get();
+		return ResponseEntity.ok(neighborService.findNeighborRequestRequesterMe(myId));
 	}
+
+
+	/*
+	 *  닉네임으로 회원 검색.
+	 */
+	@GetMapping("/search")
+	public ResponseEntity<DataListResponse<MemberSearchResponse>> memberList(@RequestParam("nickname") String nickname) {
+		Long myId = MemberContextHolder.memberIdHolder.get();
+		return ResponseEntity.ok(neighborService.findMemberList(nickname, myId));
+	}
+
+	/*
+	* 이웃 신청
+	*  myId- > 신청자
+	* memberId -> 신청 받은 사람.
+	*/
+
 	@PostMapping("/applications/{memberId}")
 	public ResponseEntity<Void> neighborRequest(@PathVariable("memberId") Long memberId) {
 		Long myId = MemberContextHolder.memberIdHolder.get();
@@ -46,19 +72,31 @@ public class NeighborController {
 		return ResponseEntity.ok().build();
 	}
 
-	@PutMapping("/accepts/{memberId}")
-	public ResponseEntity<Void> neighborAccept(@PathVariable("memberId") Long memberId) {
+	@DeleteMapping("/applications/{memberId}")
+	public ResponseEntity<Void> neighborRequestCancel(@PathVariable("memberId")Long memberId){
+		Long requester = MemberContextHolder.memberIdHolder.get();
+		neighborService.requestCancel(requester, memberId);
+		return ResponseEntity.ok().build();
+	}
+
+	/*
+	* 신청 승인
+	*/
+
+	@PutMapping("/accepts/{neighborId}")
+	public ResponseEntity<Void> neighborAccept(@PathVariable("neighborId") Long neighborId) {
 		Long myId = MemberContextHolder.memberIdHolder.get();
-		neighborService.acceptNeighbor(myId, memberId);
+		neighborService.acceptNeighbor(myId, neighborId);
 
 		return ResponseEntity.ok().build();
 	}
 
-	// 취소, 거절, 삭제 통합
-	@DeleteMapping("/api/neighbors/{memberId}")
-	public ResponseEntity<Void> neighborRemove(@PathVariable("memberId") Long memberId) {
+	// 거절, 삭제 통합
+	@DeleteMapping("/{neighborId}")
+	public ResponseEntity<Void> neighborRemove(@PathVariable("neighborId") Long neighborId) {
 		Long myId = MemberContextHolder.memberIdHolder.get();
-		neighborService.removeNeighbor(myId, memberId);
+		neighborService.removeNeighbor(neighborId, myId);
 		return ResponseEntity.noContent().build();
 	}
+
 }
