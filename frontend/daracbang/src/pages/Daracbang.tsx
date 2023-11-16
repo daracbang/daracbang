@@ -19,6 +19,7 @@ import { ResponseDataType } from "../api/responseType";
 import { deleteToken } from "../utils/tokenUtil";
 import { DiaryDetail, MoodTrackerItemType, MoodeStatus, getDiaryDeatailApi, getMoodStatusApi } from "../api/diaryApi";
 import { formatDate } from "../utils/dateUtil";
+import Swal from "sweetalert2";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 15,
@@ -68,7 +69,12 @@ const Daracbang: React.FC = () => {
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
         if (error.response?.status === 401) {
-          alert("로그인이 필요합니다.");
+          Swal.fire({
+            icon: "info",
+            title: "다시 로그인해주세요",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           dispatch(logoutAction());
           deleteToken();
           navigator("/");
@@ -87,7 +93,12 @@ const Daracbang: React.FC = () => {
       } catch (error) {
         if (isAxiosError<ResponseDataType>(error)) {
           if (error.response?.status === 401) {
-            alert("로그인이 필요합니다.");
+            Swal.fire({
+              icon: "info",
+              title: "다시 로그인해주세요",
+              showConfirmButton: false,
+              timer: 1500,
+            });
             dispatch(logoutAction());
             deleteToken();
             navigator("/");

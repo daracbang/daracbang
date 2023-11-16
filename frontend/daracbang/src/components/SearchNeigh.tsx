@@ -23,7 +23,7 @@ const SearchNeigh: React.FC<SearchNeighProps> = ({ data, onApplicate, onCancel }
       }}
     >
       <NeighInfo style={{ display: "flex", flexDirection: "row", marginTop: "10px", marginLeft: "10px" }}>
-        <img src={data?.profileImage} alt="sun" style={{ height: "30px", marginLeft: "10px" }} />
+        <img src={data?.profileImage} alt="sun" style={{ height: "30px", marginLeft: "10px", width: "50px" }} />
         <Typography
           style={{
             fontFamily: "omyu_pretty",
@@ -31,6 +31,7 @@ const SearchNeigh: React.FC<SearchNeighProps> = ({ data, onApplicate, onCancel }
             width: "100px",
             marginLeft: "10px",
             lineHeight: "30px",
+            whiteSpace: "nowrap",
           }}
         >
           {data.nickname}
@@ -67,7 +68,7 @@ const SearchNeigh: React.FC<SearchNeighProps> = ({ data, onApplicate, onCancel }
           </Typography>
         ) : (
           <>
-            <Button onClick={() => onApplicate(data.memberId)} style={{ marginLeft: "100px" }}>
+            <Button onClick={() => onApplicate(data.memberId)} style={{ marginLeft: "120px" }}>
               <img src={Plus} alt="plus" style={{ height: "20px" }} />
             </Button>
           </>

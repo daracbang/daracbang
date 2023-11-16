@@ -36,6 +36,7 @@ const DayDiary: React.FC<DayDiaryProps> = ({ diary }: DayDiaryProps) => {
           maxHeight: "250px",
           width: "600px",
           marginLeft: "50px",
+          padding: "20px",
           marginTop: "10px",
           borderRadius: "10px",
           boxShadow: "3px 3px 3px #eeeeee",
@@ -46,9 +47,7 @@ const DayDiary: React.FC<DayDiaryProps> = ({ diary }: DayDiaryProps) => {
         }}
         className="noscroll"
       >
-        <Typography style={{ fontFamily: "KyoboHand", marginLeft: "20px", marginTop: "20px" }}>
-          {diary?.content}
-        </Typography>
+        <Typography style={{ fontFamily: "KyoboHand" }}>{diary?.content}</Typography>
       </Card>
     </div>
   );

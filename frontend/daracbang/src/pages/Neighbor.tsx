@@ -22,6 +22,7 @@ import {
 } from "../api/neighborApi";
 import { isAxiosError } from "axios";
 import { ResponseDataType } from "../api/responseType";
+import Swal from "sweetalert2";
 
 const theme = createTheme({
   typography: {
@@ -48,8 +49,6 @@ const Neighbor = () => {
           ...mem,
         };
       });
-    console.log("검색 결과===");
-    console.log(searchMem);
     setSearchMember(searchMem);
   }
 
@@ -57,24 +56,44 @@ const Neighbor = () => {
   async function onApplicationNeighbor(id: number) {
     try {
       await applicateNeigborApi(id); // 이웃 신청 후
-      alert("신청 성공");
+      Swal.fire({
+        icon: "success",
+        title: "이웃 신청 성공!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
 
       await searchNeigbor(searchedNickname);
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
         if (error.response?.status === 409) {
-          alert("이미 신청한 회원입니다.");
+          Swal.fire({
+            icon: "error",
+            title: "이미 신청한 회원입니다.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           return;
         }
       }
-      alert("서버 에러");
+      Swal.fire({
+        icon: "error",
+        title: "서버 에러..!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       console.error(error);
     }
   }
 
   async function cancelApplication(memberId: number) {
     await cancelApplicationApi(memberId);
-    alert("신청 취소 성공");
+    Swal.fire({
+      icon: "success",
+      title: "취소 성공!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
     await searchNeigbor(searchedNickname);
   }
 
@@ -98,13 +117,23 @@ const Neighbor = () => {
   }
   async function reject(neighborId: number) {
     await removeAndRejectNeigborApi(neighborId);
-    alert("거절 요청 성공!");
+    Swal.fire({
+      icon: "success",
+      title: "거절 요청 성공",
+      showConfirmButton: false,
+      timer: 1500,
+    });
     await getMyAcceptedList();
   }
 
   async function removeNeighbor(neighborId: number) {
     await removeAndRejectNeigborApi(neighborId);
-    alert("신청 취소 성공!");
+    Swal.fire({
+      icon: "success",
+      title: "신청 취소 성공",
+      showConfirmButton: false,
+      timer: 1500,
+    });
     await getMyNeigbhor();
   }
 
@@ -272,7 +301,7 @@ const Neighbor = () => {
             </Card>
           </CardWrap>
 
-          <Card
+          {/* <Card
             style={{
               height: "410px",
               width: "420px",
@@ -293,7 +322,7 @@ const Neighbor = () => {
                 추가하기
               </Button>
             </SearchBar>
-          </Card>
+          </Card> */}
         </ContentWrap>
         <Navi style={{ transform: "translateZ(0px)", flexGrow: 1 }}>
           <Dial />

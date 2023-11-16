@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../store/memberReducer";
 import * as tokenUtil from "../utils/tokenUtil";
 import { RootState } from "../store/rootReducer";
+import Swal from "sweetalert2";
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
   width: 22,
@@ -35,6 +36,12 @@ const Head = () => {
 
   const logout = () => {
     dispatch(logoutAction());
+    Swal.fire({
+      icon: "success",
+      title: "로그아웃 성공",
+      showConfirmButton: false,
+      timer: 1500,
+    });
     tokenUtil.deleteToken();
   };
   const open = Boolean(anchorEl);
@@ -45,12 +52,19 @@ const Head = () => {
         <Link to={`/daracbang/${member?.id}`} style={{ textDecoration: "none", marginRight: "20px" }}>
           <img src={Logo} alt="logo" />
         </Link>
-        <Typography style={{ fontFamily: "omyu_pretty", fontSize: "30px", fontWeight: "bold", marginTop: "5px" }}>
+        <Typography
+          style={{
+            fontFamily: "omyu_pretty",
+            fontSize: "30px",
+            fontWeight: "bold",
+            lineHeight: "70px",
+          }}
+        >
           다락방
         </Typography>
       </Logos>
       <BtnGroup>
-        <Badge
+        {/* <Badge
           overlap="circular"
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
           badgeContent={<SmallAvatar alt="Remy Sharp" src={CheckAlert} />}
@@ -73,7 +87,7 @@ const Head = () => {
           >
             The content of the Popover.
           </Popover>
-        </Badge>
+        </Badge> */}
 
         <Link
           onClick={logout}

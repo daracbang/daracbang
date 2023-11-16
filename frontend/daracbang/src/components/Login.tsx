@@ -13,6 +13,7 @@ import { ResponseDataType } from "../api/responseType";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../store/memberReducer";
+import Swal from "sweetalert2";
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
   const [loginId, setLoginId] = React.useState("");
@@ -46,31 +47,48 @@ export default function FormDialog() {
       const response = await loginApi.getMyMemberInfo();
       const memberInfo = response.data;
       dispatch(loginAction(memberInfo));
-      alert("로그인 성공!");
+      Swal.fire({
+        icon: "success",
+        title: "로그인 성공!",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+
       navigate(`/daracbang/${memberInfo.id}`);
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
+        if (error.response?.status === 400 && error.response?.data.errorCode === "MEMBER_004") {
+          Swal.fire({
+            icon: "question",
+            title: "패스워드가 일치하지 않습니다.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          return;
+        }
         if (error.response?.status === 400) {
-          alert("잘못된 값입니다.");
+          Swal.fire("잘못된 값입니다.");
           return;
         }
         if (error.response?.status === 404 && error.response?.data.errorCode === "MEMBER_001") {
-          alert("없는 계정입니다.");
-          return;
-        }
-        if (error.response?.status === 409 && error.response?.data.errorCode === "MEMBER_004") {
-          alert("잘못된 인증 정보입니다.");
+          Swal.fire({
+            icon: "question",
+            title: "없는 계정입니다",
+            text: "계속 진행하고 싶으시면 회원가입을 진행해주세요!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           return;
         }
       }
-      alert("서버 에러");
+      Swal.fire("서버 문제...!");
       console.error(error);
     }
   };
 
   const validateInputValues = () => {
     if (loginId.trim().length === 0 || password.trim().length === 0) {
-      alert("값을 정확히 입력해주세요");
+      Swal.fire("값을 정확히 입력해주세요!");
       return false;
     }
     return true;
@@ -80,7 +98,7 @@ export default function FormDialog() {
       <Button variant="outlined" onClick={handleClickOpen}>
         로그인
       </Button>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} style={{ zIndex: 10 }}>
         <DialogTitle>로그인</DialogTitle>
         <DialogContent>
           <TextField
