@@ -22,6 +22,7 @@ import { isAxiosError } from "axios";
 import { ResponseDataType } from "../api/responseType";
 import { logoutAction } from "../store/memberReducer";
 import { deleteToken } from "../utils/tokenUtil";
+import Swal from "sweetalert2";
 
 const Diary: React.FC = () => {
   const [scope, setScoop] = useState<string>("PUBLIC");
@@ -41,28 +42,53 @@ const Diary: React.FC = () => {
 
   const submitDiary = async () => {
     if (content.length < 50) {
-      alert("50자 이상 작성해야 합니다.");
+      Swal.fire({
+        icon: "info",
+        title: "50자 이상 작성해야 합니다.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       return;
     }
     try {
       await uploadDiary(scope, content);
-      alert("등록 성공");
+      Swal.fire({
+        icon: "success",
+        title: "등록 성공!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       navigator("/daracbang/" + member?.id);
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
         if (error.response?.status === 401) {
-          alert("로그인이 필요합니다.");
+          Swal.fire({
+            icon: "info",
+            title: "다시 로그인해주세요",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           dispatch(logoutAction());
           deleteToken();
           navigator("/");
           return;
         }
         if (error.response?.status === 409 && error.response.data.errorCode === "DIARY_002") {
-          alert("오늘은 이미 다이어리를 작성하셨습니다.");
+          Swal.fire({
+            icon: "info",
+            title: "오늘 이미 다이어리를 작성했습니다.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           return;
         }
       }
-      alert("서버 에러 발생");
+      Swal.fire({
+        icon: "error",
+        title: "서버 에러..!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       return;
     }
   };
