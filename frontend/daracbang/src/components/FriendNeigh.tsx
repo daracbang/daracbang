@@ -4,18 +4,16 @@ import Ban from '../assets/images/ban.png';
 import Plus from '../assets/images/plus.png';
 import styled from "@emotion/styled";
 import { NeighborObject } from '../api/neighborApi';
-import axios from 'axios';
 import { getToken } from '../utils/tokenUtil';
+import axios from 'axios';
 
-interface SearchNeighProps {
+
+interface FriendNeighProps {
     data: NeighborObject | null;
 }
 
-const SearchNeigh: React.FC<SearchNeighProps> = ({ data }) => {
+const FriendNeigh: React.FC<FriendNeighProps> = ({ data }) => {
     const accessToken = getToken();
-
-    console.log("--" + data?.nickname);
-
 
     const handleAccept = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault();
@@ -56,15 +54,16 @@ const SearchNeigh: React.FC<SearchNeighProps> = ({ data }) => {
     }
 
     return (
-        <Card style={{ height: "70px", width: "360px", margin: "15px auto", boxShadow: "2px 2px 1px 1px #eeeeee", borderRadius: "10px" }} >
-            <NeighInfo style={{ display: "flex", flexDirection: "row", marginTop: "10px", marginLeft: "10px" }}>
-                <img src={data?.profileImage[1]} alt='sun' style={{ height: "20px", marginLeft: "10px" }} />
-                <Typography style={{ fontFamily: "omyu_pretty", fontWeight: "bold", width: "100px", marginLeft: "10px", marginRight: "100px" }}>{data?.nickname}</Typography>
-                <Button onClick={handleAccept} style={{ marginLeft: "30px", padding: 0 }}><img src={Plus} alt='plus' style={{ height: "20px" }} /></Button>
-                <Button onClick={handleDelete} style={{ padding: 0 }}><img src={Ban} alt='ban' style={{ height: "20px" }} /></Button>
-            </NeighInfo>
-        </ Card>
-
+        <div>
+            < Card style={{ height: "70px", width: "360px", margin: "15px auto", boxShadow: "2px 2px 1px 1px #eeeeee", borderRadius: "10px" }}>
+                <NeighInfo style={{ display: "flex", flexDirection: "row", marginTop: "10px", marginLeft: "10px" }}>
+                    <img src={data?.profileImage} alt='sun' style={{ height: "20px", marginLeft: "10px" }} />
+                    <Typography style={{ fontFamily: "omyu_pretty", fontWeight: "bold", width: "100px", marginLeft: "10px", marginRight: "100px" }}>{data?.nickname}</Typography>
+                    <Button onClick={handleAccept} style={{ marginLeft: "30px", padding: 0 }}><img src={Plus} alt='plus' style={{ height: "20px" }} /></Button>
+                    <Button onClick={handleDelete} style={{ padding: 0 }}><img src={Ban} alt='ban' style={{ height: "20px" }} /></Button>
+                </NeighInfo>
+            </ Card>
+        </div >
     );
 }
 
@@ -72,4 +71,4 @@ const NeighInfo = styled.div`
 
 `;
 
-export default SearchNeigh;
+export default FriendNeigh;
