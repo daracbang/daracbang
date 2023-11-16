@@ -3,14 +3,11 @@ import DiaryBook from "../assets/images/book.png";
 import PostIt from "../assets/images/postit.png";
 import Room from "../assets/images/room3.png";
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/rootReducer';
 
 
-const actions: { icon: React.ReactNode; name: string, link: string; }[] = [
-    { icon: <img src={Room} alt="Room" style={{ height: "90px", width: "90px" }} />, name: '이웃 다락방', link: "/neighbor", },
-    { icon: <img src={PostIt} alt="Post It" style={{ height: "80px", width: "80px" }} />, name: '방명록', link: "/guestbook" },
-    { icon: <img src={DiaryBook} alt="Diary Book" style={{ height: "80px", width: "80px" }} />, name: '오늘 다이어리 작성', link: "/diary-write" },
 
-];
 
 const actionSize = {
     width: 50,
@@ -21,12 +18,25 @@ const actionSize = {
 }
 
 
+
+
 const Dial: React.FC = () => {
 
     const handleSpeedDialClick = (link: string) => {
         // 클릭할 때 이동하려는 페이지로 리디렉션합니다.
         window.location.href = link;
     };
+
+    const member = useSelector((state: RootState) => {
+        return state.memberReducer.member;
+    });
+
+    const actions: { icon: React.ReactNode; name: string, link: string; }[] = [
+        { icon: <img src={Room} alt="Room" style={{ height: "90px", width: "90px" }} />, name: '이웃 다락방', link: member?.id + "/neighbor", },
+        { icon: <img src={PostIt} alt="Post It" style={{ height: "80px", width: "80px" }} />, name: '방명록', link: member?.id + "/guestbook" },
+        { icon: <img src={DiaryBook} alt="Diary Book" style={{ height: "80px", width: "80px" }} />, name: '오늘 다이어리 작성', link: "/diary-write" },
+
+    ];
 
     return (
         <SpeedDial
