@@ -1,19 +1,16 @@
-package a503.daracbang.domain.member.exception;
+package a503.daracbang.domain.guestbook.exception;
 
 import a503.daracbang.global.exception.ErrorCode;
 
-public enum MemberErrorCode implements ErrorCode {
-    NOTFOUND_MEMBER("MEMBER_001","해당 회원을 찾을 수 없습니다.",404),
-    DUPLICATE_MEMBER_LOGIN_ID("MEMBER_002", "중복된 아이디입니다.", 409),
-    DUPLICATE_MEMBER_NICKNAME("MEMBER_003", "중복된 닉네임입니다.", 409),
-
-    ;
+public enum GuestbookErrorCode implements ErrorCode {
+    NOTWRITER_GUESTBOOK("GUESTBOOK_002","방명록 작성자가 아닙니다.",403),
+    NOTFOUND_GUESTBOOK("GUESTBOOK_001","해당 방명록을 찾을 수 없습니다.",404);
 
     private String errorCode;
     private String message;
     private int statusCode;
 
-    MemberErrorCode(String errorCode, String message, int statusCode) {
+    GuestbookErrorCode(String errorCode, String message, int statusCode) {
         this.errorCode = errorCode;
         this.message = message;
         this.statusCode = statusCode;
@@ -33,6 +30,4 @@ public enum MemberErrorCode implements ErrorCode {
     public int getStatusCode() {
         return this.statusCode;
     }
-
-
 }
