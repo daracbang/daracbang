@@ -1,9 +1,11 @@
-import { Button, Card, Typography } from "@mui/material";
+import { Button, Card, Tooltip, Typography } from "@mui/material";
 import * as React from "react";
 import Ban from "../assets/images/ban.png";
 import Plus from "../assets/images/plus.png";
 import styled from "@emotion/styled";
 import { MemberSearchObject } from "../api/neighborApi";
+import { hover } from "@testing-library/user-event/dist/hover";
+import { useNavigate } from "react-router-dom";
 
 interface SearchNeighProps {
   data: MemberSearchObject;
@@ -12,6 +14,7 @@ interface SearchNeighProps {
 }
 
 const SearchNeigh: React.FC<SearchNeighProps> = ({ data, onApplicate, onCancel }) => {
+  const navigator = useNavigate();
   return (
     <Card
       style={{
@@ -24,18 +27,27 @@ const SearchNeigh: React.FC<SearchNeighProps> = ({ data, onApplicate, onCancel }
     >
       <NeighInfo style={{ display: "flex", flexDirection: "row", marginTop: "10px", marginLeft: "10px" }}>
         <img src={data?.profileImage} alt="sun" style={{ height: "30px", marginLeft: "10px", width: "50px" }} />
-        <Typography
+        <Tooltip
+          title="다락방 이동"
+          placement="top-start"
           style={{
-            fontFamily: "omyu_pretty",
-            fontWeight: "bold",
-            width: "100px",
-            marginLeft: "10px",
-            lineHeight: "30px",
-            whiteSpace: "nowrap",
+            cursor: "pointer",
           }}
+          onClick={() => navigator(`/daracbang/${data.memberId}`)}
         >
-          {data.nickname}
-        </Typography>
+          <Typography
+            style={{
+              fontFamily: "omyu_pretty",
+              fontWeight: "bold",
+              width: "100px",
+              marginLeft: "10px",
+              lineHeight: "30px",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {data.nickname}
+          </Typography>
+        </Tooltip>
         {data.isNeighborRequest ? (
           <div style={{ display: "flex", justifyContent: "center", alignContent: "center" }}>
             <Typography
@@ -50,9 +62,11 @@ const SearchNeigh: React.FC<SearchNeighProps> = ({ data, onApplicate, onCancel }
             >
               신청 대기중
             </Typography>
-            <Button onClick={() => onCancel(data.memberId)} style={{}}>
-              <img src={Ban} alt="plus" style={{ height: "20px" }} />
-            </Button>
+            <Tooltip title="신청 취소">
+              <Button onClick={() => onCancel(data.memberId)} style={{}}>
+                <img src={Ban} alt="plus" style={{ height: "20px" }} />
+              </Button>
+            </Tooltip>
           </div>
         ) : data.isNeighbor ? (
           <Typography
@@ -67,11 +81,11 @@ const SearchNeigh: React.FC<SearchNeighProps> = ({ data, onApplicate, onCancel }
             이미 이웃입니다!
           </Typography>
         ) : (
-          <>
+          <Tooltip title="이웃 신청">
             <Button onClick={() => onApplicate(data.memberId)} style={{ marginLeft: "120px" }}>
               <img src={Plus} alt="plus" style={{ height: "20px" }} />
             </Button>
-          </>
+          </Tooltip>
         )}
       </NeighInfo>
     </Card>

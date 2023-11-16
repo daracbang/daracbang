@@ -62,7 +62,7 @@ export default function FormDialog() {
             icon: "question",
             title: "패스워드가 일치하지 않습니다.",
             showConfirmButton: false,
-            timer: 1500,
+            timer: 1200,
           });
           return;
         }
@@ -76,7 +76,7 @@ export default function FormDialog() {
             title: "없는 계정입니다",
             text: "계속 진행하고 싶으시면 회원가입을 진행해주세요!",
             showConfirmButton: false,
-            timer: 1500,
+            timer: 1200,
           });
           return;
         }

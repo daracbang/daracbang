@@ -1,8 +1,9 @@
-import { Button, Card, Typography } from "@mui/material";
+import { Button, Card, Tooltip, Typography } from "@mui/material";
 import * as React from "react";
 import Ban from "../assets/images/ban.png";
 import styled from "@emotion/styled";
 import { NeighborObject } from "../api/neighborApi";
+import { useNavigate } from "react-router-dom";
 
 interface FriendNeighProps {
   data: NeighborObject;
@@ -10,6 +11,7 @@ interface FriendNeighProps {
 }
 
 const FriendNeigh: React.FC<FriendNeighProps> = ({ data, onRemove }) => {
+  const navigator = useNavigate();
   return (
     <div>
       <Card
@@ -23,21 +25,33 @@ const FriendNeigh: React.FC<FriendNeighProps> = ({ data, onRemove }) => {
       >
         <NeighInfo style={{ display: "flex", flexDirection: "row", marginTop: "10px", marginLeft: "10px" }}>
           <img src={data?.profileImage} alt="sun" style={{ height: "20px", marginLeft: "10px" }} />
-          <Typography
+          <Tooltip
+            title="다락방 이동"
+            placement="top-start"
             style={{
-              fontFamily: "omyu_pretty",
-              fontWeight: "bold",
-              width: "100px",
-              marginLeft: "10px",
-              marginRight: "100px",
-              lineHeight: "30px",
+              cursor: "pointer",
             }}
+            onClick={() => navigator(`/daracbang/${data.memberId}`)}
           >
-            {data?.nickname}
-          </Typography>
-          <Button onClick={() => onRemove(data.neighborId)} style={{ padding: 0 }}>
-            <img src={Ban} alt="ban" style={{ height: "20px" }} />
-          </Button>
+            <Typography
+              style={{
+                fontFamily: "omyu_pretty",
+                fontWeight: "bold",
+                width: "100px",
+                marginLeft: "10px",
+                marginRight: "100px",
+                lineHeight: "30px",
+              }}
+            >
+              {data?.nickname}
+            </Typography>
+          </Tooltip>
+
+          <Tooltip title="이웃 삭제">
+            <Button onClick={() => onRemove(data.neighborId)} style={{ padding: 0 }}>
+              <img src={Ban} alt="ban" style={{ height: "20px" }} />
+            </Button>
+          </Tooltip>
         </NeighInfo>
       </Card>
     </div>
