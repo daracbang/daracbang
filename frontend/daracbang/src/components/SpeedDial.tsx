@@ -33,7 +33,6 @@ const Dial: React.FC = () => {
 
     const actions: { icon: React.ReactNode; name: string, link: string; }[] = [
         { icon: <img src={Room} alt="Room" style={{ height: "90px", width: "90px" }} />, name: '이웃 다락방', link: member?.id + "/neighbor", },
-        { icon: <img src={PostIt} alt="Post It" style={{ height: "80px", width: "80px" }} />, name: '방명록', link: member?.id + "/guestbook" },
         { icon: <img src={DiaryBook} alt="Diary Book" style={{ height: "80px", width: "80px" }} />, name: '오늘 다이어리 작성', link: "/diary-write" },
 
     ];

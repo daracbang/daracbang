@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import MyDarac from "../assets/images/room2.png";
 import Head from "../components/Head";
-import { Button, Card, CardContent, Typography } from "@mui/material";
+import { Button, Card, CardContent, Chip, Typography } from "@mui/material";
 import LinearProgress, { linearProgressClasses } from "@mui/material/LinearProgress";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Dial from "../components/SpeedDial";
@@ -19,7 +19,7 @@ import { ResponseDataType } from "../api/responseType";
 import { deleteToken } from "../utils/tokenUtil";
 import { DiaryDetail, MoodTrackerItemType, MoodeStatus, getDiaryDeatailApi, getMoodStatusApi } from "../api/diaryApi";
 import { formatDate } from "../utils/dateUtil";
-import { margin } from "@mui/system";
+import upArrow from "../assets/images/upArrow.png";
 
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -194,10 +194,19 @@ const Daracbang: React.FC = () => {
             </Card>
           </SumDiary>
         </SideWrap>
-        <Link to={`/daracbang/${params.memberId}/guestbook`}>
-          {" "}
-          <img src={MyDarac} alt="myDarac" />
-        </Link>
+        <MidWrap style={{ display: "flex", flexDirection: "column" }}>
+          <Link to={`/daracbang/${params.memberId}/guestbook`}>
+            {" "}
+
+            <img src={MyDarac} alt="myDarac" style={{ height: "550px" }} />
+
+          </Link>
+          <Typography style={{ fontFamily: "omyu_pretty", fontWeight: "bold", textAlign: "center", fontSize: "20px", marginTop: "10px" }}>
+            방명록보러가기 <img src={upArrow} alt="arrow" style={{ height: "25px" }}></img> </Typography>
+
+        </MidWrap>
+
+
         <Navi style={{ transform: "translateZ(0px)", flexGrow: 1 }}>
           <Dial />
         </Navi>
@@ -240,6 +249,8 @@ const SumDiary = styled.div`
 `;
 
 const Navi = styled.div``;
+
+const MidWrap = styled.div``;
 
 const MoodIcon = styled.div`
   display: flex;

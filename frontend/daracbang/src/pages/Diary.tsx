@@ -136,7 +136,7 @@ const Diary = () => {
       <ContainerWrap style={{ backgroundColor: "#F2EBEB" }}>
         <LsideWrap>
           <MoodTracker memberId={1} onClickTracker={onActive} />
-          <img src={MyDarac} alt="myDarac" style={{ height: "300px", marginTop: "10px" }} />
+          <img src={MyDarac} alt="myDarac" style={{ height: "300px", marginTop: "60px" }} />
         </LsideWrap>
 
         <ContentWrap>
@@ -228,8 +228,8 @@ const Diary = () => {
 
 const ContainerWrap = styled.div`
   display: flex;
-  padding-top: 20px;
-  padding-bottom: 37px;
+  padding-top: 13px;
+  padding-bottom: 19px;
 
   .noscroll {
     ::-webkit-scrollbar {

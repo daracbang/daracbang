@@ -7,9 +7,10 @@ import Music from "../assets/images/music.png";
 import Bell from "../assets/images/bell.png";
 import CheckAlert from "../assets/images/checkAlert.png";
 import Mute from "../assets/images/mute.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../store/memberReducer";
 import * as tokenUtil from "../utils/tokenUtil";
+import { RootState } from "../store/rootReducer";
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
   width: 22,
@@ -49,10 +50,16 @@ const Head = () => {
     }
   };
 
+  const member = useSelector((state: RootState) => {
+    return state.memberReducer.member;
+  });
+
+  const darac = "/daracbang/" + member?.id
+
   return (
     <Header style={{ backgroundColor: "#F2EBEB" }}>
       <Logos>
-        <Link to="/daracbang" style={{ textDecoration: "none", marginRight: "20px" }}>
+        <Link to={darac} style={{ textDecoration: "none", marginRight: "20px" }}>
           <img src={Logo} alt="logo" />
         </Link>
         <Typography style={{ fontFamily: "omyu_pretty", fontSize: "30px", fontWeight: "bold", marginTop: "5px" }}>
