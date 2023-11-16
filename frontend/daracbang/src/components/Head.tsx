@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React, { useRef } from "react";
+import React from "react";
 import Logo from "../assets/images/logo.png";
 import styled from "@emotion/styled";
 import { Avatar, Badge, Button, Card, Popover, Typography } from "@mui/material";
@@ -10,7 +10,6 @@ import Mute from "../assets/images/mute.png";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../store/memberReducer";
 import * as tokenUtil from "../utils/tokenUtil";
-import YoutubePlayer from "./YoutubePlayer";
 import { RootState } from "../store/rootReducer";
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
@@ -22,23 +21,7 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 
 const Head = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-  const [currentBGMIndex, setCurrentBGMIndex] = React.useState<number>(0);
   const dispatch = useDispatch();
-  const bgmLists = useSelector((state:RootState) => {
-    return state.BGMReducer.bgmList;
-  })
-
-  const changeBGM = (direction: 'next' | 'prev') => {
-    if (direction === 'next') {
-      setCurrentBGMIndex((prevIndex) => (prevIndex + 1) % bgmLists.length);
-    } else if (direction === 'prev') {
-      setCurrentBGMIndex((prevIndex) => {
-        if (prevIndex === 0) return bgmLists.length - 1;
-        return prevIndex - 1;
-      });
-    }
-  };
-  
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -57,16 +40,6 @@ const Head = () => {
   const [mute, setMute] = React.useState(false);
   const [mPic, setMpic] = React.useState("Music");
 
-  const muteClickHandler = () => {
-    if (mute === true) {
-      setMute(false);
-      setMpic("Music");
-    } else {
-      setMute(true);
-      setMpic("Mute");
-    }
-  };
-
   return (
     <Header style={{ backgroundColor: "#F2EBEB" }}>
       <Logos>
@@ -78,33 +51,6 @@ const Head = () => {
         </Typography>
       </Logos>
       <BtnGroup>
-        {(bgmLists.length == 0) && 
-        <Card  style={{ borderRadius: "30px", width: "280px", height: "30px", marginTop: "10px" }}>
-          <Typography style={{ fontFamily: "omyu_pretty", textAlign: "center", marginTop: "2px" }}>
-           현재 재생중인 bgm이 없습니다.
-          </Typography>
-        </Card> 
-        }
-        {bgmLists.length > 0 && (
-          <Card key={bgmLists[currentBGMIndex].bgmId} style={{ borderRadius: "30px", width: "280px", height: "30px", marginTop: "10px" }}>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <Button onClick={() => changeBGM('prev')}>&lt;</Button>
-              <Typography style={{ fontFamily: "omyu_pretty", textAlign: "center", marginTop: "2px" }}>
-                {bgmLists[currentBGMIndex].bgmName}
-              </Typography>
-              <Button onClick={() => changeBGM('next')}>&gt;</Button>
-            </div>
-          </Card> 
-        )}
-        
-        <Button onClick={muteClickHandler}>
-          {mPic === "Music" ? (
-            <img src={Music} alt="music" style={{ height: "60px", width: "70px" }} />
-          ) : (
-            <img src={Mute} alt="mute" style={{ height: "60px", width: "70px" }} />
-          )}
-        </Button>
-
         <Badge
           overlap="circular"
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
