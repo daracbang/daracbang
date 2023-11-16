@@ -10,10 +10,13 @@ import SignUp from "./pages/SignUp";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import PublicPage from "./pages/PublicPage";
 import PrivatePage from "./pages/PriviatePage";
+import { Global } from "@emotion/react";
+import reset from "./style/reset";
 
 function App() {
   return (
     <BrowserRouter>
+      <Global styles={reset} />
       <Routes>
         <Route element={<PublicPage />}>
           <Route path="/signup" element={<SignUp />}></Route>

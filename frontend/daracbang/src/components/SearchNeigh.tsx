@@ -1,25 +1,82 @@
-import { Button, Card, Typography } from '@mui/material';
-import * as React from 'react';
-import Ban from '../assets/images/ban.png';
-import Plus from '../assets/images/plus.png';
-import Sun from '../assets/images/sun.png';
+import { Button, Card, Typography } from "@mui/material";
+import * as React from "react";
+import Ban from "../assets/images/ban.png";
+import Plus from "../assets/images/plus.png";
 import styled from "@emotion/styled";
+import { MemberSearchObject } from "../api/neighborApi";
 
-export default function SearchNeigh() {
-
-    return (
-        <Card style={{ height: "70px", width: "360px", margin: "15px auto", boxShadow: "2px 2px 1px 1px #eeeeee", borderRadius: "10px" }}>
-            <NeighInfo style={{ display: "flex", flexDirection: "row", marginTop: "10px", marginLeft: "10px" }}>
-                <img src={Sun} alt='sun' style={{ height: "20px", marginLeft: "10px" }} />
-                <Typography style={{ fontFamily: "omyu_pretty", fontWeight: "bold", width: "100px", marginLeft: "10px", marginRight: "100px" }}>김싸피</Typography>
-                <Button style={{ marginLeft: "30px", padding: 0 }}><img src={Plus} alt='plus' style={{ height: "20px" }} /></Button>
-                <Button style={{ padding: 0 }}><img src={Ban} alt='ban' style={{ height: "20px" }} /></Button>
-            </NeighInfo>
-            <Typography style={{ fontFamily: 'omyu_pretty', marginLeft: "20px" }}>놀러오세요 마이 다락방!</Typography>
-        </Card>
-    );
+interface SearchNeighProps {
+  data: MemberSearchObject;
+  onApplicate: (id: number) => void;
+  onCancel: (id: number) => void;
 }
 
-const NeighInfo = styled.div`
+const SearchNeigh: React.FC<SearchNeighProps> = ({ data, onApplicate, onCancel }) => {
+  return (
+    <Card
+      style={{
+        height: "50px",
+        width: "360px",
+        margin: "15px auto",
+        boxShadow: "2px 2px 1px 1px #eeeeee",
+        borderRadius: "10px",
+      }}
+    >
+      <NeighInfo style={{ display: "flex", flexDirection: "row", marginTop: "10px", marginLeft: "10px" }}>
+        <img src={data?.profileImage} alt="sun" style={{ height: "30px", marginLeft: "10px" }} />
+        <Typography
+          style={{
+            fontFamily: "omyu_pretty",
+            fontWeight: "bold",
+            width: "100px",
+            marginLeft: "10px",
+            lineHeight: "30px",
+          }}
+        >
+          {data.nickname}
+        </Typography>
+        {data.isNeighborRequest ? (
+          <div style={{ display: "flex", justifyContent: "center", alignContent: "center" }}>
+            <Typography
+              style={{
+                fontFamily: "omyu_pretty",
+                fontWeight: "bold",
+                width: "100px",
+                marginLeft: "50px",
+                textAlign: "center",
+                lineHeight: "30px",
+              }}
+            >
+              신청 대기중
+            </Typography>
+            <Button onClick={() => onCancel(data.memberId)} style={{}}>
+              <img src={Ban} alt="plus" style={{ height: "20px" }} />
+            </Button>
+          </div>
+        ) : data.isNeighbor ? (
+          <Typography
+            style={{
+              fontFamily: "omyu_pretty",
+              fontWeight: "bold",
+              width: "100px",
+              marginLeft: "50px",
+              lineHeight: "30px",
+            }}
+          >
+            이미 이웃입니다!
+          </Typography>
+        ) : (
+          <>
+            <Button onClick={() => onApplicate(data.memberId)} style={{ marginLeft: "100px" }}>
+              <img src={Plus} alt="plus" style={{ height: "20px" }} />
+            </Button>
+          </>
+        )}
+      </NeighInfo>
+    </Card>
+  );
+};
 
-`;
+const NeighInfo = styled.div``;
+
+export default SearchNeigh;

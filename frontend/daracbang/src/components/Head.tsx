@@ -22,7 +22,9 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 const Head = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
   const dispatch = useDispatch();
-
+  const member = useSelector((state: RootState) => {
+    return state.memberReducer.member;
+  });
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -37,13 +39,10 @@ const Head = () => {
   };
   const open = Boolean(anchorEl);
 
-  const [mute, setMute] = React.useState(false);
-  const [mPic, setMpic] = React.useState("Music");
-
   return (
-    <Header style={{ backgroundColor: "#F2EBEB" }}>
+    <Header style={{ backgroundColor: "#F2EBEB", height: "100px", display: "flex", alignItems: "center" }}>
       <Logos>
-        <Link to="/daracbang" style={{ textDecoration: "none", marginRight: "20px" }}>
+        <Link to={`/daracbang/${member?.id}`} style={{ textDecoration: "none", marginRight: "20px" }}>
           <img src={Logo} alt="logo" />
         </Link>
         <Typography style={{ fontFamily: "omyu_pretty", fontSize: "30px", fontWeight: "bold", marginTop: "5px" }}>
