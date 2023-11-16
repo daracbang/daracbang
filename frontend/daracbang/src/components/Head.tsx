@@ -60,7 +60,7 @@ const Head = () => {
         </Typography>
       </Logos>
       <BtnGroup>
-        <Card style={{ borderRadius: "30px", width: "280px", height: "30px", marginTop: "10px" }}>
+        {/* <Card style={{ borderRadius: "30px", width: "280px", height: "30px", marginTop: "10px" }}>
           <Typography style={{ fontFamily: "omyu_pretty", textAlign: "center", marginTop: "2px" }}>
             르세라핌 - 이브와 프시케와 푸른수염의 아내
           </Typography>
@@ -71,9 +71,9 @@ const Head = () => {
           ) : (
             <img src={Mute} alt="mute" style={{ height: "60px", width: "70px" }} />
           )}
-        </Button>
+        </Button> */}
 
-        <Badge
+        {/* <Badge
           overlap="circular"
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
           badgeContent={<SmallAvatar alt="Remy Sharp" src={CheckAlert} />}
@@ -96,7 +96,7 @@ const Head = () => {
           >
             The content of the Popover.
           </Popover>
-        </Badge>
+        </Badge> */}
 
         <Link
           onClick={logout}

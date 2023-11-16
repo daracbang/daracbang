@@ -4,7 +4,10 @@ import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import styled from "@emotion/styled";
 import { Link } from 'react-router-dom';
 import Arrow from "../assets/images/arrow.png";
-import room1 from "../assets/images/room2.png"
+import room1 from "../assets/images/room2.png";
+import first from "../assets/images/1.png";
+import second from "../assets/images/2.png";
+import third from "../assets/images/3.png";
 
 const Main: React.FC = () => {
 
@@ -16,13 +19,13 @@ const Main: React.FC = () => {
                     <Card style={{ height: "505px", width: "540px", margin: "5px", boxShadow: "3px 3px 5px 3px #eeeeee", borderRadius: "15px" }}>
                         <CardMedia
                             component="img"
-                            height="400"
-                            image={room1}
+                            height="440"
+                            image={third}
                             title="ex3"
                         />
                         <CardContent>
                             <Typography style={{ fontFamily: "omyu_pretty", display: "flex", justifyContent: "center", flexDirection: "row", fontSize: "20px", fontWeight: "bold" }}>
-                                ex3
+                                실시간으로 나의 다이어리를 분석하여 무드트래커를 완성해보세요
                             </Typography>
                         </CardContent>
                     </Card>
@@ -32,12 +35,12 @@ const Main: React.FC = () => {
                             <CardMedia
                                 component="img"
                                 height="200"
-                                image={room1}
+                                image={first}
                                 title="ex1"
                             />
                             <CardContent>
                                 <Typography style={{ fontFamily: "omyu_pretty", display: "flex", justifyContent: "center", flexDirection: "row", fontSize: "20px", fontWeight: "bold" }}>
-                                    ex1
+                                    친구의 방명록에 방문하여 발자국을 남겨보세요
                                 </Typography>
                             </CardContent>
                         </Card>
@@ -45,12 +48,12 @@ const Main: React.FC = () => {
                             <CardMedia
                                 component="img"
                                 height="200"
-                                image={room1}
+                                image={second}
                                 title="ex2"
                             />
                             <CardContent>
                                 <Typography style={{ fontFamily: "omyu_pretty", display: "flex", justifyContent: "center", flexDirection: "row", fontSize: "20px", fontWeight: "bold" }}>
-                                    ex2
+                                    달력을 통해 나의 일기에 달린 친구들의 말을 같이 봐요
                                 </Typography>
                             </CardContent>
                         </Card>
