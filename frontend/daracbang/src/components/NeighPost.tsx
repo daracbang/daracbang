@@ -13,6 +13,8 @@ interface NeighPostProps {
 export default function NeighPost({ data }: NeighPostProps) {
 
 
+
+
     return (
         <Card style={{ position: 'relative', height: "100px", width: "600px", marginLeft: "50px", marginTop: "15px" }}>
             <Typography style={{ height: "20px", marginLeft: "10px", fontFamily: "omyu_pretty", fontWeight: "bold" }} >{formatDate(data.createdAt)}</Typography>
