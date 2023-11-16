@@ -28,6 +28,7 @@ const Neighbor = () => {
     });
 
     const [searchedNickname, setSearchedNickname] = useState<string>("");
+    const [intro, setIntro] = useState<string>('');
     const [searchMember, setSearchMember] = React.useState<NeighborObject>();
     const [requestMember, setRequestMember] = useState<NeighborObject[]>([]);
     const [friendMember, setFriendMember] = useState<NeighborObject[]>([]);
@@ -94,7 +95,29 @@ const Neighbor = () => {
             });
 
 
+
+
     }, [accessToken, searchMember, searchedNickname]);
+
+    const submitIntro = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.preventDefault();
+
+        axios.put(`/api/members/introduce`, {
+            introduce: intro
+        }, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
+        }).then((response: { data: NeighborObject[] }) => {
+            console.log(response.data);
+            alert('수정되었습니다.');
+        })
+            .catch((error) => {
+                // 오류 처리
+                console.log(error);
+                alert('수정에 실패했습니다. 다시 시도해주세요');
+            });
+    }
 
 
     return (
@@ -127,9 +150,11 @@ const Neighbor = () => {
 
                         <Card style={{ height: "150px", marginLeft: "50px", marginBottom: "10px", boxShadow: "3px 3px 2px 1px #bdbdbd", borderRadius: "15px", display: "flex", flexDirection: "column" }} >
                             <ThemeProvider theme={theme} >
-                                <TextField value={member?.introduce} multiline style={{ fontFamily: "KyoboHand", marginTop: "15px", marginLeft: "30px", width: "360px" }} rows={2}></TextField>
+                                <TextField value={intro}
+                                    onChange={(e) => setIntro(e.target.value)}
+                                    multiline style={{ fontFamily: "KyoboHand", marginTop: "15px", marginLeft: "30px", width: "360px" }} rows={2}></TextField>
                             </ThemeProvider>
-                            <Button variant='outlined' style={{ marginLeft: "300px", marginTop: "10px", width: "90px", height: "30px" }}>수정하기</Button>
+                            <Button onClick={submitIntro} variant='outlined' style={{ marginLeft: "300px", marginTop: "10px", width: "90px", height: "30px" }}>수정하기</Button>
                         </Card>
                         <Card style={{ height: "440px", width: "420px", backgroundColor: "rgba( 255, 255, 255, 0.3 )", marginLeft: "50px", boxShadow: "3px 3px 2px 1px #bdbdbd", borderRadius: "15px" }} >
                             <Typography style={{ fontFamily: "omyu_pretty", textAlign: "center", fontWeight: "bold", fontSize: "20px", marginTop: "5px" }}>나의 BFF</Typography>
