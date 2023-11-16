@@ -39,7 +39,7 @@ const Neighbor = () => {
   const [searchMember, setSearchMember] = React.useState<MemberSearchObject[]>([]);
   const [requireAccepteMember, setRequireAcceptMember] = useState<NeighborObject[]>([]);
   const [friendMember, setFriendMember] = useState<NeighborObject[]>([]);
-
+  const [intro, setIntro] = useState<string>("");
   async function searchNeigbor(keyword: string) {
     const res = await searchNeighborApi(keyword);
     const searchMem = res.data.data

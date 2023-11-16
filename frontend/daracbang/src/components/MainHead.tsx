@@ -10,7 +10,7 @@ const MainHead = () => {
     return (
         <Header>
             <Logos>
-                <Link to="/daracbang" style={{ textDecoration: "none", marginRight: "20px" }}>
+                <Link to="/" style={{ textDecoration: "none", marginRight: "20px" }}>
                     <img src={Logo} alt="logo" />
                 </Link>
                 <Typography style={{ fontFamily: "omyu_pretty", fontSize: "30px", fontWeight: "bold", marginTop: "5px" }}>다락방</Typography>

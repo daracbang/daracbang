@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import MyDarac from "../assets/images/room2.png";
 import Head from "../components/Head";
-import { Button, Card, CardContent, Typography } from "@mui/material";
+import { Button, Card, CardContent, Chip, Typography } from "@mui/material";
 import LinearProgress, { linearProgressClasses } from "@mui/material/LinearProgress";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Dial from "../components/SpeedDial";
@@ -20,6 +20,7 @@ import { deleteToken } from "../utils/tokenUtil";
 import { DiaryDetail, MoodTrackerItemType, MoodeStatus, getDiaryDeatailApi, getMoodStatusApi } from "../api/diaryApi";
 import { formatDate } from "../utils/dateUtil";
 import Swal from "sweetalert2";
+import upArrow from "../assets/images/upArrow.png";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 15,
@@ -176,7 +177,7 @@ const Daracbang: React.FC = () => {
           <MoodTracker memberId={member!.id} onClickTracker={onActive} />
           <SumDiary>
             <Card style={{ height: "130px", borderRadius: "10px", boxShadow: "3px 3px 5px 1px #bdbdbd" }}>
-              <CardContent style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px" }}>
+              <CardContent style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px", height: "50px" }}>
                 {activeDiaryInfo === null ? (
                   "다이어리를 선택해주세요"
                 ) : (
@@ -204,10 +205,24 @@ const Daracbang: React.FC = () => {
             </Card>
           </SumDiary>
         </SideWrap>
-        <Link to={`/daracbang/${params.memberId}/guestbook`}>
-          {" "}
-          <img src={MyDarac} alt="myDarac" />
-        </Link>
+        <MidWrap style={{ display: "flex", flexDirection: "column" }}>
+          <Link to={`/daracbang/${params.memberId}/guestbook`}>
+            {" "}
+            <img src={MyDarac} alt="myDarac" style={{ height: "550px" }} />
+          </Link>
+          <Typography
+            style={{
+              fontFamily: "omyu_pretty",
+              fontWeight: "bold",
+              textAlign: "center",
+              fontSize: "20px",
+              marginTop: "10px",
+            }}
+          >
+            방명록보러가기 <img src={upArrow} alt="arrow" style={{ height: "25px" }}></img>{" "}
+          </Typography>
+        </MidWrap>
+
         <Navi style={{ transform: "translateZ(0px)", flexGrow: 1 }}>
           <Dial />
         </Navi>
@@ -220,7 +235,7 @@ const ContainerWrap = styled.div`
   display: flex;
   flex-direction: row;
   padding-top: 17px;
-  padding-bottom: 25px;
+  padding-bottom: 20px;
   padding-left: 50px;
   padding-right: 50px;
   .content-hidden {
@@ -250,6 +265,8 @@ const SumDiary = styled.div`
 `;
 
 const Navi = styled.div``;
+
+const MidWrap = styled.div``;
 
 const MoodIcon = styled.div`
   display: flex;
