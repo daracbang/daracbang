@@ -27,6 +27,7 @@ import { deleteToken } from "../utils/tokenUtil";
 import { isAxiosError } from "axios";
 import { ResponseDataType } from "../api/responseType";
 import { CommentType, createCommentApi, getCommentApi } from "../api/commentsApi";
+import Swal from "sweetalert2";
 
 const Diary = () => {
   const [open, setOpen] = React.useState(false);
@@ -53,17 +54,32 @@ const Diary = () => {
 
   const onSubmitComment = async () => {
     if (content.trim().length === 0) {
-      alert("댓글을 입력해주세요!");
+      Swal.fire({
+        icon: "info",
+        title: "댓글을 입력해주세요!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
     try {
       await createCommentApi(diary!.id, content);
-      alert("댓글 등록 성공");
+      Swal.fire({
+        icon: "success",
+        title: "댓글 등록 성공",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       handleClose();
       getCommentList(diary!.id);
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
         if (error.response?.status === 401) {
-          alert("로그인이 필요합니다.");
+          Swal.fire({
+            icon: "info",
+            title: "다시 로그인해주세요",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           dispatch(logoutAction());
           deleteToken();
           navigator("/");
@@ -94,7 +110,12 @@ const Diary = () => {
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
         if (error.response?.status === 401) {
-          alert("로그인이 필요합니다.");
+          Swal.fire({
+            icon: "info",
+            title: "다시 로그인해주세요",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           dispatch(logoutAction());
           deleteToken();
           navigator("/");
@@ -112,7 +133,12 @@ const Diary = () => {
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
         if (error.response?.status === 401) {
-          alert("로그인이 필요합니다.");
+          Swal.fire({
+            icon: "info",
+            title: "다시 로그인해주세요",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           dispatch(logoutAction());
           deleteToken();
           navigator("/");
@@ -135,8 +161,8 @@ const Diary = () => {
       <Head />
       <ContainerWrap style={{ backgroundColor: "#F2EBEB" }}>
         <LsideWrap>
-          <MoodTracker memberId={1} onClickTracker={onActive} />
-          <img src={MyDarac} alt="myDarac" style={{ height: "300px", marginTop: "60px" }} />
+          <MoodTracker memberId={param.memberId ? parseInt(param!.memberId) : 1} onClickTracker={onActive} />
+          <img src={MyDarac} alt="myDarac" style={{ height: "300px", marginTop: "10px" }} />
         </LsideWrap>
 
         <ContentWrap>

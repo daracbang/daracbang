@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../store/memberReducer";
 import * as tokenUtil from "../utils/tokenUtil";
 import { RootState } from "../store/rootReducer";
+import Swal from "sweetalert2";
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
   width: 22,
@@ -22,7 +23,9 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 const Head = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
   const dispatch = useDispatch();
-
+  const member = useSelector((state: RootState) => {
+    return state.memberReducer.member;
+  });
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -33,53 +36,34 @@ const Head = () => {
 
   const logout = () => {
     dispatch(logoutAction());
+    Swal.fire({
+      icon: "success",
+      title: "로그아웃 성공",
+      showConfirmButton: false,
+      timer: 1500,
+    });
     tokenUtil.deleteToken();
   };
   const open = Boolean(anchorEl);
 
-  const [mute, setMute] = React.useState(false);
-  const [mPic, setMpic] = React.useState("Music");
-
-  const muteClickHandler = () => {
-    if (mute === true) {
-      setMute(false);
-      setMpic("Music");
-    } else {
-      setMute(true);
-      setMpic("Mute");
-    }
-  };
-
-  const member = useSelector((state: RootState) => {
-    return state.memberReducer.member;
-  });
-
-  const darac = "/daracbang/" + member?.id
-
   return (
-    <Header style={{ backgroundColor: "#F2EBEB" }}>
+    <Header style={{ backgroundColor: "#F2EBEB", height: "100px", display: "flex", alignItems: "center" }}>
       <Logos>
-        <Link to={darac} style={{ textDecoration: "none", marginRight: "20px" }}>
+        <Link to={`/daracbang/${member?.id}`} style={{ textDecoration: "none", marginRight: "20px" }}>
           <img src={Logo} alt="logo" />
         </Link>
-        <Typography style={{ fontFamily: "omyu_pretty", fontSize: "30px", fontWeight: "bold", marginTop: "5px" }}>
+        <Typography
+          style={{
+            fontFamily: "omyu_pretty",
+            fontSize: "30px",
+            fontWeight: "bold",
+            lineHeight: "70px",
+          }}
+        >
           다락방
         </Typography>
       </Logos>
       <BtnGroup>
-        {/* <Card style={{ borderRadius: "30px", width: "280px", height: "30px", marginTop: "10px" }}>
-          <Typography style={{ fontFamily: "omyu_pretty", textAlign: "center", marginTop: "2px" }}>
-            르세라핌 - 이브와 프시케와 푸른수염의 아내
-          </Typography>
-        </Card>
-        <Button onClick={muteClickHandler}>
-          {mPic === "Music" ? (
-            <img src={Music} alt="music" style={{ height: "60px", width: "70px" }} />
-          ) : (
-            <img src={Mute} alt="mute" style={{ height: "60px", width: "70px" }} />
-          )}
-        </Button> */}
-
         {/* <Badge
           overlap="circular"
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
