@@ -1,7 +1,6 @@
 package a503.daracbang.domain.bgm.controller;
 
-import a503.daracbang.domain.bgm.dto.request.RegisterBgmIdRequest;
-import a503.daracbang.domain.bgm.dto.request.RegisterBgmUrlRequest;
+import a503.daracbang.domain.bgm.dto.request.RegisterBgmRequest;
 import a503.daracbang.domain.bgm.dto.response.MyBgmListResponse;
 import a503.daracbang.domain.bgm.dto.response.YoutubeListResponse;
 import a503.daracbang.domain.bgm.service.CreateBgmService;
@@ -31,18 +30,11 @@ public class BgmController {
     private final DeleteBgmService deleteBgmService;
     private final FindBgmService findBgmService;
 
-    @PostMapping("/url")
-    public ResponseEntity<Void> createByUrl(@Valid @RequestBody RegisterBgmUrlRequest registerBgmUrlRequest) {
-        Long memberId = MemberContextHolder.memberIdHolder.get();
-        createBgmService.saveBgmUrl(registerBgmUrlRequest, memberId);
-        return ResponseEntity.created(URI.create("/api/bgm/url")).build();
-    }
-
     @PostMapping
-    public ResponseEntity<Void> createById(@Valid @RequestBody RegisterBgmIdRequest registerBgmIdRequest) {
+    public ResponseEntity<Void> create(@Valid @RequestBody RegisterBgmRequest registerBgmRequest) {
         Long memberId = MemberContextHolder.memberIdHolder.get();
-        createBgmService.saveBgmId(registerBgmIdRequest, memberId);
-        return ResponseEntity.created(URI.create("/api/bgm")).build();
+        createBgmService.saveBgm(registerBgmRequest, memberId);
+        return ResponseEntity.created(URI.create("/api/bgm/url")).build();
     }
 
     @GetMapping("/search")
