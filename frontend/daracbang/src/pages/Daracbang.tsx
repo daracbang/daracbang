@@ -19,8 +19,8 @@ import { ResponseDataType } from "../api/responseType";
 import { deleteToken } from "../utils/tokenUtil";
 import { DiaryDetail, MoodTrackerItemType, MoodeStatus, getDiaryDeatailApi, getMoodStatusApi } from "../api/diaryApi";
 import { formatDate } from "../utils/dateUtil";
+import Swal from "sweetalert2";
 import upArrow from "../assets/images/upArrow.png";
-
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 15,
@@ -70,7 +70,12 @@ const Daracbang: React.FC = () => {
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
         if (error.response?.status === 401) {
-          alert("로그인이 필요합니다.");
+          Swal.fire({
+            icon: "info",
+            title: "다시 로그인해주세요",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           dispatch(logoutAction());
           deleteToken();
           navigator("/");
@@ -80,6 +85,7 @@ const Daracbang: React.FC = () => {
       }
     }
   }
+
   useEffect(() => {
     async function getOtherMemberInfo(id: number) {
       try {
@@ -88,7 +94,12 @@ const Daracbang: React.FC = () => {
       } catch (error) {
         if (isAxiosError<ResponseDataType>(error)) {
           if (error.response?.status === 401) {
-            alert("로그인이 필요합니다.");
+            Swal.fire({
+              icon: "info",
+              title: "다시 로그인해주세요",
+              showConfirmButton: false,
+              timer: 1500,
+            });
             dispatch(logoutAction());
             deleteToken();
             navigator("/");
@@ -197,21 +208,26 @@ const Daracbang: React.FC = () => {
         <MidWrap style={{ display: "flex", flexDirection: "column" }}>
           <Link to={`/daracbang/${params.memberId}/guestbook`}>
             {" "}
-
             <img src={MyDarac} alt="myDarac" style={{ height: "550px" }} />
-
           </Link>
-          <Typography style={{ fontFamily: "omyu_pretty", fontWeight: "bold", textAlign: "center", fontSize: "20px", marginTop: "10px" }}>
-            방명록보러가기 <img src={upArrow} alt="arrow" style={{ height: "25px" }}></img> </Typography>
-
+          <Typography
+            style={{
+              fontFamily: "omyu_pretty",
+              fontWeight: "bold",
+              textAlign: "center",
+              fontSize: "20px",
+              marginTop: "10px",
+            }}
+          >
+            방명록보러가기 <img src={upArrow} alt="arrow" style={{ height: "25px" }}></img>{" "}
+          </Typography>
         </MidWrap>
-
 
         <Navi style={{ transform: "translateZ(0px)", flexGrow: 1 }}>
           <Dial />
         </Navi>
       </ContainerWrap>
-    </div >
+    </div>
   );
 };
 

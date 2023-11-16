@@ -8,6 +8,7 @@ import * as signUpApis from "../api/memberApi";
 import { ResponseDataType } from "../api/responseType";
 import { loginIdValidator, nicknameValidator } from "../utils/validator";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const [profilefile, setProfileFile] = useState<any>(null);
@@ -61,7 +62,12 @@ const SignUp = () => {
   // 아이디 중복 확인 함수
   const checkLoginId = async () => {
     if (!loginIdValidate) {
-      alert("정확한 값을 입력해주세요");
+      Swal.fire({
+        icon: "question",
+        title: "값을 정확히 입력해주세요!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       return;
     }
     try {
@@ -71,16 +77,31 @@ const SignUp = () => {
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
         if (error.response!.status === 409) {
-          alert("중복된 아이디 입니다.");
+          Swal.fire({
+            icon: "error",
+            title: "중복된 id 입니다..",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           return;
         }
         if (error.response!.status === 400) {
-          alert("잘못된 ID 입니다.");
+          Swal.fire({
+            icon: "error",
+            title: "잘못된 id 입니다..",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           return;
         }
       }
       // 그외
-      alert("알 수 없는 에러");
+      Swal.fire({
+        icon: "error",
+        title: "서버 에러...",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       console.error(error);
     }
   };
@@ -105,7 +126,12 @@ const SignUp = () => {
   // 닉네임 중복 확인 함수
   const checkNickname = async () => {
     if (!nicknameValidate) {
-      alert("정확한 값을 입력해주세요");
+      Swal.fire({
+        icon: "question",
+        title: "정확한 값을 입력해주세요!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       return;
     }
     try {
@@ -114,17 +140,32 @@ const SignUp = () => {
       setNicknameHelperText("사용 가능한 닉네임입니다!");
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
-        if (error.status === 409) {
-          alert("중복된 아이디 입니다.");
+        if (error.response!.status === 409) {
+          Swal.fire({
+            icon: "error",
+            title: "중복된 닉네임 입니다.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           return;
         }
-        if (error.status === 400) {
-          alert("잘못된 ID 입니다.");
+        if (error.response!.status === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "잘못된 닉네임 입니다..",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           return;
         }
       }
       // 그외
-      alert("알 수 없는 에러");
+      Swal.fire({
+        icon: "error",
+        title: "서버 에러..",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       console.error(error);
     }
   };
@@ -152,20 +193,40 @@ const SignUp = () => {
 
     try {
       await signUpApis.signUp(formData);
-      alert("회원가입 성공!");
+      Swal.fire({
+        icon: "success",
+        title: "회원가입 성공!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       navigate("/");
     } catch (error) {
       if (isAxiosError<ResponseDataType>(error)) {
         if (error.status === 409) {
-          alert("중복 체크를 진행해주세요");
+          Swal.fire({
+            icon: "error",
+            title: "중복 체크를 진행해주세요!.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           return;
         }
         if (error.status === 400) {
-          alert("잘못된 값 입니다.");
+          Swal.fire({
+            icon: "error",
+            title: "잘못된 값 입니다..",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           return;
         }
       }
-      alert("회원가입 실패");
+      Swal.fire({
+        icon: "error",
+        title: "서버 에러..!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       console.error(error);
     }
   };
@@ -174,15 +235,30 @@ const SignUp = () => {
   // 이미지 파일 있는지,닉네임, loginId 값이 있는지 ?  중복 체크 둘 다 했는지, 패스워드 빈 값인지?
   const preSignUpRequestValidation = (): boolean => {
     if (profilefile === null) {
-      alert("이미지를 업로드해주세요");
+      Swal.fire({
+        icon: "error",
+        title: "이미지를 업로드 해 주세요!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       return false;
     }
     if (!loginIdValidator(loginId) || !nicknameValidator(nickname) || password.length === 0) {
-      alert("값을 정확히 입력해주세요");
+      Swal.fire({
+        icon: "error",
+        title: "값을 정확히 입력해 주세요!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       return false;
     }
     if (!loginIdCheck || !nicknameCheck) {
-      alert("중복 체크를 진행해주세요");
+      Swal.fire({
+        icon: "error",
+        title: "중복 체크를 진행해 주세요!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       return false;
     }
     return true;
