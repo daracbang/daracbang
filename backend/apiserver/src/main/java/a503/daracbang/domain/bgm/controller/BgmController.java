@@ -30,7 +30,7 @@ public class BgmController {
     private final DeleteBgmService deleteBgmService;
     private final FindBgmService findBgmService;
 
-    @PostMapping("/{memberId}")
+    @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody RegisterBgmRequest registerBgmRequest) {
         Long memberId = MemberContextHolder.memberIdHolder.get();
         createBgmService.saveBgm(registerBgmRequest, memberId);
