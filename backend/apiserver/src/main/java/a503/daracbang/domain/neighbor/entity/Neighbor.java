@@ -1,5 +1,7 @@
 package a503.daracbang.domain.neighbor.entity;
 
+import a503.daracbang.domain.neighbor.exception.NeighborErrorCode;
+import a503.daracbang.global.exception.CustomException;
 import java.time.LocalDateTime;
 
 import a503.daracbang.domain.member.entity.Member;
@@ -48,7 +50,10 @@ public class Neighbor {
 		this.isCon = isRequest;
 	}
 
-	public LocalDateTime acceptNeighbor() {
+	public LocalDateTime acceptNeighbor(Member accepter) {
+		if(!accepter.getId().equals(this.accepter.getId())){
+			throw new CustomException(NeighborErrorCode.ALREADY_NEIGHBOR);
+		}
 		this.isCon = true;
 		this.acceptedAt = LocalDateTime.now();
 
@@ -58,4 +63,5 @@ public class Neighbor {
 	public void updateAcceptedAt(LocalDateTime acceptedAt) {
 		this.acceptedAt = acceptedAt;
 	}
+
 }
