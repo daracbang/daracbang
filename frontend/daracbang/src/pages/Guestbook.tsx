@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Head from '../components/Head';
 import styled from "@emotion/styled";
 import MyDarac from "../assets/images/room2.png";
@@ -6,7 +6,7 @@ import Dial from '../components/SpeedDial';
 import NeighPost from '../components/NeighPost';
 import { Button, Card, TextField, ThemeProvider, Typography, createTheme } from '@mui/material';
 import Sun from '../assets/images/sun.png';
-import { GuestBookItem, GuestBookObject, getGuestBook, writeGuestBook } from '../api/guestBookApi';
+import { GuestBookObject, getGuestBook, writeGuestBook } from '../api/guestBookApi';
 import { GuestBookEntry } from '../api/guestBookApi';
 
 import { useParams } from 'react-router-dom';
@@ -18,7 +18,7 @@ const Guestbook = () => {
 
     const parm = useParams();
     console.log(parm.memberId);
-    
+
     const [guestBook, setGuestBook] = React.useState<GuestBookObject | null>(null);
     const [entry, setEntry] = React.useState(new GuestBookEntry(''));
     const [userNickname, setUserNickname] = React.useState('');
@@ -26,7 +26,7 @@ const Guestbook = () => {
 
     useEffect(() => {
         getUserInfo();
-        if(parm.memberId){
+        if (parm.memberId) {
             getOne(parseInt(parm.memberId));
         }
 
@@ -43,7 +43,7 @@ const Guestbook = () => {
         };
     }, [parm.memberId]);
 
-    async function getOne(id:number) {
+    async function getOne(id: number) {
         const response = await getGuestBook(id);
         setGuestBook(response.data);
     }
@@ -52,7 +52,7 @@ const Guestbook = () => {
         try {
             const response = await getMyMemberInfo();
             setUserNickname(response.data.nickname);
-            setToday(formatDate(new Date().toISOString().slice(0, 10))); 
+            setToday(formatDate(new Date().toISOString().slice(0, 10)));
         } catch (error) {
             console.error('Failed to get user info', error);
         }
@@ -69,21 +69,21 @@ const Guestbook = () => {
             console.error('memberId is undefined');
             return;
         }
-        if (entry.content.trim() === '') { 
+        if (entry.content.trim() === '') {
             alert("내용을 입력해주세요.");
             return;
         }
         const ownerId = parseInt(parm.memberId);
         try {
             await writeGuestBook(ownerId, entry);
-            alert("방명록을 작성했습니다.");  
-            setEntry(new GuestBookEntry(''));  
-            getOne(ownerId); 
+            alert("방명록을 작성했습니다.");
+            setEntry(new GuestBookEntry(''));
+            getOne(ownerId);
         } catch (error) {
             console.error('Failed to write guest book', error);
         }
     };
-    
+
 
     const theme = createTheme({
         typography: {
@@ -111,7 +111,7 @@ const Guestbook = () => {
                             <Typography style={{ height: "20px", marginLeft: "510px", fontFamily: "omyu_pretty", fontWeight: "bold" }} >{today}</Typography>
                         </NeighInfo>
                         <ThemeProvider theme={theme}>
-                        <TextField style={{ fontFamily: "KyoboHand", width: "650px", marginLeft: "25px", marginTop: "10px" }} value={entry.content} onChange={handleContentChange}></TextField>
+                            <TextField style={{ fontFamily: "KyoboHand", width: "650px", marginLeft: "25px", marginTop: "10px" }} value={entry.content} onChange={handleContentChange}></TextField>
                         </ThemeProvider>
                         <Button variant='outlined' style={{ fontFamily: "omyu_pretty", marginLeft: "580px", marginTop: "5px", height: "25px" }} onClick={handleButtonClick}>방명록남기기</Button>
                     </Card>

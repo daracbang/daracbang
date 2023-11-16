@@ -10,9 +10,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/rootReducer';
 import FriendNeigh from '../components/FriendNeigh';
 import RequestNeigh from '../components/RequestNeigh';
-import { MemberInfo } from '../store/memberReducer';
 import axios from 'axios';
 import { getToken } from '../utils/tokenUtil';
+import { NeighborObject } from '../api/neighborApi';
+
 
 const Neighbor = () => {
 
@@ -26,18 +27,37 @@ const Neighbor = () => {
         return state.memberReducer.member;
     });
 
+    const [searchedNickname, setSearchedNickname] = useState<string>("");
+    const [searchMember, setSearchMember] = React.useState<NeighborObject>();
+    const [requestMember, setRequestMember] = useState<NeighborObject[]>([]);
+    const [friendMember, setFriendMember] = useState<NeighborObject[]>([]);
 
-    const [searchedNickname, setSearchedNickname] = useState<string>();
-
-    const [requestMember, setRequestMember] = useState<MemberInfo[]>([]);
-    const [friendMember, setFriendMember] = useState<MemberInfo[]>([]);
 
     const accessToken = getToken();
 
 
 
     React.useEffect(() => {
-
+        if (searchedNickname) { // searchs가 존재할 때만 요청을 보냄
+            axios.get(`/api/neighbors/search`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                params: { nickname: searchedNickname },
+            })
+                .then((response: { data: NeighborObject[] }) => {
+                    console.log('Search response:', response.data);
+                    if (response.data.length > 0) {
+                        console.log('Setting search member:', response.data);
+                        setSearchMember(response.data[0]);
+                    }
+                })
+                .catch((error) => {
+                    // 오류 처리
+                    console.log(searchedNickname);
+                    console.log(error);
+                });
+        }
 
         axios
             .get(`/api/neighbors/accepts`, {
@@ -46,7 +66,7 @@ const Neighbor = () => {
                     Authorization: `Bearer ${accessToken}`,
                 },
             })
-            .then((response) => {
+            .then((response: { data: NeighborObject[] }) => {
                 console.log(response.data);
                 setRequestMember(response.data); // API 호출 완료 후에 studyrooms 업데이트
                 console.log(requestMember);
@@ -63,7 +83,7 @@ const Neighbor = () => {
                     Authorization: `Bearer ${accessToken}`,
                 },
             })
-            .then((response) => {
+            .then((response: { data: NeighborObject[] }) => {
                 console.log(response.data);
                 setFriendMember(response.data); // API 호출 완료 후에 studyrooms 업데이트
                 console.log(friendMember);
@@ -74,7 +94,7 @@ const Neighbor = () => {
             });
 
 
-    },);
+    }, [accessToken, searchMember, searchedNickname]);
 
 
     return (
@@ -85,14 +105,20 @@ const Neighbor = () => {
                     <Card style={{ height: "600px", width: "420px", backgroundColor: "rgba( 255, 255, 255, 0.3 )", marginLeft: "100px", boxShadow: "3px 3px 2px 1px #bdbdbd", borderRadius: "15px" }} >
                         <ThemeProvider theme={theme} >
                             <img src={Search} alt='search' style={{ marginTop: "15px", marginLeft: "15px" }} />
-                            <TextField value={searchedNickname}
-                                onChange={(e) => setSearchedNickname(e.target.value)} variant="standard" style={{ width: "300px", marginLeft: "20px", marginRight: "10px", marginTop: "15px", fontFamily: "KyoboHand" }} />
+                            <TextField
+                                value={searchedNickname}
+                                onChange={(e) => setSearchedNickname(e.target.value)}
+                                variant="standard"
+                                style={{ width: "300px", marginLeft: "20px", marginRight: "10px", marginTop: "15px", fontFamily: "KyoboHand" }}
+                            />
                         </ThemeProvider>
-                        {searchedNickname && <SearchNeigh searchs={searchedNickname} />}
+                        {searchMember !== undefined && (
+                            <SearchNeigh key={searchMember.memberId} data={searchMember} />
+                        )}
 
                         <Card style={{ height: "400px", width: "400px", margin: "10px", marginTop: "30px", boxShadow: "3px 3px 2px 1px #bdbdbd", borderRadius: "15px" }} >
-                            {requestMember.map((requests) => (
-                                <RequestNeigh requests={requests} />
+                            {requestMember.length > 0 && requestMember.map((requests) => (
+                                <RequestNeigh key={requests.memberId} data={requests} />
                             ))}
                         </Card>
                     </Card>
@@ -107,8 +133,8 @@ const Neighbor = () => {
                         </Card>
                         <Card style={{ height: "440px", width: "420px", backgroundColor: "rgba( 255, 255, 255, 0.3 )", marginLeft: "50px", boxShadow: "3px 3px 2px 1px #bdbdbd", borderRadius: "15px" }} >
                             <Typography style={{ fontFamily: "omyu_pretty", textAlign: "center", fontWeight: "bold", fontSize: "20px", marginTop: "5px" }}>나의 BFF</Typography>
-                            {friendMember.map((friends) => (
-                                <FriendNeigh friends={friends} />
+                            {friendMember.length > 0 && friendMember.map((friends) => (
+                                <FriendNeigh key={friends.memberId} data={friends} />
                             ))}
 
                         </Card>
