@@ -27,7 +27,6 @@ function App() {
           <Route path="/daracbang/:memberId/guestbook" element={<Guestbook />}></Route>
         </Route>
       </Routes>
-      <ReactQueryDevtools initialIsOpen={false} position="bottom" />
     </BrowserRouter>
   );
 }
