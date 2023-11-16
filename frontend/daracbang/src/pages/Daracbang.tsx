@@ -20,6 +20,7 @@ import { deleteToken } from "../utils/tokenUtil";
 import { DiaryDetail, MoodTrackerItemType, MoodeStatus, getDiaryDeatailApi, getMoodStatusApi } from "../api/diaryApi";
 import { formatDate } from "../utils/dateUtil";
 
+
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 15,
   width: 300,
