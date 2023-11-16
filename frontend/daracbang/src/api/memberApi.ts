@@ -1,6 +1,5 @@
-import { AxiosError, AxiosResponse, isAxiosError } from "axios";
+import { AxiosResponse } from "axios";
 import { backApiInstance, jwtApiInstance } from "./http";
-import { ResponseDataType } from "./responseType";
 import { MemberInfo } from "../store/memberReducer";
 
 const http = backApiInstance();
