@@ -19,6 +19,7 @@ import { ResponseDataType } from "../api/responseType";
 import { deleteToken } from "../utils/tokenUtil";
 import { DiaryDetail, MoodTrackerItemType, MoodeStatus, getDiaryDeatailApi, getMoodStatusApi } from "../api/diaryApi";
 import { formatDate } from "../utils/dateUtil";
+import { margin } from "@mui/system";
 
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -165,7 +166,7 @@ const Daracbang: React.FC = () => {
           <MoodTracker memberId={member!.id} onClickTracker={onActive} />
           <SumDiary>
             <Card style={{ height: "130px", borderRadius: "10px", boxShadow: "3px 3px 5px 1px #bdbdbd" }}>
-              <CardContent style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px" }}>
+              <CardContent style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px", height: "50px" }}>
                 {activeDiaryInfo === null ? (
                   "다이어리를 선택해주세요"
                 ) : (
@@ -201,7 +202,7 @@ const Daracbang: React.FC = () => {
           <Dial />
         </Navi>
       </ContainerWrap>
-    </div>
+    </div >
   );
 };
 
@@ -209,7 +210,7 @@ const ContainerWrap = styled.div`
   display: flex;
   flex-direction: row;
   padding-top: 17px;
-  padding-bottom: 25px;
+  padding-bottom: 20px;
   padding-left: 50px;
   padding-right: 50px;
   .content-hidden {

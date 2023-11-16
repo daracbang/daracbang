@@ -81,7 +81,10 @@ const MoodTracker: React.FC<MoodTackerProps> = ({ memberId, onClickTracker }: Mo
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateCalendar
-        sx={{ height: "300px" }}
+        sx={{
+          height: "275px", '& .MuiPickersCalendarHeader-root': { marginTop: "8px", marginBottom: 0 },
+          '& .MuiPickersFadeTransitionGroup-root-MuiDateCalendar-viewTransitionContainer': { height: "200px" }
+        }}
         slots={{
           day: MoodTrackerItem,
         }}
