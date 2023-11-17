@@ -21,7 +21,17 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 
 ---
 ## 🔑 주요 기능
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/007.png" alt="기획"/>
+![주요기능1](/uploads/eb6042c27a9f40cedea989d9c0ec0e7f/주요기능1.JPG)
+
+![주요기능2](/uploads/d64a8f4b3ca13edd7b175f2e43741b9e/주요기능2.JPG)
+
+![주요기능3](/uploads/4ea1777835638ae319873494b72b907e/주요기능3.JPG)
+
+![주요기능4](/uploads/f96afc6950504e83aee8dd090e485361/주요기능4.JPG)
+
+![주요기능5](/uploads/0aad0efcc9182a794ebcdafa9d98254e/주요기능5.JPG)
+
+
 
 ## 📜 기능명세서
 
@@ -113,6 +123,16 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 ---
 ## 📝 설계 문서
 
+### 기능명세서
+<details>
+<summary>기능명세서</summary>
+<div markdown="1">       
+    <img src="/uploads/ecfd42f826f9265eef6264ce2ac35cd6/기능명세서1.JPG" alt="기능명세서"/>
+    <img src="/uploads/4116d273f01c294c2e59df64fd1b90bb/기능명세서2.JPG" alt="기능명세서"/>
+</div>
+</details>
+
+
 ### ERD
 <details>
 <summary>ERD</summary>
@@ -146,6 +166,3 @@ https://www.figma.com/file/n5esjnbJmX1crDIYgQNJS9/Travel?type=design&node-id=103
 ---
     
 
----
-## ❤ 팀원 소개
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/003.png" alt="기획"/>
