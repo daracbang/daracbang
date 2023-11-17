@@ -20,6 +20,12 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 ![기획4](/uploads/b7f5746b87a338925efc0d13baf25542/기획4.JPG)
 
 ---
+## 📜 ER Diagram
+
+![erd](/uploads/fcb4473ab4acc10f967f575c5ec4e1b1/erd.JPG)
+
+
+---
 ## 🔑 주요 기능
 ![주요기능1](/uploads/eb6042c27a9f40cedea989d9c0ec0e7f/주요기능1.JPG)
 
@@ -31,18 +37,7 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 
 ![주요기능5](/uploads/0aad0efcc9182a794ebcdafa9d98254e/주요기능5.JPG)
 
-
-
-## 📜 기능명세서
-
-![기능명세서1](/uploads/ecfd42f826f9265eef6264ce2ac35cd6/기능명세서1.JPG)
-
-![기능명세서2](/uploads/4116d273f01c294c2e59df64fd1b90bb/기능명세서2.JPG)
-
-## 📜 API 명세서
-
-![api명세서](/uploads/e37a9e7b6a3853ad4075e9732a3533b8/api명세서.JPG)
-
+---
 ## 📜 ER Diagram
 
 ![erd](/uploads/fcb4473ab4acc10f967f575c5ec4e1b1/erd.JPG)
@@ -86,7 +81,7 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 ---
 ## 🏗️ 아키텍쳐
 
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/008.png" alt="아키텍쳐"/>
+<img src="!/uploads/f222bf98d8bcc06b8c4915a652b59729/a503.drawio.png" alt="아키텍쳐"/>
 
 ---
 ## 🛠 기술 스택
@@ -95,11 +90,11 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 
     **Language |** java 17
 
-    **Framework |** Spring Boot 3.1
+    **Framework |** Spring Boot 3.1.5
 
     **Build Tool |** gradle 
 
-    **Database |** MySQL 
+    **Database |** MySQL 8.0.33
 
 <br></br>
 ### 프론트엔드
@@ -155,7 +150,8 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 <details>
 <summary>FIGMA</summary>
 
-https://www.figma.com/file/n5esjnbJmX1crDIYgQNJS9/Travel?type=design&node-id=103-445&mode=design&t=PsNE2mWlgEcwdAqN-0
+![피그마1](/uploads/1949a49fc7acb5cfc29d164fbcddb99f/피그마1.JPG)
+![피그마2](/uploads/b4009ccbce5ec8d33379a4fadc72ee1f/피그마2.JPG)
 
 
 </details> 
