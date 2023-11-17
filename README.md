@@ -143,12 +143,15 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 ![피그마1](/uploads/1949a49fc7acb5cfc29d164fbcddb99f/피그마1.JPG)
 ![피그마2](/uploads/b4009ccbce5ec8d33379a4fadc72ee1f/피그마2.JPG)
 
-
 </details> 
-
-
-```
-
 ---
+## 담당 역할
+
+이해준:	다이어리, 댓글, 감정분석, 무드트래커 API 개발
+조인혁:	Infra, CICD, 배포 관련
+권민재:	방명록 API 개발, restdocs 문서화, 로그 관리
+김경륜:	이웃 관련 API 개발
+우찬희:	회원, 인증 , BGM API 개발
+서수정:	프론트 전체
     
 
