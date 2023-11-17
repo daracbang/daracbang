@@ -63,5 +63,4 @@ public class Neighbor {
 	public void updateAcceptedAt(LocalDateTime acceptedAt) {
 		this.acceptedAt = acceptedAt;
 	}
-
 }

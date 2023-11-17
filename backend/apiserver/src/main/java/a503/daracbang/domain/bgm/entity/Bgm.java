@@ -13,9 +13,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -32,8 +29,9 @@ public class Bgm {
     @Column(nullable = false)
     private String bgmName;
 
-    @Column(nullable = false)
     private String videoId;
+
+    private String url;
 
     public boolean isOwner(long memberId) {
         if(this.member.getId() != memberId) {
@@ -45,26 +43,13 @@ public class Bgm {
     public Bgm(Member member, String bgmName, String url) {
         this.member = member;
         this.bgmName = bgmName;
-        this.videoId = parseVideoId(url);
+        this.url = url;
     }
 
-    private String parseVideoId(String url){
-        URL aURL = null;
-        try {
-            aURL = new URL(url);
-        } catch (MalformedURLException e) {
-            return "";
-        }
-        String query = aURL.getQuery();
-        String[] params = query.split("&");
-
-        for (String param : params) {
-            String name = param.split("=")[0];
-            String value = param.split("=")[1];
-            if ("v".equals(name)) {
-                return value;
-            }
-        }
-        return "";
+    public Bgm(Member member, String bgmName, String videoId, String url) {
+        this.member = member;
+        this.bgmName = bgmName;
+        this.videoId = videoId;
+        this.url = url;
     }
 }

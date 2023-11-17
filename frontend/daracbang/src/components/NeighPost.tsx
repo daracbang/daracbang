@@ -2,17 +2,24 @@ import { Card, Typography } from '@mui/material';
 import * as React from 'react';
 import Sun from '../assets/images/sun.png';
 import styled from "@emotion/styled";
+import { GuestBookItem } from '../api/guestBookApi';
+import { formatDate } from "../utils/dateUtil";
 
-export default function NeighPost() {
+interface NeighPostProps {
+    data: GuestBookItem;
+}
+
+export default function NeighPost({ data }: NeighPostProps) {
+
 
     return (
         <Card style={{ height: "100px", width: "600px", marginLeft: "50px", marginTop: "15px" }}>
-            <Typography style={{ height: "20px", marginLeft: "10px", fontFamily: "omyu_pretty", fontWeight: "bold" }} >2023.11.03</Typography>
+            <Typography style={{ height: "20px", marginLeft: "10px", fontFamily: "omyu_pretty", fontWeight: "bold" }} >{formatDate(data.createdAt)}</Typography>
             <NeighInfo style={{ display: "flex", flexDirection: "row", marginTop: "10px" }}>
-                <img src={Sun} alt='sun' style={{ height: "20px", marginLeft: "10px" }} />
-                <Typography style={{ fontFamily: "omyu_pretty", fontWeight: "bold", marginLeft: "10px" }}>김싸피</Typography>
+                <img src={data.profileImage} alt='profile' style={{ height: "20px", marginLeft: "10px" }} />
+                <Typography style={{ fontFamily: "omyu_pretty", fontWeight: "bold", marginLeft: "10px" }}>{data.nickname}</Typography>
             </NeighInfo>
-            <Typography style={{ fontFamily: "KyoboHand", marginLeft: "10px", marginTop: "5px" }}>안녕~!</Typography>
+            <Typography style={{ fontFamily: "KyoboHand", marginLeft: "10px", marginTop: "5px" }}>{data.content}</Typography>
         </Card>
     );
 }

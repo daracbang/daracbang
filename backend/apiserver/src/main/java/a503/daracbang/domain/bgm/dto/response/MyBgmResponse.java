@@ -12,15 +12,19 @@ public class MyBgmResponse {
 
     private String videoId;
 
-    public MyBgmResponse(Long bgmId, String bgmName,String videoId) {
+    private String url;
+
+    public MyBgmResponse(Long bgmId, String bgmName, String videoId, String url) {
         this.bgmId = bgmId;
         this.bgmName = bgmName;
         this.videoId = videoId;
+        this.url = url;
     }
 
     public MyBgmResponse(Bgm bgm) {
         this.bgmId = bgm.getId();
         this.bgmName = bgm.getBgmName();
         this.videoId = bgm.getVideoId();
+        this.url = bgm.getUrl();
     }
 }

@@ -21,10 +21,10 @@ function App() {
         </Route>
         <Route element={<PrivatePage />}>
           <Route path="/daracbang/:memberId" element={<Daracbang />}></Route>
-          <Route path="/diary" element={<Diary />}></Route>
-          <Route path="/diary-write" element={<DiaryWrite />}></Route>
-          <Route path="/neighbor" element={<Neighbor />}></Route>
-          <Route path="/guestbook" element={<Guestbook />}></Route>
+          <Route path="/daracbang/:memberId/diary" element={<Diary />}></Route>
+          <Route path="/daracbang/:memberId/diary-write" element={<DiaryWrite />}></Route>
+          <Route path="/daracbang/:memberId/neighbor" element={<Neighbor />}></Route>
+          <Route path="/daracbang/:memberId/guestbook" element={<Guestbook />}></Route>
         </Route>
       </Routes>
       <ReactQueryDevtools initialIsOpen={false} position="bottom" />
