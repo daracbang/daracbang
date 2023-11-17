@@ -11,9 +11,13 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 
 ---
 ## 🎉 프로젝트 기획
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/004.png" alt="기획"/>
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/005.png" alt="기획"/>
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/006.png" alt="기획"/>
+![기획1](/uploads/4a657510653034beb89fbab01145de86/기획1.JPG)
+
+![기획2](/uploads/44dd1cbf170cb4cea597896c1902302b/기획2.JPG)
+
+![기획3](/uploads/e9c2b7163c9ca04591e86016ea36f9d7/기획3.JPG)
+
+![기획4](/uploads/b7f5746b87a338925efc0d13baf25542/기획4.JPG)
 
 ---
 ## 🔑 주요 기능
