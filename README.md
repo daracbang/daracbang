@@ -19,11 +19,6 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 
 ![기획4](/uploads/b7f5746b87a338925efc0d13baf25542/기획4.JPG)
 
----
-## 📜 ER Diagram
-
-![erd](/uploads/fcb4473ab4acc10f967f575c5ec4e1b1/erd.JPG)
-
 
 ---
 ## 🔑 주요 기능
@@ -36,11 +31,6 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 ![주요기능4](/uploads/f96afc6950504e83aee8dd090e485361/주요기능4.JPG)
 
 ![주요기능5](/uploads/0aad0efcc9182a794ebcdafa9d98254e/주요기능5.JPG)
-
----
-## 📜 ER Diagram
-
-![erd](/uploads/fcb4473ab4acc10f967f575c5ec4e1b1/erd.JPG)
 
 
 ---
@@ -81,7 +71,7 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 ---
 ## 🏗️ 아키텍쳐
 
-<img src="!/uploads/f222bf98d8bcc06b8c4915a652b59729/a503.drawio.png" alt="아키텍쳐"/>
+<img src="/uploads/72aa7b249845e3ca872fd473fcf2a0a3/아키텍처.png" alt="아키텍쳐"/>
 
 ---
 ## 🛠 기술 스택
