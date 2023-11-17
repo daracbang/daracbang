@@ -23,17 +23,20 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 ## 🔑 주요 기능
 <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/007.png" alt="기획"/>
 
-## 📜 빅데이터
-<details>
-<summary>빅데이터</summary>
-<div markdown="1">
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/009.png" alt="기획"/>
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/010.png" alt="기획"/>
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/011.png" alt="기획"/>
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/012.png" alt="기획"/>
-<img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/013.png" alt="기획"/>
-</div>
-</details>
+## 📜 기능명세서
+
+![기능명세서1](/uploads/ecfd42f826f9265eef6264ce2ac35cd6/기능명세서1.JPG)
+
+![기능명세서2](/uploads/4116d273f01c294c2e59df64fd1b90bb/기능명세서2.JPG)
+
+## 📜 API 명세서
+
+![api명세서](/uploads/e37a9e7b6a3853ad4075e9732a3533b8/api명세서.JPG)
+
+## 📜 ER Diagram
+
+![erd](/uploads/fcb4473ab4acc10f967f575c5ec4e1b1/erd.JPG)
+
 
 ---
 ## 🖥 서비스 화면
@@ -97,7 +100,6 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
     
 **Engine |** Node.js 18.16.1
     
-**Library |** zustand 4.4.1, css-loader 6.8.1, styled-components 6.0.4
 
 <br></br>
 ### 인프라
@@ -115,7 +117,7 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 <details>
 <summary>ERD</summary>
 <div markdown="1">       
-    <img src="https://hackmd.io/_uploads/SJKl2Mj32.png" alt="ERD 페이지"/>
+    <img src="/uploads/fcb4473ab4acc10f967f575c5ec4e1b1/erd.JPG" alt="ERD 페이지"/>
 </div>
 </details>
 
@@ -124,7 +126,7 @@ AI 감정분석을 활용한 감정 다이어리 공유 플랫폼
 <details>
 <summary>API 문서</summary>
 <div markdown="1">       
-    <img src="https://tripickbucket.s3.ap-northeast-2.amazonaws.com/README/api.JPG" alt="전체 문서 페이지"/>
+    <img src="/uploads/e37a9e7b6a3853ad4075e9732a3533b8/api명세서.JPG" alt="전체 문서 페이지"/>
 </div>
 </details>
 
