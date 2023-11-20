@@ -254,8 +254,8 @@ const Diary = () => {
 
 const ContainerWrap = styled.div`
   display: flex;
-  padding-top: 13px;
-  padding-bottom: 19px;
+  padding-top: 17px;
+  padding-bottom: 20px;
 
   .noscroll {
     ::-webkit-scrollbar {

@@ -197,8 +197,8 @@ const Diary: React.FC = () => {
 const ContainerWrap = styled.div`
   display: flex;
   flex-direction: row;
-  padding-top: 40px;
-  padding-bottom: 66px;
+  padding-top: 27px;
+  padding-bottom: 60px;
   textarea {
     ::-webkit-scrollbar {
       display: none;
