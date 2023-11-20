@@ -125,7 +125,7 @@ const Daracbang: React.FC = () => {
             <Card
               style={{
                 height: "80px",
-                marginBottom: "15px",
+                marginBottom: "10px",
                 borderRadius: "10px",
                 boxShadow: "3px 3px 5px 1px #bdbdbd",
               }}
@@ -176,7 +176,7 @@ const Daracbang: React.FC = () => {
           </Emotions>
           <MoodTracker memberId={member!.id} onClickTracker={onActive} />
           <SumDiary>
-            <Card style={{ height: "130px", borderRadius: "10px", boxShadow: "3px 3px 5px 1px #bdbdbd" }}>
+            <Card style={{ height: "120px", borderRadius: "10px", boxShadow: "3px 3px 5px 1px #bdbdbd" }}>
               <CardContent style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px", height: "50px" }}>
                 {activeDiaryInfo === null ? (
                   "다이어리를 선택해주세요"
@@ -185,6 +185,7 @@ const Daracbang: React.FC = () => {
                     <div>{formatDate(activeDiaryInfo.createdAt)}</div>
                     <br />
                     <div className="content-hidden">{activeDiaryInfo.content}</div>
+
                   </div>
                 )}
               </CardContent>
@@ -196,9 +197,9 @@ const Daracbang: React.FC = () => {
                     alert("다이어리를 선택해주세요 ");
                     return;
                   }
-                  navigator(`/daracbang/${member?.id}/diary/${activeDiaryInfo.id}`);
+                  navigator(`/daracbang/${params.memberId}/diary/${activeDiaryInfo.id}`);
                 }}
-                style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px" }}
+                style={{ fontFamily: "omyu_pretty", fontWeight: "bold", fontSize: "15px", marginTop: "30px" }}
               >
                 더 읽으러 가기
               </Button>
@@ -234,8 +235,8 @@ const Daracbang: React.FC = () => {
 const ContainerWrap = styled.div`
   display: flex;
   flex-direction: row;
-  padding-top: 17px;
-  padding-bottom: 20px;
+  padding-top: 15px;
+  padding-bottom: 17px;
   padding-left: 50px;
   padding-right: 50px;
   .content-hidden {
