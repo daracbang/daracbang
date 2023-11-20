@@ -166,8 +166,8 @@ const Guestbook = () => {
 const ContainerWrap = styled.div`
   display: flex;
   flex-direction: row;
-  padding-top: 20px;
-  padding-bottom: 22px;
+  padding-top: 10px;
+  padding-bottom: 12px;
 `;
 
 const ContentWrap = styled.div`

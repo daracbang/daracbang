@@ -192,16 +192,30 @@ const Neighbor = () => {
               ))}
             </div>
 
-            <Card
+
+          </Card>
+
+          <Card
+            style={{
+              height: "600px",
+              width: "400px",
+              marginLeft: "20px",
+              boxShadow: "3px 3px 2px 1px #bdbdbd",
+              borderRadius: "15px",
+            }}
+          >
+            <Typography
               style={{
-                height: "400px",
-                width: "400px",
-                margin: "10px",
-                marginTop: "30px",
-                boxShadow: "3px 3px 2px 1px #bdbdbd",
-                borderRadius: "15px",
+                fontFamily: "omyu_pretty",
+                textAlign: "center",
+                fontWeight: "bold",
+                fontSize: "20px",
+                marginTop: "5px",
               }}
             >
+              이웃 수락 / 거절 하기
+            </Typography>
+            {requireAccepteMember.length === 0 ? (
               <Typography
                 style={{
                   fontFamily: "omyu_pretty",
@@ -211,33 +225,20 @@ const Neighbor = () => {
                   marginTop: "5px",
                 }}
               >
-                이웃 수락 / 거절 하기
+                이웃 신청 온 회원이 없습니다.
               </Typography>
-              {requireAccepteMember.length === 0 ? (
-                <Typography
-                  style={{
-                    fontFamily: "omyu_pretty",
-                    textAlign: "center",
-                    fontWeight: "bold",
-                    fontSize: "20px",
-                    marginTop: "5px",
-                  }}
-                >
-                  이웃 신청 온 회원이 없습니다.
-                </Typography>
-              ) : (
-                requireAccepteMember.map((requests) => (
-                  <RequestNeigh key={requests.memberId} data={requests} onReject={reject} onAccpet={accept} />
-                ))
-              )}
-            </Card>
+            ) : (
+              requireAccepteMember.map((requests) => (
+                <RequestNeigh key={requests.memberId} data={requests} onReject={reject} onAccpet={accept} />
+              ))
+            )}
           </Card>
 
           <CardWrap>
             <Card
               style={{
                 height: "150px",
-                marginLeft: "50px",
+                marginLeft: "20px",
                 marginBottom: "10px",
                 boxShadow: "3px 3px 2px 1px #bdbdbd",
                 borderRadius: "15px",
@@ -265,7 +266,7 @@ const Neighbor = () => {
                 height: "440px",
                 width: "420px",
                 backgroundColor: "rgba( 255, 255, 255, 0.3 )",
-                marginLeft: "50px",
+                marginLeft: "20px",
                 boxShadow: "3px 3px 2px 1px #bdbdbd",
                 borderRadius: "15px",
               }}
@@ -335,8 +336,8 @@ const Neighbor = () => {
 const ContainerWrap = styled.div`
   display: flex;
   flex-direction: row;
-  padding-top: 27px;
-  padding-bottom: 40px;
+  padding-top: 18px;
+  padding-bottom: 28px;
 `;
 
 const ContentWrap = styled.div`
